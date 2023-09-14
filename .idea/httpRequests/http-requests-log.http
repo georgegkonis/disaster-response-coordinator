@@ -1,0 +1,106 @@
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 127
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "George Doe",
+  "email": "georgedoe@example.com",
+  "password": "password123",
+  "passwordConfirm": "password123"
+}
+
+<> 2023-09-14T223239.201.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 123
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "passwordConfirm": "password123"
+}
+
+<> 2023-09-14T223154.409.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 123
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "passwordConfirm": "password123"
+}
+
+<> 2023-09-14T221825.201.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 123
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "confirmPassword": "password123"
+}
+
+<> 2023-09-14T221746.400.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 147
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "body": {
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "password123",
+    "confirmPassword": "password123"
+  }
+}
+
+<> 2023-09-14T221726.400.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+{:
+    "name": "Test User",
+    "email": "test@test.com",
+    "password": "test123",
+    "passwordConfirm": "test123"
+}:
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
