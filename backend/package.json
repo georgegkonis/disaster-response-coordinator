@@ -1,0 +1,36 @@
+{
+  "name": "product-offers-platform-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "license": "NIS",
+  "scripts": {
+    "start": "ts-node-dev --respawn --transpile-only src/server.ts"
+  },
+  "dependencies": {
+    "@typegoose/typegoose": "^11.5.0",
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.7",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.5.0",
+    "redis": "^4.0.6",
+    "ts-node-dev": "^2.0.0",
+    "zod": "^3.14.4"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/config": "^3.3.1",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/lodash": "^4.14.182",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^20.6.0",
+    "morgan": "^1.10.0",
+    "typescript": "^5.2.2"
+  }
+}
+
