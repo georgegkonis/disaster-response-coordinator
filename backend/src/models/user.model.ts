@@ -1,5 +1,6 @@
 import { getModelForClass, index, modelOptions, pre, prop } from '@typegoose/typegoose';
 import bcrypt from 'bcryptjs';
+import { Role } from '../enums/role.enum';
 
 @index({ email: 1 })
 @pre<User>('save', async function () {
@@ -27,7 +28,7 @@ export class User {
     @prop({ required: true, minlength: 8, maxLength: 32, select: false })
     password: string;
 
-    @prop({ default: 'user' })
+    @prop({ default: Role.USER })
     role: string;
 
     // Instance method to check if passwords match

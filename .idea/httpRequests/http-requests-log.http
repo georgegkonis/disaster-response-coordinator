@@ -1,5 +1,292 @@
 POST http://localhost:8000/api/auth/register
 content-type: application/json
+Content-Length: 116
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Admin",
+  "email": "admin@email.com",
+  "password": "password123",
+  "passwordConfirm": "password123"
+}
+
+<> 2023-09-15T005543.201.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 121
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Admin",
+  "email": "admin@email.com",
+  "password": "password123",
+  "passwordConfirmation": "password123"
+}
+
+<> 2023-09-15T005534.400.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 117
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Admin",
+  "email": "admin@email.com",
+  "password": "admin",
+  "passwordConfirmation": "password123"
+}
+
+<> 2023-09-15T005510.400.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 109
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Admin",
+  "email": "admin@email.com",
+  "password": "admin",
+  "passwordConfirmation": "admin"
+}
+
+<> 2023-09-15T005446.400.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
+Content-Length: 109
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "user": "admin",
+  "email": "admin@email.com",
+  "password": "admin",
+  "passwordConfirmation": "admin"
+}
+
+<> 2023-09-15T005428.400.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 67
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTAzNWZkN2JlMzllNTgzZjM4M2M3ODMiLCJpYXQiOjE2OTQ3MjI1MzQsImV4cCI6MTY5NDcyMzQzNH0.WYjAlL2-N9NQkWpTrJTAxUliGlGwZf2zj-Cv98eB8WdnJDlRaEkG-Kg3an2xhfsPAZnGAsxgsIIuwO9mWtRI_p8sZwbhhX5gEr14fQHUtRNU_7W9oQEuFhGwHvMvDLH1y5ZGhoe9FsC4ZaiACMS-EykGCq2le8XmU2ieU_y2Jc4FbU8kDibaaguOji6xbzxZdO45dx7Gc6kC1W7Q41cbxDij2QwCVBESAIHLgMCjJwGD3CLQuwcGcTbmoGMOSv0W_IuBz5BhnVaAECpkc-72PtYXA1EahVcbetwD-JCfRpRV-KAx8W6ptabj-e3QPKZmRwzctjFjSp02mLDn2WdANA; logged_in=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "georgedoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T231537.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 67
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTAzNWZkN2JlMzllNTgzZjM4M2M3ODMiLCJpYXQiOjE2OTQ3MjIxNjAsImV4cCI6MTY5NDcyMzA2MH0.F2TznEGzRYozilgali7lklVKLPVwAH53iLoRhWjt7wURJcKynUnRMXt8s7vyWIITlQQx9zT2oxozWn8JQfAzzDerlQntlz_kW256M032w7ijk1aV1ktjCCJ0aEtajJFDQBntI5iZNt6QCx4-n6yl7I-2KHCxe9t09XMN0HMatHnsuVY1lxriXVyWkch4xnQWsgET9TP1c_wHHwuq3A43dCDAag5iQ_jXYn7wp5EI06YPgvu7U9KA_QgCviFHB8hhu1JghANEFF0VyHod8rgRlSAovcPdWuZd1QVxB1tc1qGGg6KdOG-NlftUQ1MMHVU-iOgAJQzhkHUVpkm7NwFz5g; logged_in=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "georgedoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T231534.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 67
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTAzNWM4MThlZTA1MmYxZmJjNWMyZjEiLCJpYXQiOjE2OTQ3MjE1NzMsImV4cCI6MTY5NDcyMjQ3M30.FajDjswFlg2H4Bqk_XMeDvjL8KoED0nE85H1rvOQN7Hj4ghYIywyjh6ZxqI14TaEyKL23YQmBHYIga4JV1JtYO6Xk3zw-UIbnr3Wm7iMJbdi-ZadcJe3Ttz4blE0UB0P_LTiUfnjw2s7Z7yI05ZYvHvB91snXfXRpuVjI_cUC7ZEhelTVlk87h_NZ6hjoEfr74r8LpOKdJILBGD2_S_uaBjy6XOadieP6fKC0PG6qjqPmaSy4r9mNVLm3QdcBWr63ZJ0edhaG8MTyF--1cuz6OolP8jleo-oL5UoDX6xoT4KvV_9eGhAYKrv_yd2XSzsZqV0j-VYMUU0VKoyAivTDw; logged_in=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "georgedoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T230920.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 65
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTAzNWM4MThlZTA1MmYxZmJjNWMyZjEiLCJpYXQiOjE2OTQ3MjE1MzUsImV4cCI6MTY5NDcyMjQzNX0.Ue_RG-W8Y5UEDv76Bbn1OSrqynN2_RDmIgneASeKYm-dv2L2akQYaL4gl4urVuydD2bxU9kT3P-pTH-R0TJ9cUwzq6UCYpj3RGEAhj_2gOnAtsek6QBhrn9Z0pRMcSxI0DVeVTeJHq8-GhsGh7JjMmkflrOfsWBoYKy-tZWlP_fGlIdoLb-kEOlgbDAcvyWWfy4xFVBpIAX0zo4ywotgebEo62GANeCbqF_-FneTjUbuomVBRBkmRjohTgcnVkKqfdU1sJfzagqVU3X8Uh__9HQeuEdLGhCKOcoOgfFIXiJKPEbezASTiz-bWaGl-GiB9kkl99C9ISbx0AUif3BLVw; logged_in=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T230001.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 65
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTAzNWM4MThlZTA1MmYxZmJjNWMyZjEiLCJpYXQiOjE2OTQ3MjEzMjQsImV4cCI6MTY5NDcyMjIyNH0.EWkLyS47JvOZg9d-j-Abq6ivDChfThl2XHpTDIjzo9W7vHnfdPsEXpTzA26X3u3Py0sf-LCumSvK2gb5IZZExkbRPJf_n0fqrL3gGfYHKv22qoasG0yqQqDp_gj6phBZIEpH0Sh5sGJIlpHempSVQaEzP3yCJ077tzoOjjexbspUTsfnVIvOWuK_N9TtXXGuNal00yyks3q0ciiF8SON6RD63d5wVJoE99mSROqeG23o6DEWcU8_hmWg1WoYM8N_3sGmy2WoE54UuJsTRcF6GLXZp9M0gOnUqPZxNZDjIfz4bSEEiRyawPEORW4-l14kkbEOhYjVHYC-I3dumRi3Ew; logged_in=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T225855.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 65
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T225524.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 65
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T225343.500.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 65
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T225329.500.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 65
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T225325.500.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 65
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T224739.500.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 63
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@email.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T224713.401.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 63
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "johndoe@gmail.com",
+  "password": "password123"
+}
+
+<> 2023-09-14T224700.401.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+content-type: application/json
 Content-Length: 127
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)

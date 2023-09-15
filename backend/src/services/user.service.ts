@@ -3,8 +3,8 @@ import { FilterQuery, QueryOptions } from 'mongoose';
 import config from 'config';
 import userModel, { User } from '../models/user.model';
 import { excludedFields } from '../controllers/auth.controller';
-import { signJwt } from '../middleware/jwt';
-import redisClient from '../utils/connect-redis';
+import { signJwt } from '../utils/jwt';
+import redisClient from '../config/connect-redis';
 import { DocumentType } from '@typegoose/typegoose';
 import { SignOptions } from 'jsonwebtoken';
 
@@ -52,10 +52,11 @@ export const signToken = async (user: DocumentType<User>) => {
 
     const accessToken: string = signJwt(payload, options);
 
-    // @ts-ignore
-    redisClient.set(user._id, JSON.stringify(user), { EX: 60 * 60 });
+    // Convert the ObjectId to a string
+    redisClient.set(user._id.toString(), JSON.stringify(user), { EX: 60 * 60 });
 
     // Return access token
     return { accessToken };
 };
+
 

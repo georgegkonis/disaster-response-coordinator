@@ -9,7 +9,7 @@ const connectRedis = async (): Promise<void> => {
         console.log('Redis client connected...');
     } catch (err: any) {
         console.log(err.message);
-        setTimeout(connectRedis, 5000);
+        setTimeout(connectRedis.call, 5000);
     }
 };
 
