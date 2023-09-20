@@ -4,6 +4,7 @@ import { CreateUserInput, LoginUserInput } from '../schemas/user.schema';
 import { createUser, findUser, signToken } from '../services/user.service';
 import AppError from '../errors/app-error';
 import { StatusCode } from '../enums/status-code.enum';
+import { MongoErrorCodes } from '../constants/error-codes';
 
 // Exclude this fields from the response
 export const excludedFields = ['password'];
@@ -39,10 +40,10 @@ export const registerHandler = async (
             data: { user }
         });
     } catch (err: any) {
-        if (err.code === 11000) {
+        if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
             return res.status(StatusCode.CONFLICT).json({
                 status: 'fail',
-                message: 'Username already exist'
+                message: 'Email/Username already exist'
             });
         }
         next(err);
@@ -67,7 +68,7 @@ export const loginHandler = async (
         const { accessToken } = await signToken(user);
 
         // Send Access Token in Cookie
-        res.cookie('accessToken', accessToken, accessTokenCookieOptions);
+        res.cookie('access_token', accessToken, accessTokenCookieOptions);
         res.cookie('logged_in', true, { ...accessTokenCookieOptions, httpOnly: false });
 
         // Send Access Token

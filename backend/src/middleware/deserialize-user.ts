@@ -10,13 +10,15 @@ export const deserializeUser = async (
     next: NextFunction
 ) => {
     try {
+
         // Get the token
         let access_token;
-        if (
-            req.headers.authorization &&
-            req.headers.authorization.startsWith('Bearer')
-        ) {
-            access_token = req.headers.authorization.split(' ')[1];
+        if (req.headers.authorization) {
+            if (req.headers.authorization.startsWith('Bearer')) {
+                access_token = req.headers.authorization.split(' ')[1];
+            } else if (req.cookies.access_token) {
+                access_token = req.cookies.access_token;
+            }
         } else if (req.cookies.access_token) {
             access_token = req.cookies.access_token;
         }
