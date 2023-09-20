@@ -1,1 +1,35 @@
-<p>register works!</p>
+<div class="p-d-flex p-jc-center p-mt-6">
+    <div class="card">
+        <h2 class="p-text-center">Register</h2>
+        <form [formGroup]="registerForm">
+            <!-- Username Field -->
+            <div class="p-field">
+                <label for="username">Username</label>
+                <input id="username" type="text" pInputText formControlName="username">
+            </div>
+
+            <!-- Email Field -->
+            <div class="p-field">
+                <label for="email">Email</label>
+                <input id="email" type="email" pInputText formControlName="email">
+            </div>
+
+            <!-- Password Field -->
+            <div class="p-field">
+                <label for="password">Password</label>
+                <input id="password" type="password" pPassword formControlName="password">
+            </div>
+
+            <!-- Password Confirmation Field -->
+            <div class="p-field">
+                <label for="password">Password Confirmation</label>
+                <input id="passwordConfirmation" type="password" pPassword formControlName="passwordConfirmation">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="p-field">
+                <button pButton type="submit" label="Register"></button>
+            </div>
+        </form>
+    </div>
+</div>

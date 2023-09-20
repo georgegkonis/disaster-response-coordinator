@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+nav {
+  // Optional: You can add styles for the navigation bar here.
+}
+
+router-outlet {
+  flex: 1;
+  // This ensures that the router-outlet (and its child components) will take up all available space, pushing the footer to the bottom.
+}
+
+footer {
+  // Optional: You can add styles for the footer here.
+}

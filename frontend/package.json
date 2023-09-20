@@ -22,6 +22,7 @@
     "@ngrx/entity": "^16.2.0",
     "@ngrx/store": "^16.2.0",
     "@ngrx/store-devtools": "^16.2.0",
+    "font-awesome": "^4.7.0",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primeng": "^16.3.1",
