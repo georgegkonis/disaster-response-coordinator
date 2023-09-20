@@ -1,18 +1,38 @@
 import { NextFunction, Request, Response } from 'express';
-import { findAllUsers } from '../services/user.service';
+import { deleteUser, findAllUsers, findUserById, updateUser } from '../services/user.service';
+import { StatusCode } from '../enums/status-code.enum';
+import { UpdateUserInput } from '../schemas/user.schema';
+
+interface RouteParamsId {
+    id: string;
+}
 
 export const getMeHandler = (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
         const user = res.locals.user;
-        res.status(200).json({
+        res.status(StatusCode.OK).json({
             status: 'success',
-            data: {
-                user,
-            },
+            data: { user }
+        });
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const getUserHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const user = await findUserById(req.params.id);
+        res.status(StatusCode.OK).json({
+            status: 'success',
+            data: { user }
         });
     } catch (err: any) {
         next(err);
@@ -26,12 +46,42 @@ export const getAllUsersHandler = async (
 ) => {
     try {
         const users = await findAllUsers();
-        res.status(200).json({
+        res.status(StatusCode.OK).json({
             status: 'success',
             result: users.length,
-            data: {
-                users,
-            },
+            data: { users }
+        });
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const updateUserHandler = async (
+    req: Request<RouteParamsId, {}, UpdateUserInput>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const user = await updateUser(req.params.id, req.body);
+        res.status(StatusCode.OK).json({
+            status: 'success',
+            data: { user }
+        });
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const deleteUserHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const user = await deleteUser(req.params.id);
+        res.status(StatusCode.OK).json({
+            status: 'success',
+            data: { user }
         });
     } catch (err: any) {
         next(err);
