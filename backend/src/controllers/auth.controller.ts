@@ -3,6 +3,7 @@ import { CookieOptions, NextFunction, Request, Response } from 'express';
 import { CreateUserInput, LoginUserInput } from '../schemas/user.schema';
 import { createUser, findUser, signToken } from '../services/user.service';
 import AppError from '../errors/app-error';
+import { StatusCode } from '../enums/status-code.enum';
 
 // Exclude this fields from the response
 export const excludedFields = ['password'];
@@ -14,7 +15,7 @@ const accessTokenCookieOptions: CookieOptions = {
     ),
     maxAge: config.get<number>('accessTokenExpiresIn') * 60 * 1000,
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: 'lax'
 };
 
 // Only set secure to true in production
@@ -28,22 +29,20 @@ export const registerHandler = async (
 ) => {
     try {
         const user = await createUser({
-            email: req.body.email,
-            name: req.body.name,
+            username: req.body.username,
             password: req.body.password,
+            email: req.body.email
         });
 
-        res.status(201).json({
+        res.status(StatusCode.CREATED).json({
             status: 'success',
-            data: {
-                user,
-            },
+            data: { user }
         });
     } catch (err: any) {
         if (err.code === 11000) {
-            return res.status(409).json({
+            return res.status(StatusCode.CONFLICT).json({
                 status: 'fail',
-                message: 'Email already exist',
+                message: 'Username already exist'
             });
         }
         next(err);
@@ -57,14 +56,11 @@ export const loginHandler = async (
 ) => {
     try {
         // Get the user from the collection
-        const user = await findUser({ email: req.body.email });
+        const user = await findUser({ username: req.body.username });
 
         // Check if user exist and password is correct
-        if (
-            !user ||
-            !(await user.comparePasswords(user.password, req.body.password))
-        ) {
-            return next(new AppError('Invalid email or password', 401));
+        if (!user || !(await user.comparePasswords(user.password, req.body.password))) {
+            return next(new AppError('Invalid email or password', StatusCode.UNAUTHORIZED));
         }
 
         // Create an Access Token
@@ -72,15 +68,12 @@ export const loginHandler = async (
 
         // Send Access Token in Cookie
         res.cookie('accessToken', accessToken, accessTokenCookieOptions);
-        res.cookie('logged_in', true, {
-            ...accessTokenCookieOptions,
-            httpOnly: false,
-        });
+        res.cookie('logged_in', true, { ...accessTokenCookieOptions, httpOnly: false });
 
         // Send Access Token
-        res.status(200).json({
+        res.status(StatusCode.OK).json({
             status: 'success',
-            access_token: accessToken,
+            access_token: accessToken
         });
     } catch (err: any) {
         next(err);
