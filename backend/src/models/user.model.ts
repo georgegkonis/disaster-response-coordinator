@@ -2,7 +2,7 @@ import { getModelForClass, index, modelOptions, pre, prop } from '@typegoose/typ
 import bcrypt from 'bcryptjs';
 import { Role } from '../enums/role.enum';
 
-@index({ email: 1 })
+@index({ username: 1, email: 1 })
 @pre<User>('save', async function () {
     // Hash password if the password is new or was updated
     if (!this.isModified('password')) return;
@@ -19,8 +19,8 @@ import { Role } from '../enums/role.enum';
 
 // Export the User class to be used as TypeScript type
 export class User {
-    @prop()
-    name: string;
+    @prop({ unique: true, required: true })
+    username: string;
 
     @prop({ unique: true, required: true })
     email: string;
@@ -28,8 +28,8 @@ export class User {
     @prop({ required: true, minlength: 8, maxLength: 32, select: false })
     password: string;
 
-    @prop({ default: Role.USER })
-    role: string;
+    @prop({ default: Role.USER, enum: Role })
+    role: Role;
 
     // Instance method to check if passwords match
     async comparePasswords(hashedPassword: string, candidatePassword: string) {
