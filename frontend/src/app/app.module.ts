@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './components/app.component';
+import { RouterOutletComponent } from './components/router-outlet/router-outlet.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
-        AppComponent,
+        RouterOutletComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent
@@ -27,6 +27,6 @@ import { ReactiveFormsModule } from '@angular/forms';
         ReactiveFormsModule
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [RouterOutletComponent]
 })
 export class AppModule {}
