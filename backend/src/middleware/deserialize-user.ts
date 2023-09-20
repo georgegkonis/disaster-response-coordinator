@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { findUserById } from '../services/user.service';
 import AppError from '../errors/app-error';
-import redisClient from '../config/connect-redis';
+import redisClient from '../config/redis.config';
 import { verifyJwt } from '../utils/jwt';
 
 export const deserializeUser = async (

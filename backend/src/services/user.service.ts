@@ -4,7 +4,7 @@ import config from 'config';
 import userModel, { User } from '../models/user.model';
 import { excludedFields } from '../controllers/auth.controller';
 import { signJwt } from '../utils/jwt';
-import redisClient from '../config/connect-redis';
+import redisClient from '../config/redis.config';
 import { DocumentType } from '@typegoose/typegoose';
 import { SignOptions } from 'jsonwebtoken';
 
