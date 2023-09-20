@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import config from 'config';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import connectDB from './utils/connect-db';
+import connectDB from './config/db.config';
 import userRouter from './routes/user.route';
 import authRouter from './routes/auth.route';
 
@@ -32,14 +32,6 @@ app.use(
 // 5. Routes
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
-
-// Testing
-app.get('/healthChecker', (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({
-        status: 'success',
-        message: 'Welcome to CodevoWeb????',
-    });
-});
 
 // UnKnown Routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
