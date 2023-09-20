@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div class="login">
+    <h2 class="login__title">login</h2>
+    <form [formGroup]="loginForm">
+        <!-- Username Field -->
+        <div class="login__field">
+            <label for="username" class="login__field-label">Username</label>
+            <input id="username" type="text" pInputText formControlName="username" class="login__field-input">
+        </div>
+
+        <!-- Password Field -->
+        <div class="login__field">
+            <label for="password" class="login__field-label">Password</label>
+            <input id="password" type="password" pPassword formControlName="password" class="login__field-input">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="login__buttons">
+            <p-button (onClick)="onLoginClick()" type="submit" label="Login"></p-button>
+            <p-button routerLink="" type="submit" label="Cancel" styleClass="p-button-outlined"></p-button>
+        </div>
+    </form>
+</div>
