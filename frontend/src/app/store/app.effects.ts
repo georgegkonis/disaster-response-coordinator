@@ -5,6 +5,7 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { AuthActions } from './app.actions';
+import { LoginRequest, RegisterRequest } from '../models/requests.model';
 
 @Injectable()
 export class AuthEffects {
@@ -17,12 +18,25 @@ export class AuthEffects {
     login$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.login),
-            mergeMap(action =>
-                this.authService.login(action.username, action.password).pipe(
+            mergeMap((payload: LoginRequest) =>
+                this.authService.login(payload).pipe(
                     map(token => AuthActions.loginSuccess({ token })),
                     catchError(error => of(AuthActions.loginFailure({ error })))
                 )
             )
         )
     );
+
+    register$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.register),
+            mergeMap((payload: RegisterRequest) =>
+                this.authService.register(payload).pipe(
+                    map(() => AuthActions.registerSuccess()),
+                    catchError(error => of(AuthActions.registerFailure({ error })))
+                )
+            )
+        )
+    );
+
 }
