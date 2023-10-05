@@ -10,6 +10,8 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './store/app.reducer';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         InputTextModule,
         ButtonModule,
         PasswordModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        StoreModule.forRoot({ app: appReducer })
     ],
     providers: [],
     bootstrap: [RouterOutletComponent]

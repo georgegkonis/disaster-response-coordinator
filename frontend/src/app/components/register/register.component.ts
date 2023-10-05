@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterModel } from '../../models/register.model';
+import { RegisterRequest } from '../../models/requests.model';
+import { AppState } from '../../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../../store/app.actions';
 
 @Component({
     selector: 'app-register',
@@ -9,9 +12,11 @@ import { RegisterModel } from '../../models/register.model';
 })
 export class RegisterComponent implements OnInit {
     registerForm!: FormGroup;
-    formData!: RegisterModel;
 
-    constructor(private fb: FormBuilder) { }
+    constructor(
+        private fb: FormBuilder,
+        private store: Store<AppState>
+    ) { }
 
     ngOnInit(): void {
         this.registerForm = this.fb.group({
@@ -24,8 +29,8 @@ export class RegisterComponent implements OnInit {
 
     onRegisterClick(): void {
         if (this.registerForm.valid) {
-            this.formData = this.registerForm.value; // Populate formData with the form values
-            // Handle registration logic here
+            const request: RegisterRequest = this.registerForm.value;
+            this.store.dispatch(AuthActions.register(request))
         }
     }
 }
