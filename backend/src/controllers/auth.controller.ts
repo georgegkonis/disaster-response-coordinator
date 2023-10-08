@@ -61,7 +61,7 @@ export const loginHandler = async (
 
         // Check if user exist and password is correct
         if (!user || !(await user.comparePasswords(user.password, req.body.password))) {
-            return next(new AppError('Invalid email or password', StatusCode.UNAUTHORIZED));
+            return next(new AppError('Invalid username or password', StatusCode.UNAUTHORIZED));
         }
 
         // Create an Access Token
