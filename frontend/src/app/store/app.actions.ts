@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 import { LoginRequest, RegisterRequest } from '../models/requests.model';
-import { Message } from 'primeng/api';
 
 export namespace AuthActions {
 
@@ -55,20 +54,6 @@ export namespace AuthActions {
     );
 
     //#endregion
-}
-
-export namespace MessageActions {
-
-    const namespace: string = '[Message]';
-
-    export const set = createAction(
-        `${namespace} Set Message`,
-        props<Message>()
-    );
-
-    export const clear = createAction(
-        `${namespace} Clear Message`
-    );
 }
 
 export const resetState = createAction(

@@ -15,9 +15,11 @@ import { appReducer } from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/app.effects';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MessagesModule } from 'primeng/messages';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -38,9 +40,12 @@ import { MessagesModule } from 'primeng/messages';
         StoreDevtoolsModule.instrument(),
         HttpClientModule,
         BrowserAnimationsModule,
-        MessagesModule
+        ToastModule
     ],
-    providers: [],
+    providers: [
+        MessageService,
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, deps: [MessageService] }
+    ],
     bootstrap: [RouterOutletComponent]
 })
 export class AppModule {}
