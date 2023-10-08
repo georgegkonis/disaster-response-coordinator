@@ -1,9 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { LoginRequest, RegisterRequest } from '../models/requests.model';
+import { Message } from 'primeng/api';
 
 export namespace AuthActions {
 
-    const namespace = '[AUTH]';
+    const namespace: string = '[Authentication]';
 
     //#region Login
 
@@ -13,13 +14,11 @@ export namespace AuthActions {
     );
 
     export const loginSuccess = createAction(
-        `${namespace} Login Success`,
-        props<{ token: object }>()
+        `${namespace} Login Success`
     );
 
     export const loginFailure = createAction(
-        `${namespace} Login Failure`,
-        props<{ error: any }>()
+        `${namespace} Login Failure`
     );
 
     //#endregion
@@ -36,8 +35,7 @@ export namespace AuthActions {
     );
 
     export const registerFailure = createAction(
-        `${namespace} Register Failure`,
-        props<{ error: any }>()
+        `${namespace} Register Failure`
     );
 
     //#endregion
@@ -53,13 +51,26 @@ export namespace AuthActions {
     );
 
     export const logoutFailure = createAction(
-        `${namespace} Logout Failure`,
-        props<{ error: any }>()
+        `${namespace} Logout Failure`
     );
 
     //#endregion
 }
 
+export namespace MessageActions {
+
+    const namespace: string = '[Message]';
+
+    export const set = createAction(
+        `${namespace} Set Message`,
+        props<Message>()
+    );
+
+    export const clear = createAction(
+        `${namespace} Clear Message`
+    );
+}
+
 export const resetState = createAction(
-    'Reset App State'
+    '[App] Reset State'
 );

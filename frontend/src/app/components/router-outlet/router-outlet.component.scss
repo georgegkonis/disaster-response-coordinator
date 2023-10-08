@@ -1,0 +1,9 @@
+p-messages {
+  position: fixed;
+  z-index: 9999; /* a high value to ensure it's above other components */
+  top: 0;         /* position at the top */
+  left: 50%;      /* centering the messages */
+  transform: translateX(-50%);
+  width: 50%;     /* take up 80% of viewport width */
+  max-width: 600px; /* maximum width */
+}

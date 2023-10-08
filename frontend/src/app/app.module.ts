@@ -16,6 +16,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/app.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
     declarations: [
@@ -34,7 +36,9 @@ import { HttpClientModule } from '@angular/common/http';
         StoreModule.forRoot({ app: appReducer }),
         EffectsModule.forRoot(AuthEffects),
         StoreDevtoolsModule.instrument(),
-        HttpClientModule
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MessagesModule
     ],
     providers: [],
     bootstrap: [RouterOutletComponent]
