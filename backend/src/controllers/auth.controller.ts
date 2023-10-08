@@ -66,8 +66,8 @@ export const loginHandler = async (
         const { accessToken } = await signToken(user);
 
         // Send Access Token in Cookie
-        res.cookie('access_token', accessToken, accessTokenCookieOptions);
-        res.cookie('logged_in', true, { ...accessTokenCookieOptions, httpOnly: false });
+        res.cookie('accessToken', accessToken, accessTokenCookieOptions);
+        res.cookie('loggedIn', true, { ...accessTokenCookieOptions, httpOnly: false });
 
         // Send Access Token
         res.status(StatusCode.OK).json({
@@ -82,8 +82,8 @@ export const loginHandler = async (
 export const logoutHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // Clear the cookie
-        res.clearCookie('access_token');
-        res.clearCookie('logged_in');
+        res.clearCookie('accessToken');
+        res.clearCookie('loggedIn');
 
         // Send Access Token
         res.status(StatusCode.OK).json({

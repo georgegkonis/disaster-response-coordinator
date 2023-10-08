@@ -13,23 +13,23 @@ export const deserializeUser = async (
     try {
 
         // Get the token
-        let access_token;
+        let accessToken;
         if (req.headers.authorization) {
             if (req.headers.authorization.startsWith('Bearer')) {
-                access_token = req.headers.authorization.split(' ')[1];
-            } else if (req.cookies.access_token) {
-                access_token = req.cookies.access_token;
+                accessToken = req.headers.authorization.split(' ')[1];
+            } else if (req.cookies.accessToken) {
+                accessToken = req.cookies.accessToken;
             }
-        } else if (req.cookies.access_token) {
-            access_token = req.cookies.access_token;
+        } else if (req.cookies.accessToken) {
+            accessToken = req.cookies.accessToken;
         }
 
-        if (!access_token) {
+        if (!accessToken) {
             return next(new AppError('You are not logged in', StatusCode.UNAUTHORIZED));
         }
 
         // Validate Access Token
-        const decoded = verifyJwt<{ sub: string }>(access_token);
+        const decoded = verifyJwt<{ sub: string }>(accessToken);
 
         if (!decoded) {
             return next(new AppError(`Invalid token or user doesn't exist`, StatusCode.UNAUTHORIZED));
