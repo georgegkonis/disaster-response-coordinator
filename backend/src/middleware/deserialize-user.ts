@@ -3,6 +3,7 @@ import { findUserById } from '../services/user.service';
 import AppError from '../errors/app-error';
 import redisClient from '../config/redis.config';
 import { verifyJwt } from '../utils/jwt';
+import { StatusCode } from '../enums/status-code.enum';
 
 export const deserializeUser = async (
     req: Request,
@@ -24,28 +25,28 @@ export const deserializeUser = async (
         }
 
         if (!access_token) {
-            return next(new AppError('You are not logged in', 401));
+            return next(new AppError('You are not logged in', StatusCode.UNAUTHORIZED));
         }
 
         // Validate Access Token
         const decoded = verifyJwt<{ sub: string }>(access_token);
 
         if (!decoded) {
-            return next(new AppError(`Invalid token or user doesn't exist`, 401));
+            return next(new AppError(`Invalid token or user doesn't exist`, StatusCode.UNAUTHORIZED));
         }
 
         // Check if user has a valid session
         const session = await redisClient.get(decoded.sub);
 
         if (!session) {
-            return next(new AppError(`User session has expired`, 401));
+            return next(new AppError(`User session has expired`, StatusCode.UNAUTHORIZED));
         }
 
         // Check if user still exist
         const user = await findUserById(JSON.parse(session)._id);
 
         if (!user) {
-            return next(new AppError(`User with that token no longer exist`, 401));
+            return next(new AppError(`User with that token no longer exist`, StatusCode.UNAUTHORIZED));
         }
 
         // This is really important (Helps us know if the user is logged in from other controllers)

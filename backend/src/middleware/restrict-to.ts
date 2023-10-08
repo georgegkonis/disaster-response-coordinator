@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import AppError from '../errors/app-error';
+import { StatusCode } from '../enums/status-code.enum';
 
 export const restrictTo =
     (...allowedRoles: string[]) =>
@@ -7,7 +8,7 @@ export const restrictTo =
             const user = res.locals.user;
             if (!allowedRoles.includes(user.role)) {
                 return next(
-                    new AppError('You are not allowed to perform this action', 403)
+                    new AppError('You are not allowed to perform this action', StatusCode.FORBIDDEN)
                 );
             }
 
