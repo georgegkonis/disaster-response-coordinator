@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { LoginRequest, RegisterRequest } from '../models/requests.model';
+import { LoginResponse } from '../models/responses.model';
 
 export namespace AuthActions {
 
@@ -13,7 +14,8 @@ export namespace AuthActions {
     );
 
     export const loginSuccess = createAction(
-        `${namespace} Login Success`
+        `${namespace} Login Success`,
+        props<LoginResponse>()
     );
 
     export const loginFailure = createAction(

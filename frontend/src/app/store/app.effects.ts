@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthActions } from './app.actions';
 import { LoginRequest, RegisterRequest } from '../models/requests.model';
 import { MessageService } from 'primeng/api';
+import { LoginResponse } from '../models/responses.model';
 
 @Injectable()
 export class AuthEffects {
@@ -21,9 +22,9 @@ export class AuthEffects {
             ofType(AuthActions.login),
             mergeMap((payload: LoginRequest) =>
                 this.authService.login(payload).pipe(
-                    map(() => {
+                    map((response: LoginResponse) => {
                         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful' });
-                        return AuthActions.loginSuccess();
+                        return AuthActions.loginSuccess({ token: response.token });
                     }),
                     catchError(() => of(AuthActions.loginFailure()))
                 )
