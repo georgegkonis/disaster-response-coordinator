@@ -14,10 +14,7 @@ export const getMeHandler = (
 ) => {
     try {
         const user = res.locals.user;
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            data: { user }
-        });
+        res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         next(err);
     }
@@ -30,10 +27,7 @@ export const getUserHandler = async (
 ) => {
     try {
         const user = await findUserById(req.params.id);
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            data: { user }
-        });
+        res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         next(err);
     }
@@ -46,11 +40,7 @@ export const getAllUsersHandler = async (
 ) => {
     try {
         const users = await findAllUsers();
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            result: users.length,
-            data: { users }
-        });
+        res.status(StatusCode.OK).json(users);
     } catch (err: any) {
         next(err);
     }
@@ -63,10 +53,7 @@ export const updateUserHandler = async (
 ) => {
     try {
         const user = await updateUser(req.params.id, req.body);
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            data: { user }
-        });
+        res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         next(err);
     }
@@ -79,10 +66,7 @@ export const deleteUserHandler = async (
 ) => {
     try {
         const user = await deleteUser(req.params.id);
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            data: { user }
-        });
+        res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         next(err);
     }
