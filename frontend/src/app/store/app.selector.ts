@@ -3,7 +3,7 @@ import { AppState } from './app.reducer';
 
 const appState = createFeatureSelector<AppState>('app');
 
-export const selectMessage = createSelector(
+export const selectIsAuthenticated = createSelector(
     appState,
-    (state: AppState) => state.message
+    (state: AppState) => state.isAuthenticated
 );
