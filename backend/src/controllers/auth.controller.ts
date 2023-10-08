@@ -11,9 +11,7 @@ export const excludedFields = ['password'];
 
 // Cookie options
 const accessTokenCookieOptions: CookieOptions = {
-    expires: new Date(
-        Date.now() + config.get<number>('accessTokenExpiresIn') * 60 * 1000
-    ),
+    expires: new Date(Date.now() + config.get<number>('accessTokenExpiresIn') * 60 * 1000),
     maxAge: config.get<number>('accessTokenExpiresIn') * 60 * 1000,
     httpOnly: true,
     sameSite: 'lax'
@@ -80,4 +78,20 @@ export const loginHandler = async (
         next(err);
     }
 };
+
+export const logoutHandler = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // Clear the cookie
+        res.clearCookie('access_token');
+        res.clearCookie('logged_in');
+
+        // Send Access Token
+        res.status(StatusCode.OK).json({
+            status: 'success',
+            message: 'Logged out successfully'
+        });
+    } catch (err: any) {
+        next(err);
+    }
+}
 
