@@ -12,6 +12,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { appReducer } from './store/app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/app.effects';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -27,7 +31,10 @@ import { appReducer } from './store/app.reducer';
         ButtonModule,
         PasswordModule,
         ReactiveFormsModule,
-        StoreModule.forRoot({ app: appReducer })
+        StoreModule.forRoot({ app: appReducer }),
+        EffectsModule.forRoot(AuthEffects),
+        StoreDevtoolsModule.instrument(),
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [RouterOutletComponent]

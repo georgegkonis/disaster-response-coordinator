@@ -15,7 +15,7 @@
 
         <!-- Submit Button -->
         <div class="login__buttons">
-            <p-button [disabled]="loginForm.valid" (onClick)="onLoginClick()" type="submit" label="Login"></p-button>
+            <p-button [disabled]="!loginForm.valid" (onClick)="onLoginClick()" type="submit" label="Login"></p-button>
             <p-button routerLink="" type="submit" label="Cancel" styleClass="p-button-outlined"></p-button>
         </div>
     </form>

@@ -6,7 +6,7 @@ export interface AppState {
     error: any;
 }
 
-export const initialState: AppState = {
+const initialState: AppState = {
     token: null,
     error: null
 };

@@ -48,6 +48,15 @@ export namespace AuthActions {
         `${namespace} Logout`
     );
 
+    export const logoutSuccess = createAction(
+        `${namespace} Logout Success`
+    );
+
+    export const logoutFailure = createAction(
+        `${namespace} Logout Failure`,
+        props<{ error: any }>()
+    );
+
     //#endregion
 }
 
