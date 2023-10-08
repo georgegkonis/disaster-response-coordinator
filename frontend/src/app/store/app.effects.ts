@@ -22,7 +22,7 @@ export class AuthEffects {
             mergeMap((payload: LoginRequest) =>
                 this.authService.login(payload).pipe(
                     map(() => {
-                        this.messageService.add({ severity: 'success', summary: 'Login', detail: 'Login successful' });
+                        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful' });
                         return AuthActions.loginSuccess();
                     }),
                     catchError(() => of(AuthActions.loginFailure()))
@@ -37,7 +37,7 @@ export class AuthEffects {
             mergeMap((payload: RegisterRequest) =>
                 this.authService.register(payload).pipe(
                     map(() => {
-                        this.messageService.add({ severity: 'success', summary: 'Register', detail: 'Register successful' });
+                        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registration successful' });
                         return AuthActions.registerSuccess();
                     }),
                     catchError(() => of(AuthActions.registerFailure()))
