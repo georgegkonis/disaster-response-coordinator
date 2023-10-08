@@ -1,6 +1,7 @@
 <div class="register">
     <h2 class="register__title">Register</h2>
-    <form [formGroup]="registerForm">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
         <!-- Username Field -->
         <div class="register__field">
             <label for="username" class="register__field-label">Username</label>
@@ -16,19 +17,28 @@
         <!-- Password Field -->
         <div class="register__field">
             <label for="password" class="register__field-label">Password</label>
-            <input id="password" type="password" pPassword formControlName="password" class="register__field-input">
+            <p-password [toggleMask]="true"
+                        id="password"
+                        formControlName="password"
+                        styleClass="w-full"
+                        inputStyleClass="w-full"></p-password>
         </div>
 
         <!-- Password Confirmation Field -->
         <div class="register__field">
-            <label for="passwordConfirmation" class="register__field-label">Password Confirmation</label>
-            <input id="passwordConfirmation" type="password" pPassword formControlName="passwordConfirmation" class="register__field-input">
+            <label for="passwordConfirm" class="register__field-label">Password Confirmation</label>
+            <p-password [toggleMask]="true"
+                        [feedback]="false"
+                        id="passwordConfirm"
+                        formControlName="passwordConfirm"
+                        styleClass="w-full"
+                        inputStyleClass="w-full"></p-password>
         </div>
 
         <!-- Submit Button -->
         <div class="register__buttons">
-            <p-button (onClick)="onRegisterClick()" type="submit" label="Register"></p-button>
-            <p-button routerLink="" type="submit" label="Cancel" styleClass="p-button-outlined"></p-button>
+            <p-button [disabled]="!registerForm.valid" type="submit" label="Register"></p-button>
+            <p-button (onClick)="onCancelClick()" type="button" label="Cancel" styleClass="p-button-outlined"></p-button>
         </div>
     </form>
 </div>
