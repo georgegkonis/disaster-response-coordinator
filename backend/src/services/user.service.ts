@@ -17,13 +17,13 @@ export const createUser = async (input: Partial<User>) => {
 };
 
 export const updateUser = async (id: string, input: Partial<User>) => {
-    const user = await userModel.findByIdAndUpdate({ _id: id }, input, { new: true });
+    const user = userModel.findByIdAndUpdate({ _id: id }, input, { new: true });
     if (!user) throw new Error('User not found');
     return omit(user.toJSON(), excludedFields);
 };
 
 export const deleteUser = async (id: string) => {
-    const user = await userModel.findByIdAndDelete(id);
+    const user = userModel.findByIdAndDelete(id);
     if (!user) throw new Error('User not found');
     return omit(user.toJSON(), excludedFields);
 };
