@@ -2,7 +2,8 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
-import { MessageService } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
+import { ServerError } from '../models/client-error.model';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -14,25 +15,24 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
+                const serverError = error.error as ServerError;
 
-                let errorMessage = '';
-                if (error.error instanceof ErrorEvent) {
-                    // Client-side error
-                    errorMessage = `Error: ${error.error.message}`;
+                if (serverError.additionalInfo && serverError.additionalInfo.length > 0) {
+                    let messages: Message[] = serverError.additionalInfo.map((info: string) => {
+                        return {
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: info
+                        };
+                    });
+                    this.messageService.addAll(messages);
                 } else {
-                    // Server-side error
-                    errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: serverError.message
+                    });
                 }
-
-                // You can also add more logic here to transform or handle the error as needed.
-                // For instance, dispatching an action to store the error in the NgRx store.
-
-                this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: errorMessage
-                });
-
                 return throwError(() => error);
             })
         );

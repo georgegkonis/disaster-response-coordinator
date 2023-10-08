@@ -1,7 +1,5 @@
-export interface ClientError {
-    error: any;
-    message: string;
+export interface ServerError {
     status: number;
-    timestamp: string;
-    path: string;
+    message: string;
+    additionalInfo?: Array<string>;
 }
