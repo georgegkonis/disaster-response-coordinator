@@ -25,7 +25,6 @@ export class AuthService {
         return this.http.post(authUrl + '/register', request);
     }
 
-
     logout(): Observable<void> {
         return this.http.post<void>(authUrl + '/logout', {});
     }
