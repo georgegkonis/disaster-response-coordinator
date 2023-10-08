@@ -3,11 +3,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { AuthActions } from './app.actions';
+import { AuthActions, UserActions } from './app.actions';
 import { LoginRequest, RegisterRequest } from '../models/requests.model';
 import { MessageService } from 'primeng/api';
-import { LoginResponse } from '../models/responses.model';
+import { GetUsersResponse, LoginResponse } from '../models/responses.model';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class AuthEffects {
@@ -15,6 +17,7 @@ export class AuthEffects {
     constructor(
         private actions$: Actions,
         private authService: AuthService,
+        private userService: UserService,
         private messageService: MessageService,
         private router: Router
     ) {}
@@ -62,6 +65,30 @@ export class AuthEffects {
                         return AuthActions.logoutSuccess();
                     }),
                     catchError(() => of(AuthActions.logoutFailure()))
+                )
+            )
+        )
+    );
+
+    getCurrentUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(UserActions.getCurrent),
+            mergeMap(() =>
+                this.userService.getCurrent().pipe(
+                    map((user: User) => UserActions.getCurrentSuccess(user)),
+                    catchError(() => of(UserActions.getCurrentFailure()))
+                )
+            )
+        )
+    );
+
+    getAllUsers$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(UserActions.getAll),
+            mergeMap(() =>
+                this.userService.getAll().pipe(
+                    map((response: GetUsersResponse) => UserActions.getAllSuccess(response)),
+                    catchError(() => of(UserActions.getAllFailure()))
                 )
             )
         )

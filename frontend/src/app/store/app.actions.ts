@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { LoginRequest, RegisterRequest } from '../models/requests.model';
-import { LoginResponse } from '../models/responses.model';
+import { GetUsersResponse, LoginResponse } from '../models/responses.model';
+import { User } from '../models/user.model';
 
 export namespace AuthActions {
 
@@ -53,6 +54,45 @@ export namespace AuthActions {
 
     export const logoutFailure = createAction(
         `${namespace} Logout Failure`
+    );
+
+    //#endregion
+}
+
+export namespace UserActions {
+
+    const namespace: string = '[Users]';
+
+    //#region Get Current User
+
+    export const getCurrent = createAction(
+        `${namespace} Get Current User`
+    );
+
+    export const getCurrentSuccess = createAction(
+        `${namespace} Get Current User Success`,
+        props<User>()
+    );
+
+    export const getCurrentFailure = createAction(
+        `${namespace} Get Current User Failure`
+    );
+
+    //#endregion
+
+    //#region Get All Users
+
+    export const getAll = createAction(
+        `${namespace} Get All Users`
+    );
+
+    export const getAllSuccess = createAction(
+        `${namespace} Get All Users Success`,
+        props<GetUsersResponse>()
+    );
+
+    export const getAllFailure = createAction(
+        `${namespace} Get All Users Failure`
     );
 
     //#endregion
