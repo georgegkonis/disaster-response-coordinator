@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 app.use(
     cors({
         origin: config.get<string>('origin'),
-        credentials: true,
+        credentials: true
     })
 );
 
@@ -48,7 +48,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     res.status(err.statusCode).json({
         status: err.status,
         message: err.message,
-        additionalInfo: err.additionalInfo,
+        additionalInfo: err.additionalInfo
     });
 });
 
