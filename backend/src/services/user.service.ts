@@ -16,7 +16,7 @@ export const createUser = async (input: Partial<User>) => {
 export const updateUser = async (id: string, input: Partial<User>) => {
     const user = await userModel.findById(id);
     if (!user) throw new Error('User not found');
-    if (input.password) user.password = input.password;
+    Object.assign(user, input);
     await user.save();
     return omit(user.toJSON(), excludedFields);
 };
