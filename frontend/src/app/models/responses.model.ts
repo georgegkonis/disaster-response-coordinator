@@ -1,7 +1,8 @@
 import { User } from './user.model';
+import { Role } from '../enums/user-role.enum';
 
 export interface LoginResponse {
-    token: string;
+    role: Role;
 }
 
 export interface GetUsersResponse {

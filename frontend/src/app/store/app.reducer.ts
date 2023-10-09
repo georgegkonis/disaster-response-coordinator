@@ -20,8 +20,8 @@ export const initialState: AppState = {
 export const appReducer = createReducer(
     initialState,
 
-    on(AuthActions.loginSuccess, (state, { token }) =>
-        updateState(state, { isAuthenticated: true })),
+    on(AuthActions.loginSuccess, (state, { role }) =>
+        updateState(state, { isAuthenticated: true, currentRole: role })),
 
     on(UserActions.getAllSuccess, (state, { users }) =>
         updateState(state, { allUsers: users })),

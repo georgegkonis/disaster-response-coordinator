@@ -30,7 +30,7 @@ export class AppEffects {
                     map((response: LoginResponse) => {
                         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful' });
                         this.router.navigate(['/dashboard']).then();
-                        return AuthActions.loginSuccess({ token: response.token });
+                        return AuthActions.loginSuccess(response);
                     }),
                     catchError(() => of(AuthActions.loginFailure()))
                 )
