@@ -2,11 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { deleteUser, findAllUsers, findUserById, updateUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { UpdateUserInput } from '../schemas/user.schema';
-
-interface RouteParamsId {
-    id: string;
-}
-
 export const getMeHandler = (
     _req: Request,
     res: Response,
