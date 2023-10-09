@@ -1,19 +1,19 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AppState } from './app.reducer';
 
-const appState = createFeatureSelector<AppState>('app');
+const selectAppState = createFeatureSelector<AppState>('app');
 
 export const selectIsAuthenticated = createSelector(
-    appState,
+    selectAppState,
     (state: AppState) => state.isAuthenticated
 );
 
 export const selectCurrentUser = createSelector(
-    appState,
+    selectAppState,
     (state: AppState) => state.currentUser
 );
 
 export const selectCurrentRole = createSelector(
-    appState,
+    selectAppState,
     (state: AppState) => state.currentRole
 );
