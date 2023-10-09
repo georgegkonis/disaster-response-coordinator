@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { AuthActions, resetState, UserActions } from './app.actions';
+import { AuthActions, UserActions } from './app.actions';
 import { User } from '../models/user.model';
 
 export interface AppState {
@@ -20,9 +20,6 @@ export const appReducer = createReducer(
     on(AuthActions.loginSuccess, (state, { token }) =>
         updateState(state, { isAuthenticated: true })),
 
-    on(AuthActions.logoutSuccess, (state) =>
-        updateState(state, { isAuthenticated: false })),
-
     on(UserActions.getAllSuccess, (state, { users }) =>
         updateState(state, { allUsers: users })),
 
@@ -32,7 +29,7 @@ export const appReducer = createReducer(
     on(UserActions.updateCurrentSuccess, (state, user) =>
         updateState(state, { currentUser: user })),
 
-    on(resetState, () => initialState)
+    on(AuthActions.logoutSuccess, () => initialState)
 );
 
 function updateState(state: AppState, changes: Partial<AppState>) {

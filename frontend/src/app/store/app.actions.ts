@@ -115,7 +115,3 @@ export namespace UserActions {
 
     //#endregion
 }
-
-export const resetState = createAction(
-    '[App] Reset State'
-);
