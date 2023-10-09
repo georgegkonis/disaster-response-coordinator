@@ -21,7 +21,7 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ProfileComponent } from './components/profile/profile.component';
-import { CredentialsHttpInterceptor } from './interceptors/credentials-http.interceptor';
+import { HttpCredentialsInterceptor } from './interceptors/http-credentials.interceptor';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenubarModule } from 'primeng/menubar';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -54,7 +54,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     providers: [
         MessageService,
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, deps: [MessageService] },
-        { provide: HTTP_INTERCEPTORS, useClass: CredentialsHttpInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: HttpCredentialsInterceptor, multi: true }
     ],
     bootstrap: [RouterOutletComponent]
 })
