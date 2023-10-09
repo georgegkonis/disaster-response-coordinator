@@ -10,7 +10,7 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
     const router = inject(Router);
 
     return store.select(selectIsAuthenticated).pipe(
-        map(isAuthenticated => {
+        map((isAuthenticated: boolean) => {
             if (!isAuthenticated) {
                 router.navigate(['/login']).then();
                 return false;
