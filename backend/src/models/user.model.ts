@@ -8,7 +8,7 @@ import { Role } from '../enums/role.enum';
     if (!this.isModified('password')) return;
 
     // Hash password with costFactor of 12
-    this.password = await bcrypt.hash(this.password, 12);
+    this['password'] = await bcrypt.hash(this['password'], 12);
 })
 @modelOptions({
     schemaOptions: {
