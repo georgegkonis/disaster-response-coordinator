@@ -1,16 +1,19 @@
 import { createReducer, on } from '@ngrx/store';
 import { AuthActions, UserActions } from './app.actions';
 import { User } from '../models/user.model';
+import { Role } from '../enums/user-role.enum';
 
 export interface AppState {
     isAuthenticated: boolean;
     currentUser: User | null;
+    currentRole: Role | null;
     allUsers: Array<User>;
 }
 
 export const initialState: AppState = {
     isAuthenticated: false,
     currentUser: null,
+    currentRole: null,
     allUsers: []
 };
 

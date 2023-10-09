@@ -12,3 +12,8 @@ export const selectCurrentUser = createSelector(
     appState,
     (state: AppState) => state.currentUser
 );
+
+export const selectCurrentRole = createSelector(
+    appState,
+    (state: AppState) => state.currentRole
+);
