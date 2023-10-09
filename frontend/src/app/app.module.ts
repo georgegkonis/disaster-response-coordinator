@@ -14,7 +14,7 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from './store/app.effects';
+import { AppEffects } from './store/app.effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
@@ -22,6 +22,9 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CredentialsHttpInterceptor } from './interceptors/credentials-http.interceptor';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MenubarModule } from 'primeng/menubar';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +32,9 @@ import { CredentialsHttpInterceptor } from './interceptors/credentials-http.inte
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        ProfileComponent
+        ProfileComponent,
+        DashboardComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,
@@ -39,11 +44,12 @@ import { CredentialsHttpInterceptor } from './interceptors/credentials-http.inte
         PasswordModule,
         ReactiveFormsModule,
         StoreModule.forRoot({ app: appReducer }),
-        EffectsModule.forRoot(AuthEffects),
+        EffectsModule.forRoot(AppEffects),
         StoreDevtoolsModule.instrument(),
         HttpClientModule,
         BrowserAnimationsModule,
-        ToastModule
+        ToastModule,
+        MenubarModule
     ],
     providers: [
         MessageService,
