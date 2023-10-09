@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import { GetUsersResponse } from '../models/responses.model';
+import { UpdateUserRequest } from '../models/requests.model';
 
 const baseUrl = 'http://localhost:8000/api';
 const usersUrl = baseUrl + '/users';
@@ -16,11 +17,15 @@ export class UserService {
         private http: HttpClient
     ) { }
 
+    getAll(): Observable<GetUsersResponse> {
+        return this.http.get<GetUsersResponse>(usersUrl);
+    }
+
     getCurrent(): Observable<User> {
         return this.http.get<User>(usersUrl + '/me');
     }
 
-    getAll(): Observable<GetUsersResponse> {
-        return this.http.get<GetUsersResponse>(usersUrl);
+    updateCurrent(request: UpdateUserRequest): Observable<User> {
+        return this.http.patch<User>(usersUrl + '/me', request);
     }
 }

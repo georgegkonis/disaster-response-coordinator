@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { LoginRequest, RegisterRequest } from '../models/requests.model';
+import { LoginRequest, RegisterRequest, UpdateUserRequest } from '../models/requests.model';
 import { GetUsersResponse, LoginResponse } from '../models/responses.model';
 import { User } from '../models/user.model';
 
@@ -93,6 +93,24 @@ export namespace UserActions {
 
     export const getAllFailure = createAction(
         `${namespace} Get All Users Failure`
+    );
+
+    //#endregion
+
+    //#region Update User
+
+    export const updateCurrent = createAction(
+        `${namespace} Update Current User`,
+        props<UpdateUserRequest>()
+    );
+
+    export const updateCurrentSuccess = createAction(
+        `${namespace} Update Current User Success`,
+        props<User>()
+    );
+
+    export const updateCurrentFailure = createAction(
+        `${namespace} Update Current User Failure`
     );
 
     //#endregion

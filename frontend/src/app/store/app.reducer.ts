@@ -23,11 +23,14 @@ export const appReducer = createReducer(
     on(AuthActions.logoutSuccess, (state) =>
         updateState(state, { isAuthenticated: false })),
 
+    on(UserActions.getAllSuccess, (state, { users }) =>
+        updateState(state, { allUsers: users })),
+
     on(UserActions.getCurrentSuccess, (state, user) =>
         updateState(state, { currentUser: user })),
 
-    on(UserActions.getAllSuccess, (state, { users }) =>
-        updateState(state, { allUsers: users })),
+    on(UserActions.updateCurrentSuccess, (state, user) =>
+        updateState(state, { currentUser: user })),
 
     on(resetState, () => initialState)
 );
