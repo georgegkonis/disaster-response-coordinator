@@ -3,6 +3,7 @@ import { Category, Subcategory } from './category.model';
 
 @index({ id: 'hashed', name: 'text', category: 'asc', subcategory: 'asc' })
 export class Product {
+
     @prop({ unique: true, required: true })
     id: string;
 
