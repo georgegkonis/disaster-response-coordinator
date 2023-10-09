@@ -5,6 +5,7 @@ import { createUser, findUser, signToken } from '../services/user.service';
 import AppError from '../errors/app-error';
 import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/error-codes';
+import redisClient from '../config/redis.config';
 
 // Exclude this fields from the response
 export const excludedFields = ['password'];
@@ -85,6 +86,15 @@ export const logoutHandler = async (req: Request, res: Response, next: NextFunct
         res.clearCookie('accessToken');
         res.clearCookie('loggedIn');
 
+        const userId = res.locals.user._id.toString();
+        redisClient.del(userId)
+            .then(() => {
+                console.log('User data removed from Redis for user:', userId);
+            })
+            .catch(err => {
+                console.error('Error removing user data from Redis:', err);
+            });
+
         // Send Access Token
         res.status(StatusCode.OK).json({
             status: 'success',
@@ -93,5 +103,5 @@ export const logoutHandler = async (req: Request, res: Response, next: NextFunct
     } catch (err: any) {
         next(err);
     }
-}
+};
 
