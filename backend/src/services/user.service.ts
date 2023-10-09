@@ -8,45 +8,32 @@ import redisClient from '../config/redis.config';
 import { DocumentType } from '@typegoose/typegoose';
 import { SignOptions } from 'jsonwebtoken';
 
-/**
- * CreateUser service
- */
 export const createUser = async (input: Partial<User>) => {
     const user = await userModel.create(input);
     return omit(user.toJSON(), excludedFields);
 };
 
 export const updateUser = async (id: string, input: Partial<User>) => {
-    const user = userModel.findByIdAndUpdate({ _id: id }, input, { new: true });
+    const user = await userModel.findByIdAndUpdate(id, input, { new: true });
     if (!user) throw new Error('User not found');
     return omit(user.toJSON(), excludedFields);
 };
 
 export const deleteUser = async (id: string) => {
-    const user = userModel.findByIdAndDelete(id);
+    const user = await userModel.findByIdAndDelete(id);
     if (!user) throw new Error('User not found');
     return omit(user.toJSON(), excludedFields);
 };
 
-/**
- * Find user by id
- * @param id
- */
 export const findUserById = async (id: string) => {
-    const user = userModel.findById(id).lean();
+    const user = await userModel.findById(id).lean();
     return omit(user, excludedFields);
 };
 
-/**
- * Find All users
- */
 export const findAllUsers = async () => {
     return userModel.find();
 };
 
-/**
- * Find one user by any fields
- */
 export const findUser = async (
     query: FilterQuery<User>,
     options: QueryOptions = {}
@@ -54,10 +41,6 @@ export const findUser = async (
     return userModel.findOne(query, {}, options).select('+password');
 };
 
-/**
- * Sign Token
- * @param user
- */
 export const signToken = async (user: DocumentType<User>) => {
     let payload: Object = { sub: user._id };
     let options: SignOptions = { expiresIn: `${config.get<number>('accessTokenExpiresIn')}m` };
@@ -65,7 +48,7 @@ export const signToken = async (user: DocumentType<User>) => {
     const accessToken: string = signJwt(payload, options);
 
     // Convert the ObjectId to a string
-    redisClient.set(user._id.toString(), JSON.stringify(user), { EX: 60 * 60 });
+    redisClient.set(user._id.toString(), JSON.stringify(user), { EX: 60 * 60 }).then();
 
     // Return access token
     return { accessToken };

@@ -20,6 +20,32 @@ export const getMeHandler = (
     }
 };
 
+export const updateMeHandler = async (
+    req: Request<{}, {}, UpdateUserInput >,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const user = await updateUser(res.locals.user._id, req.body);
+        res.status(StatusCode.OK).json(user);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const deleteMeHandler = async (
+    req: Request<void>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const user = await deleteUser(res.locals.user._id);
+        res.status(StatusCode.OK).json(user);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
 export const getUserHandler = async (
     req: Request,
     res: Response,
@@ -41,19 +67,6 @@ export const getAllUsersHandler = async (
     try {
         const users = await findAllUsers();
         res.status(StatusCode.OK).json(users);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const updateUserHandler = async (
-    req: Request<RouteParamsId, {}, UpdateUserInput>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const user = await updateUser(req.params.id, req.body);
-        res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         next(err);
     }
