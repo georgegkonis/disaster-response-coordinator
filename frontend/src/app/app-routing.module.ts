@@ -7,6 +7,8 @@ import { authGuard } from './guards/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { roleGuard } from './guards/role.guard';
+import { Role } from './enums/user-role.enum';
 
 const routes: Routes = [
     {
@@ -28,9 +30,26 @@ const routes: Routes = [
         children: [
             {
                 path: 'profile',
-                component: ProfileComponent,
-                canActivate: [authGuard]
-            }
+                component: ProfileComponent
+            },
+            {
+                path: 'products',
+                component: NotFoundComponent,
+                canActivate: [roleGuard],
+                data: { role: Role.Admin }
+            },
+            {
+                path: 'stores',
+                component: NotFoundComponent,
+                canActivate: [roleGuard],
+                data: { role: Role.Admin }
+            },
+            {
+                path: 'statistics',
+                component: NotFoundComponent,
+                canActivate: [roleGuard],
+                data: { role: Role.Admin }
+            },
         ]
     },
     {
