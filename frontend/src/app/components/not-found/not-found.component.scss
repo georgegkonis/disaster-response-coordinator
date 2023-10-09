@@ -1,0 +1,20 @@
+@import "colors";
+
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  background-color: $color-background;
+}
+
+h1 {
+  font-size: 8rem;
+  color: $color-primary;
+}
+
+h2 {
+  font-size: 3rem;
+  color: $color-primary;
+}
