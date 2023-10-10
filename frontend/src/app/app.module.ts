@@ -29,6 +29,7 @@ import { ManagementComponent } from './components/management/management.componen
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         ProfileComponent,
         DashboardComponent,
         NotFoundComponent,
-        ManagementComponent
+        ManagementComponent,
+        MapComponent
     ],
     imports: [
         BrowserModule,

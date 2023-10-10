@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { roleGuard } from './guards/role.guard';
 import { Role } from './enums/user-role.enum';
 import { ManagementComponent } from './components/management/management.component';
+import { MapComponent } from './components/map/map.component';
 
 const routes: Routes = [
     {
@@ -29,6 +30,10 @@ const routes: Routes = [
         component: DashboardComponent,
         canActivate: [authGuard],
         children: [
+            {
+                path: 'map',
+                component: MapComponent,
+            },
             {
                 path: 'profile',
                 component: ProfileComponent
