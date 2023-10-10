@@ -2,7 +2,7 @@ import offerModel from '../models/offer.model';
 import AppError from '../errors/app-error';
 import { StatusCode } from '../enums/status-code.enum';
 
-export const getOffers = async (categoryId?: string, storeId?: string, creatorId?: string) => {
+export const getOffers = async (categoryId?: string, storeId?: number, creatorId?: string) => {
     let query = {};
 
     if (categoryId) query = { ...query, categoryId };

@@ -29,6 +29,11 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
     mapNodes: MapNode[] = [];
     dropdownCategories: DropdownCategory[] = [];
 
+    viewOfferVisible: boolean = false;
+    addOfferVisible: boolean = false;
+
+    comStore!: ComStore;
+
     private subscription: Subscription = new Subscription();
     private map: L.Map | null = null;
 
@@ -50,10 +55,8 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
                 store
             }));
 
-            // Check if the map is initialized before adding markers
             if (this.map) {
-                this.removeStoreMarkers(this.map);
-                this.addStoreMarkers(this.map, this.mapNodes);
+                this.setStoreMarkers(this.map, this.mapNodes);
             }
         });
 
@@ -64,7 +67,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
                 value: store.id
             }));
 
-            this.dropdownCategories.push({ label: 'All', value: null })
+            this.dropdownCategories.push({ label: 'All', value: null });
         });
 
     ngOnInit(): void {
@@ -97,14 +100,14 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
                 { attribution: '© OpenStreetMap' }
             ).addTo(this.map);
 
-            // Check if mapNodes are available, then add markers
-            if (this.mapNodes.length > 0) {
-                this.addStoreMarkers(this.map, this.mapNodes);
-            }
+            if (this.mapNodes.length > 0) this.setStoreMarkers(this.map, this.mapNodes);
         });
     }
 
-    private addStoreMarkers(map: L.Map, nodes: MapNode[]) {
+    private setStoreMarkers(map: L.Map, nodes: MapNode[]) {
+        map.eachLayer((layer) => {
+            if (layer instanceof L.Marker) map.removeLayer(layer);
+        });
         nodes.forEach((node) => {
             const { lat, lon } = node;
 
@@ -113,19 +116,15 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
                 { icon: L.divIcon({ className: 'custom-marker', html: `<i class="pi pi-map-marker"></i>` }) }
             ).addTo(map);
 
-            marker.bindPopup(node.store.type);
-
             marker.on('click', () => {
-                // Handle marker click (e.g., show store details, navigate to a page)
+                this.comStore = node.store;
+                this.viewOfferVisible = true;
             });
         });
     }
 
-    private removeStoreMarkers(map: L.Map) {
-        map.eachLayer((layer) => {
-            if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
-            }
-        });
+    onAddOfferClick(): void {
+        this.addOfferVisible = true;
+        this.viewOfferVisible = false;
     }
 }

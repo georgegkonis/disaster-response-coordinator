@@ -3,7 +3,7 @@ import { StatusCode } from '../enums/status-code.enum';
 import { createOffer, deleteOffer, getOffer, getOffers, rateOffer } from '../services/offer.service';
 
 export const getOffersHandler = async (
-    req: Request<{}, {}, {}, { categoryId?: string, storeId?: string, creatorId?: string }>,
+    req: Request<{}, {}, {}, { categoryId?: string, storeId?: number, creatorId?: string }>,
     res: Response,
     next: NextFunction
 ) => {

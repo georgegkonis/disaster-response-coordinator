@@ -30,6 +30,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
+import { ViewOfferComponent } from './components/view-offer/view-offer.component';
+import { AddOfferComponent } from './components/add-offer/add-offer.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
     declarations: [
@@ -41,7 +44,9 @@ import { OffersMapComponent } from './components/offers-map/offers-map.component
         DashboardComponent,
         NotFoundComponent,
         ManagementComponent,
-        OffersMapComponent
+        OffersMapComponent,
+        ViewOfferComponent,
+        AddOfferComponent
     ],
     imports: [
         BrowserModule,
@@ -60,7 +65,8 @@ import { OffersMapComponent } from './components/offers-map/offers-map.component
         DropdownModule,
         FileUploadModule,
         FormsModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        DialogModule
     ],
     providers: [
         MessageService,

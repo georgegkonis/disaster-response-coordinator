@@ -19,10 +19,10 @@ export class CategoryService {
     }
 
     deleteAll(): Observable<void> {
-        return this.http.delete<void>(`${url}/all`);
+        return this.http.delete<void>(`${url}/`);
     }
 
     getAllWithProducts(): Observable<any> {
-        return this.http.get<any>(`${url}/all`);
+        return this.http.get<any>(`${url}/with-products`);
     }
 }

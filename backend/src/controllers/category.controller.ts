@@ -4,6 +4,7 @@ import AppError from '../errors/app-error';
 import { deleteAllCategories, insertAndUpdateCategories } from '../services/category.service';
 import CategoryModel, { Category, Subcategory } from '../models/category.model';
 import ProductModel, { Product } from '../models/product.model';
+import { object } from 'zod';
 
 export const getCategoriesHandler = async (
     req: Request,
@@ -66,17 +67,23 @@ export const getCategoriesWithProductsHandler = async (
         let hierarchy: object[] = [];
 
         categories.forEach((category: Category) => {
+            let hierarchyNode = {
+                category: category.name,
+                subcategories: new Array<object>()
+            };
+
             category.subcategories.forEach((subcategory: Subcategory) => {
                 const subcategoryProducts = products.filter(
                     (product: Product) => product.subcategory === subcategory.uuid
                 );
-
-                hierarchy.push({
-                    category: category.name,
-                    subcategory: subcategory.name,
-                    products: subcategoryProducts
-                });
+                hierarchyNode.subcategories.push({
+                        subcategory: subcategory.name,
+                        products: subcategoryProducts
+                    }
+                );
             });
+
+            hierarchy.push(hierarchyNode);
         });
 
         return res.status(200).json(hierarchy);

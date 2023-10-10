@@ -21,7 +21,7 @@ router.get('/', getCategoriesHandler)
 
 router.post('/upload', restrictTo(Role.ADMIN), parseFileToJson, validateJson(categoryJsonSchema), uploadCategoriesHandler);
 
-router.delete('/all', restrictTo(Role.ADMIN), deleteAllCategoriesHandler);
+router.delete('/', restrictTo(Role.ADMIN), deleteAllCategoriesHandler);
 
 router.get('/with-products', getCategoriesWithProductsHandler)
 

@@ -11,3 +11,13 @@
 </form>
 
 <div id="map"></div>
+
+<!--View Offer Dialog-->
+<p-dialog [style]="{width: '25vw'}" [(visible)]="viewOfferVisible">
+    <app-view-offer *ngIf="viewOfferVisible" [comStore]="comStore" (addOfferClick)="onAddOfferClick()"></app-view-offer>
+</p-dialog>
+
+<!--Add Offer Dialog-->
+<p-dialog [style]="{width: '25vw'}" [(visible)]="addOfferVisible">
+    <app-add-offer *ngIf="addOfferVisible" [comStore]="comStore"></app-add-offer>
+</p-dialog>
