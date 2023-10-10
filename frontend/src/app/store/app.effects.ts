@@ -3,13 +3,16 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { AuthActions, UserActions } from './app.actions';
+import { AuthActions, CategoryActions, ProductActions, StoreActions, UserActions } from './app.actions';
 import { LoginRequest, RegisterRequest, UpdateUserRequest } from '../models/requests.model';
 import { MessageService } from 'primeng/api';
 import { GetUsersResponse, LoginResponse } from '../models/responses.model';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
+import { ProductService } from '../services/product.service';
+import { CategoryService } from '../services/category.service';
+import { StoreService } from '../services/store.service';
 
 @Injectable()
 export class AppEffects {
@@ -19,6 +22,9 @@ export class AppEffects {
         private authService: AuthService,
         private userService: UserService,
         private messageService: MessageService,
+        private productService: ProductService,
+        private categoryService: CategoryService,
+        private storeService: StoreService,
         private router: Router
     ) {}
 
@@ -60,7 +66,7 @@ export class AppEffects {
             mergeMap(() =>
                 this.authService.logout().pipe(
                     map(() => {
-                        this.showSuccessMessage('Logout successful')
+                        this.showSuccessMessage('Logout successful');
                         this.router.navigate(['/']).then();
                         return AuthActions.logoutSuccess();
                     }),
@@ -105,6 +111,54 @@ export class AppEffects {
                         }
                     ),
                     catchError(() => of(UserActions.updateCurrentFailure()))
+                )
+            )
+        )
+    );
+
+    deleteAllProducts$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ProductActions.deleteAll),
+            mergeMap(() =>
+                this.productService.deleteAll().pipe(
+                    map(() => {
+                            this.showSuccessMessage('All products deleted');
+                            return ProductActions.deleteAllSuccess();
+                        }
+                    ),
+                    catchError(() => of(ProductActions.deleteAllFailure()))
+                )
+            )
+        )
+    );
+
+    deleteAllCategories$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CategoryActions.deleteAll),
+            mergeMap(() =>
+                this.categoryService.deleteAll().pipe(
+                    map(() => {
+                            this.showSuccessMessage('All categories deleted');
+                            return ProductActions.deleteAllSuccess();
+                        }
+                    ),
+                    catchError(() => of(ProductActions.deleteAllFailure()))
+                )
+            )
+        )
+    );
+
+    deleteAllStores$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(StoreActions.deleteAll),
+            mergeMap(() =>
+                this.storeService.deleteAll().pipe(
+                    map(() => {
+                            this.showSuccessMessage('All stores deleted');
+                            return ProductActions.deleteAllSuccess();
+                        }
+                    ),
+                    catchError(() => of(ProductActions.deleteAllFailure()))
                 )
             )
         )

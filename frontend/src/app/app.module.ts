@@ -19,7 +19,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HttpCredentialsInterceptor } from './interceptors/http-credentials.interceptor';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -28,6 +28,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ManagementComponent } from './components/management/management.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
     declarations: [
@@ -56,10 +57,12 @@ import { FileUploadModule } from 'primeng/fileupload';
         MenubarModule,
         DropdownModule,
         FileUploadModule,
-        FormsModule
+        FormsModule,
+        ConfirmDialogModule
     ],
     providers: [
         MessageService,
+        ConfirmationService,
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, deps: [MessageService] },
         { provide: HTTP_INTERCEPTORS, useClass: HttpCredentialsInterceptor, multi: true }
     ],

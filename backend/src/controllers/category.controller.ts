@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
 import AppError from '../errors/app-error';
-import { insertAndUpdateCategories } from '../services/category.service';
+import { deleteAllCategories, insertAndUpdateCategories } from '../services/category.service';
 
 export const uploadCategoriesHandler = async (
     req: Request,
@@ -20,3 +20,17 @@ export const uploadCategoriesHandler = async (
         next(err);
     }
 };
+
+export const deleteAllCategoriesHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await deleteAllCategories();
+
+        res.status(StatusCode.OK).json({ message: 'All categories deleted successfully' });
+    } catch (err: any) {
+        next(err);
+    }
+}

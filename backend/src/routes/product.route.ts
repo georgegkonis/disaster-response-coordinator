@@ -1,4 +1,4 @@
-import { uploadProductsHandler } from '../controllers/product.controller';
+import { deleteAllProductsHandler, uploadProductsHandler } from '../controllers/product.controller';
 import { deserializeUser } from '../middleware/deserialize-user';
 import { requireUser } from '../middleware/require-user';
 import express from 'express';
@@ -13,5 +13,7 @@ const router = express.Router();
 router.use(deserializeUser, requireUser);
 
 router.post('/upload', restrictTo(Role.ADMIN), parseFileToJson, validateJson(productSchema), uploadProductsHandler);
+
+router.delete('/all', restrictTo(Role.ADMIN), deleteAllProductsHandler);
 
 export default router;

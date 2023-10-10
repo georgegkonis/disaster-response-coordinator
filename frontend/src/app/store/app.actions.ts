@@ -119,14 +119,62 @@ export namespace UserActions {
 export namespace ProductActions {
 
     const namespace: string = '[Products]';
+
+    //#region Delete All Products
+
+    export const deleteAll = createAction(
+        `${namespace} Delete All Products`
+    );
+
+    export const deleteAllSuccess = createAction(
+        `${namespace} Delete All Products Success`
+    );
+
+    export const deleteAllFailure = createAction(
+        `${namespace} Delete All Products Failure`
+    );
+
+    //#endregion
 }
 
 export namespace CategoryActions {
 
     const namespace: string = '[Categories]';
+
+    //#region Delete All Categories
+
+    export const deleteAll = createAction(
+        `${namespace} Delete All Categories`
+    );
+
+    export const deleteAllSuccess = createAction(
+        `${namespace} Delete All Categories Success`
+    );
+
+    export const deleteAllFailure = createAction(
+        `${namespace} Delete All Categories Failure`
+    );
+
+    //#endregion
 }
 
 export namespace StoreActions {
 
     const namespace: string = '[Stores]';
+
+    //#region Delete All Stores
+
+    export const deleteAll = createAction(
+        `${namespace} Delete All Stores`
+    );
+
+    export const deleteAllSuccess = createAction(
+        `${namespace} Delete All Stores Success`
+    );
+
+    export const deleteAllFailure = createAction(
+        `${namespace} Delete All Stores Failure`
+    );
+
+    //#endregion
 }

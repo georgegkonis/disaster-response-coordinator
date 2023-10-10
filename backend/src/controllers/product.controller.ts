@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
 import AppError from '../errors/app-error';
-import { insertAndUpdateProducts } from '../services/product.service';
+import { deleteAllProducts, insertAndUpdateProducts } from '../services/product.service';
 
 export const uploadProductsHandler = async (
     req: Request,
@@ -20,3 +20,17 @@ export const uploadProductsHandler = async (
         next(err);
     }
 };
+
+export const deleteAllProductsHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await deleteAllProducts();
+
+        res.status(StatusCode.OK).json({ message: 'All products deleted successfully' });
+    } catch (err: any) {
+        next(err);
+    }
+}

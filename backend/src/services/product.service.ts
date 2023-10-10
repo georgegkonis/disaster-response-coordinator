@@ -11,3 +11,7 @@ export const insertAndUpdateProducts = async (jsonData: any[]) => {
 
     await productModel.bulkWrite(bulkOps);
 };
+
+export const deleteAllProducts = async () => {
+    await productModel.deleteMany();
+}

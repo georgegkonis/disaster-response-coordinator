@@ -11,3 +11,7 @@ export const insertAndUpdateCategories = async (jsonData: any[]) => {
 
     await categoryModel.bulkWrite(bulkOps);
 };
+
+export const deleteAllCategories = async () => {
+    await categoryModel.deleteMany();
+}
