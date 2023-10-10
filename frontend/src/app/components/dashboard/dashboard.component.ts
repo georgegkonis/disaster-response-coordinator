@@ -37,23 +37,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 routerLink: '/dashboard'
             },
             {
-                label: 'Products',
-                icon: 'pi pi-fw pi-shopping-cart',
-                visible: this.isAdmin
+                label: 'Management',
+                icon: 'pi pi-fw pi-wrench',
+                visible: this.isAdmin,
+                routerLink: '/dashboard/management'
             },
             {
-                label: 'Stores',
-                icon: 'pi pi-fw pi-home',
-                visible: this.isAdmin
+                label: 'Statistics',
+                icon: 'pi pi-fw pi-chart-bar',
+                visible: this.isAdmin,
+                routerLink: '/dashboard/statistics'
             },
             {
-                label: 'My Account',
+                label: 'Leaderboard',
+                icon: 'pi pi-fw pi-users',
+                routerLink: '/dashboard/leaderboard'
+            },
+            {
+                label: 'Profile',
                 icon: 'pi pi-fw pi-user',
                 items: [
                     {
-                        label: 'Profile',
-                        icon: 'pi pi-fw pi-user-edit',
+                        label: 'Security',
+                        icon: 'pi pi-fw pi-lock',
                         routerLink: '/dashboard/profile'
+                    },
+                    {
+                        label: 'Statistics',
+                        icon: 'pi pi-fw pi-chart-bar',
+                        routerLink: '/dashboard/profile/statistics'
                     },
                     {
                         label: 'Logout',
