@@ -3,17 +3,19 @@ import { requireUser } from '../middleware/require-user';
 import express from 'express';
 import { restrictTo } from '../middleware/restrict-to';
 import { Role } from '../enums/role.enum';
-import { deleteAllCategoriesHandler, uploadCategoriesHandler } from '../controllers/category.controller';
+import { deleteAllCategoriesHandler, getCategoriesWithProductsHandler, uploadCategoriesHandler } from '../controllers/category.controller';
 import { parseFileToJson } from '../middleware/parse-file';
 import { validateJson } from '../middleware/validate-json';
-import { categorySchema } from '../schemas/category.schema';
+import { categoryJsonSchema } from '../schemas/category-json.schema';
 
 const router = express.Router();
 
 router.use(deserializeUser, requireUser);
 
-router.post('/upload', restrictTo(Role.ADMIN), parseFileToJson, validateJson(categorySchema), uploadCategoriesHandler);
+router.post('/upload', restrictTo(Role.ADMIN), parseFileToJson, validateJson(categoryJsonSchema), uploadCategoriesHandler);
 
 router.delete('/all', restrictTo(Role.ADMIN), deleteAllCategoriesHandler);
+
+router.get('/with-products', getCategoriesWithProductsHandler)
 
 export default router;

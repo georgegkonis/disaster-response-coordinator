@@ -3,6 +3,20 @@ import { StatusCode } from '../enums/status-code.enum';
 import AppError from '../errors/app-error';
 import { deleteAllProducts, insertAndUpdateProducts } from '../services/product.service';
 
+export const getProductsHandler = async (
+    req: Request<{}, {}, {}, { name?: string, categoryId?: string }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { name, categoryId } = req.query;
+
+        res.status(StatusCode.OK).json();
+    } catch (err: any) {
+        next(err);
+    }
+};
+
 export const uploadProductsHandler = async (
     req: Request,
     res: Response,
@@ -33,4 +47,4 @@ export const deleteAllProductsHandler = async (
     } catch (err: any) {
         next(err);
     }
-}
+};

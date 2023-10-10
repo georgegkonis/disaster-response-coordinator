@@ -13,6 +13,7 @@ import productRoute from './routes/product.route';
 import multer from 'multer';
 import categoryRoute from './routes/category.route';
 import storeRoute from './routes/store.route';
+import offerRoute from './routes/offer.route';
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/products', productRoute);
 app.use('/api/categories', categoryRoute);
 app.use('/api/stores', storeRoute);
+app.use('/api/offers', offerRoute);
 
 // Unknown Routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {

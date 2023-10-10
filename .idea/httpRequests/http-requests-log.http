@@ -1,3 +1,311 @@
+GET http://localhost:8000/api/categories/with-products
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MjA0NTIsImV4cCI6MTY5NjkyMTM1Mn0.eQN9z1rYDqH5uLi7XFb8UIo0vsV07-7bFNFx3qE_7WhCzICYkcprXubPAKBn0pDWM3K4Km65o_8rLkKL6Gp3qrss3cLYprbHwykw3-j-gPU4RQ4__auq97NRARKDgABrj3BqYaXk_VMqJ_4vho5Qw619nUzJ8E-tS63DHERUsgnmYobTc7io2MPyd7KzrbUkXbwc6t5QAsAHO55Iw99_1T2hagwBl_wwlkL1gOgy2L9AlKvmpG2CDFMsgxPeWEic2l5nUIUdjJYctqgTsVLW_kARSXFeGMwC_Dx4kpZLCqAIayzI4BwT0FrT0FjQBbRNjdFHx_RsKc1W_1vdRrblVw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T094803.200.json
+
+###
+
+GET http://localhost:8000/api/categories/with-products
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MjA0NTIsImV4cCI6MTY5NjkyMTM1Mn0.eQN9z1rYDqH5uLi7XFb8UIo0vsV07-7bFNFx3qE_7WhCzICYkcprXubPAKBn0pDWM3K4Km65o_8rLkKL6Gp3qrss3cLYprbHwykw3-j-gPU4RQ4__auq97NRARKDgABrj3BqYaXk_VMqJ_4vho5Qw619nUzJ8E-tS63DHERUsgnmYobTc7io2MPyd7KzrbUkXbwc6t5QAsAHO55Iw99_1T2hagwBl_wwlkL1gOgy2L9AlKvmpG2CDFMsgxPeWEic2l5nUIUdjJYctqgTsVLW_kARSXFeGMwC_Dx4kpZLCqAIayzI4BwT0FrT0FjQBbRNjdFHx_RsKc1W_1vdRrblVw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T094735.500.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "Admin123!"
+}
+
+<> 2023-10-10T094732.200.json
+
+###
+
+GET http://localhost:8000/api/categories/with-products
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T094727.401.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl&categoryId=1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTU0MjQsImV4cCI6MTY5NjkxNjMyNH0.j3YDoSdd-YoGoXcpyFrC-tVIRJ_PW3bZKaLvBh4pVdDirdALK40bu9M51CY2LNT1m5XT8b-v8NjHDP3QQKqlgCu5_O4hJ_hunVZxob6VnrBvHl0-DEf1oX_YePsIZrCvtWl05RLJn_ychkLRj6DBGErbivB4ce9PqaCD9MwX0WHL5SVYwyV-omt9tAmCiVvIe5N1oWQEsAMU8LFTvOxEqS2FqLsmTxw4kWqpLcUi4M3YfF60sVK9aP5USSzzmJG97rsh1YN2h4uj0NiEiFWNEaKqUshEQT-zd5rLiBK6QU_1s_ubpeNy4L1fzFBI_ix_nS21wnqiopfQvjDbRLvXow; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T082507.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl&categoryId=1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTU0MjQsImV4cCI6MTY5NjkxNjMyNH0.j3YDoSdd-YoGoXcpyFrC-tVIRJ_PW3bZKaLvBh4pVdDirdALK40bu9M51CY2LNT1m5XT8b-v8NjHDP3QQKqlgCu5_O4hJ_hunVZxob6VnrBvHl0-DEf1oX_YePsIZrCvtWl05RLJn_ychkLRj6DBGErbivB4ce9PqaCD9MwX0WHL5SVYwyV-omt9tAmCiVvIe5N1oWQEsAMU8LFTvOxEqS2FqLsmTxw4kWqpLcUi4M3YfF60sVK9aP5USSzzmJG97rsh1YN2h4uj0NiEiFWNEaKqUshEQT-zd5rLiBK6QU_1s_ubpeNy4L1fzFBI_ix_nS21wnqiopfQvjDbRLvXow; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T082423.500.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl&categoryId=1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTU0MjQsImV4cCI6MTY5NjkxNjMyNH0.j3YDoSdd-YoGoXcpyFrC-tVIRJ_PW3bZKaLvBh4pVdDirdALK40bu9M51CY2LNT1m5XT8b-v8NjHDP3QQKqlgCu5_O4hJ_hunVZxob6VnrBvHl0-DEf1oX_YePsIZrCvtWl05RLJn_ychkLRj6DBGErbivB4ce9PqaCD9MwX0WHL5SVYwyV-omt9tAmCiVvIe5N1oWQEsAMU8LFTvOxEqS2FqLsmTxw4kWqpLcUi4M3YfF60sVK9aP5USSzzmJG97rsh1YN2h4uj0NiEiFWNEaKqUshEQT-zd5rLiBK6QU_1s_ubpeNy4L1fzFBI_ix_nS21wnqiopfQvjDbRLvXow; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T082410.500.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTU0MjQsImV4cCI6MTY5NjkxNjMyNH0.j3YDoSdd-YoGoXcpyFrC-tVIRJ_PW3bZKaLvBh4pVdDirdALK40bu9M51CY2LNT1m5XT8b-v8NjHDP3QQKqlgCu5_O4hJ_hunVZxob6VnrBvHl0-DEf1oX_YePsIZrCvtWl05RLJn_ychkLRj6DBGErbivB4ce9PqaCD9MwX0WHL5SVYwyV-omt9tAmCiVvIe5N1oWQEsAMU8LFTvOxEqS2FqLsmTxw4kWqpLcUi4M3YfF60sVK9aP5USSzzmJG97rsh1YN2h4uj0NiEiFWNEaKqUshEQT-zd5rLiBK6QU_1s_ubpeNy4L1fzFBI_ix_nS21wnqiopfQvjDbRLvXow; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T082346.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "Admin123!"
+}
+
+<> 2023-10-10T082344.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T082339.401.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T081211.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=The Mart
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T081157.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=The-Mart
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T081153.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name="The Mart"
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T081148.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=The Mart
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T081127.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=AB
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T081115.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080951.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080659.200.json
+
+###
+
+GET http://localhost:8000/api/stores
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080642.200.json
+
+###
+
+GET http://localhost:8000/api/stores
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080542.200.json
+
+###
+
+GET http://localhost:8000/api/stores
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080452.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name="Lidl"
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080442.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=Lidl
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080429.200.json
+
+###
+
+GET http://localhost:8000/api/stores?name=store1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080352.200.json
+
+###
+
+GET http://localhost:8000/api/users/me
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTIyNDMyZDAxMzQ2NWNlNDlmNWFhNWIiLCJpYXQiOjE2OTY5MTQxODAsImV4cCI6MTY5NjkxNTA4MH0.ABbYTAvMOBMOUEY9UGHso4y5kJe6k9OnHkCk9n62ATruBNVudXI1yC5RWeFib0VeR-mZUk_xew7cInhdEKzbU_0gs_zva0dRnu1tRKMv7J3go2UE_dkje2VYvNsH8GEDWA8JRqISxCVzurf_JETYIz9B4XnLzdeiCi-UjReG7vG84Km96NB96yTb1bNi0U_m9H6rHFmg90gvjq0TmQK_J-0-rPP-7CFD3u8g-zcTFT11T8VrfZJzY021s0rjc9qn1LyaMd5RutcsAfXIQSxs4OYnjyDVu5s66wTtoHcE12d2fh3IHWD7unui3A0S-VrGNabF0yoiQzrMTAukrgYVNw; loggedIn=true
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-10T080321.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "Admin123!"
+}
+
+<> 2023-10-10T080300.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 51
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "Pass123!"
+}
+
+<> 2023-10-10T080223.401.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+content-type: application/json
+Content-Length: 55
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "Password123!"
+}
+
+<> 2023-10-10T080214.401.json
+
+###
+
 POST http://localhost:8000/api/auth/register
 content-type: application/json
 Content-Length: 123
@@ -295,460 +603,6 @@ Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBiMTEyN2E
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-09-20T185336.401.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 55
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBiMTEyN2E5NjIwZWM4MTUxN2Y2YjkiLCJpYXQiOjE2OTUyMjUwNDMsImV4cCI6MTY5NTIyNTk0M30.ihAEKwiEyFld2swesHYAHBPV3V1l7QQAysqKZk56Rw6LzwD3Bw_4ex6ZWp4leMFn8DZGtHIuWFsLCkhHBPra_imuZoLh1YWng7_cTBZvGveZTz6zB2uquYfHs-UgpLybz3RrS5gf4mGkUDI0bgI5quMCaBsDEioAGv0jCDE4MiVFHKCi59fTeik56AbP9Ydocr09fo1k9Oieaj89gS6LroRiJ-I9abGlITfHG7SqIxnAkb9fjb5wfiKuGv-1dDSrHyDw45S5WTbYhuiXVB05CXLKmn8Xffc2nTUQ-Oh1ZDn-abk_xAsVUWlpgHThu8xpOkTaUlSlRswJP67q8c6Yaw; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "admin",
-  "password": "Password123!"
-}
-
-<> 2023-09-20T185334.200.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 55
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBiMTEyN2E5NjIwZWM4MTUxN2Y2YjkiLCJpYXQiOjE2OTUyMjQ0NjYsImV4cCI6MTY5NTIyNTM2Nn0.MWDCtizMSrgDdYOZhZhpmnxkn_i_YjHw9vMNGsrbkb0DNwfNyj34xdhr6cV9oAWYvzxQuom19TaQMs9vOCJTlk5aCeLnffgJc8mfZcKPnG7v0BKe7MtDy0wci4yHcgMgyRrti1YeZgR3tSzSr61olNe5nWpt5GUNWuzueC_tnS10SLh9ZY7qM37q6XaRj3MNsv7luhVKj8gwa_tQwtppCrlovwRDhLbFZ3a6qTQUaceDV6EV8sf9Jt3JhLu3Q0RB_IaUQEqHxTFGqYDHUrbepHGoRQowjX3HRiAzo2R5kzwnRZclMxQDm1E-KDlLStKloo5ZYenJbJAgtXvia0xpHQ; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "admin",
-  "password": "Password123!"
-}
-
-<> 2023-09-20T185043.200.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 53
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBiMTEyN2E5NjIwZWM4MTUxN2Y2YjkiLCJpYXQiOjE2OTUyMjQ0NjYsImV4cCI6MTY5NTIyNTM2Nn0.MWDCtizMSrgDdYOZhZhpmnxkn_i_YjHw9vMNGsrbkb0DNwfNyj34xdhr6cV9oAWYvzxQuom19TaQMs9vOCJTlk5aCeLnffgJc8mfZcKPnG7v0BKe7MtDy0wci4yHcgMgyRrti1YeZgR3tSzSr61olNe5nWpt5GUNWuzueC_tnS10SLh9ZY7qM37q6XaRj3MNsv7luhVKj8gwa_tQwtppCrlovwRDhLbFZ3a6qTQUaceDV6EV8sf9Jt3JhLu3Q0RB_IaUQEqHxTFGqYDHUrbepHGoRQowjX3HRiAzo2R5kzwnRZclMxQDm1E-KDlLStKloo5ZYenJbJAgtXvia0xpHQ; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "sdf",
-  "password": "Password123!"
-}
-
-<> 2023-09-20T185038.401.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 55
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBiMTEyN2E5NjIwZWM4MTUxN2Y2YjkiLCJpYXQiOjE2OTUyMjQxMTQsImV4cCI6MTY5NTIyNTAxNH0.L6gSzF-9hACXLDC2SF1Y4oXUSgEXLJlhO3xxJbT_KPBykHNUro6HjcnZlbxdicwMjWJZEJhA77S_CQyqGqJ2UUpGHuYMOhTxTqB7pv34sc992G6C0qrT33kJXg1cxHQopEFx-hUzbKYqOEAZhHL26FNlVy9GeBAK5kghLlKOo1Tt7FTOhgCF9oaFNrnGFM8h5HwbDZ92gO1og3m4TKnB2B4ohk8t0UzVf2nxeyvVXtnstAysbeic7al7VzDqhVwDxibtNVk9g8DAJcvKZ_MmUGuNFKfR_c14vFLA1hKev3UuwGgf_4fSHS8eCWfozXlvHuoWaIaS-o-kYf7bGQtXsA; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "admin",
-  "password": "Password123!"
-}
-
-<> 2023-09-20T184106.200.json
-
-###
-
-GET http://localhost:8000/api/users/me
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBiMTEyN2E5NjIwZWM4MTUxN2Y2YjkiLCJpYXQiOjE2OTUyMjQxMTQsImV4cCI6MTY5NTIyNTAxNH0.L6gSzF-9hACXLDC2SF1Y4oXUSgEXLJlhO3xxJbT_KPBykHNUro6HjcnZlbxdicwMjWJZEJhA77S_CQyqGqJ2UUpGHuYMOhTxTqB7pv34sc992G6C0qrT33kJXg1cxHQopEFx-hUzbKYqOEAZhHL26FNlVy9GeBAK5kghLlKOo1Tt7FTOhgCF9oaFNrnGFM8h5HwbDZ92gO1og3m4TKnB2B4ohk8t0UzVf2nxeyvVXtnstAysbeic7al7VzDqhVwDxibtNVk9g8DAJcvKZ_MmUGuNFKfR_c14vFLA1hKev3UuwGgf_4fSHS8eCWfozXlvHuoWaIaS-o-kYf7bGQtXsA; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-20T183744.401.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 55
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "admin",
-  "password": "Password123!"
-}
-
-<> 2023-09-20T183514.200.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 122
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "admin",
-  "password": "Password123!",
-  "passwordConfirm": "Password123!",
-  "email": "admin@email.com"
-}
-
-<> 2023-09-20T183503.201.json
-
-###
-
-GET http://localhost:8000/api/users/me
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBhZjkxOTg4MDFiNTJlN2U5ZjJmNzgiLCJpYXQiOjE2OTUyMjE1ODQsImV4cCI6MTY5NTIyMjQ4NH0.2QbrLizDkpbsP8Yw4EEGU5ZNpzI0P49mNozrRnqbUhElYkrFXBZLdX3cq7UxorSc2WaaJSUIthw508EBVNlEIEjSI6hvMvwROPObGczPf4SUfKB4Fi48XoEXiXsynj3dJmKwSyUMvuF1y4KorAMy_DVgFC_wx2eqFDB78bvtcAxP5KMLaXb2Y78AS5mBPZcB7rnTqeDeiARlVwnWHM9g8C6KgC1daFZjSTjTLB4M6HmIk2nWgJNcshKi2NBtoSEO8snmkDSUHzADOK_XAIrDG9WKB2qz47az4WMv5M-OUP8mev95sFjLd1glOVDFNXVU8f7LNT6wRIe8vjbI-x6EQA; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-20T175404.401.json
-
-###
-
-GET http://localhost:8000/api/users/650ae357db97ed89f70cb5f4
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBhZjkxOTg4MDFiNTJlN2U5ZjJmNzgiLCJpYXQiOjE2OTUyMjE1ODQsImV4cCI6MTY5NTIyMjQ4NH0.2QbrLizDkpbsP8Yw4EEGU5ZNpzI0P49mNozrRnqbUhElYkrFXBZLdX3cq7UxorSc2WaaJSUIthw508EBVNlEIEjSI6hvMvwROPObGczPf4SUfKB4Fi48XoEXiXsynj3dJmKwSyUMvuF1y4KorAMy_DVgFC_wx2eqFDB78bvtcAxP5KMLaXb2Y78AS5mBPZcB7rnTqeDeiARlVwnWHM9g8C6KgC1daFZjSTjTLB4M6HmIk2nWgJNcshKi2NBtoSEO8snmkDSUHzADOK_XAIrDG9WKB2qz47az4WMv5M-OUP8mev95sFjLd1glOVDFNXVU8f7LNT6wRIe8vjbI-x6EQA; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-20T175322.401.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 55
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "admin",
-  "password": "Password123!"
-}
-
-<> 2023-09-20T175304.200.json
-
-###
-
-GET http://localhost:8000/api/users/650ae357db97ed89f70cb5f4
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBhZjkxOTg4MDFiNTJlN2U5ZjJmNzgiLCJpYXQiOjE2OTUyMTgwMDUsImV4cCI6MTY5NTIxODkwNX0.CaML3wt1TyixVNH-YBaZeICVBMqaNRmZrtUQqmFv0nCQuIUgUHvk3cNS8l9Vxp3T2RD_E2pNAwv6d4rmlMoS-jKqIxtLMDlreHN69TdyChHJsw8XprUIbylGl52NI2T0DS76KaQGHmLwG47DRk2N4NTbwsidkAdylBEkj_URKa5oOg9RewMxeOyuNfNBhzLL5wQ2DNwfuHoleuizauSWrHcIynNunoQRXLEbW0lfvqECW0rJ5gVVPol0aJ8wo4Rit2GotTssm4PqqIR7i5ZCHTEhdEBFMjuWBw92vsDWV7NLA8MClwJ_eEU1bDSdMj6HbX5kRffFA-Cv_IGDABLI5A; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-20T165353.401.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 55
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "admin",
-  "password": "Password123!"
-}
-
-<> 2023-09-20T165325.200.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 122
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "username": "admin",
-  "password": "Password123!",
-  "passwordConfirm": "Password123!",
-  "email": "admin@email.com"
-}
-
-<> 2023-09-20T165225.201.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 118
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "admin",
-  "email": "admin@email.com",
-  "password": "Password123!",
-  "passwordConfirm": "Password123!"
-}
-
-<> 2023-09-20T165154.400.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 61
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "email": "admin@email.com",
-  "password": "password123"
-}
-
-<> 2023-09-20T165048.400.json
-
-###
-
-GET http://localhost:8000/api/users/650ae357db97ed89f70cb5f4
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-20T165036.401.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 120
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBhZTM1N2RiOTdlZDg5ZjcwY2I1ZjQiLCJpYXQiOjE2OTUyMTI0MDMsImV4cCI6MTY5NTIxMzMwM30.o-znttap9N_YB7nqd1LYqBb9q5Llh6nCSvL79KUrOMWmjDMXGbJjWVnFtDoyfKyJdJz_1YAjM7rbg4NFvlp1haIfC9nvmEd0B3cGtpqDp2O-xrMv-A3KgLeYWI-qsVykoLeAlRMY210lqOojkUFwkzz9wwKzDkaB6SfJJGIXTSKk0uPrNaa596ZL_pW8gVBnmRp4v9qBVJ3seiL0pGphN36RrNSvrvC1vDaw9jcy2w3C98YAM4JBiFxXCdDP1sM587TIcVAWOrV28gYLZCh5FhiC1T99SlLtjPvFtruBVNfz6IqIXtIQf-9RmFEGz8yYMP1UASJ-V3eiMSCL6fTSdQ; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "george",
-  "email": "george@email.com",
-  "password": "Password*123",
-  "passwordConfirm": "Password*123"
-}
-
-<> 2023-09-20T152730.201.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 113
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBhZTM1N2RiOTdlZDg5ZjcwY2I1ZjQiLCJpYXQiOjE2OTUyMTI0MDMsImV4cCI6MTY5NTIxMzMwM30.o-znttap9N_YB7nqd1LYqBb9q5Llh6nCSvL79KUrOMWmjDMXGbJjWVnFtDoyfKyJdJz_1YAjM7rbg4NFvlp1haIfC9nvmEd0B3cGtpqDp2O-xrMv-A3KgLeYWI-qsVykoLeAlRMY210lqOojkUFwkzz9wwKzDkaB6SfJJGIXTSKk0uPrNaa596ZL_pW8gVBnmRp4v9qBVJ3seiL0pGphN36RrNSvrvC1vDaw9jcy2w3C98YAM4JBiFxXCdDP1sM587TIcVAWOrV28gYLZCh5FhiC1T99SlLtjPvFtruBVNfz6IqIXtIQf-9RmFEGz8yYMP1UASJ-V3eiMSCL6fTSdQ; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "george",
-  "email": "george@email.com",
-  "password": "Password*123",
-  "passwordConfirm": "d*123"
-}
-
-<> 2023-09-20T152725.400.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 119
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBhZTM1N2RiOTdlZDg5ZjcwY2I1ZjQiLCJpYXQiOjE2OTUyMTI0MDMsImV4cCI6MTY5NTIxMzMwM30.o-znttap9N_YB7nqd1LYqBb9q5Llh6nCSvL79KUrOMWmjDMXGbJjWVnFtDoyfKyJdJz_1YAjM7rbg4NFvlp1haIfC9nvmEd0B3cGtpqDp2O-xrMv-A3KgLeYWI-qsVykoLeAlRMY210lqOojkUFwkzz9wwKzDkaB6SfJJGIXTSKk0uPrNaa596ZL_pW8gVBnmRp4v9qBVJ3seiL0pGphN36RrNSvrvC1vDaw9jcy2w3C98YAM4JBiFxXCdDP1sM587TIcVAWOrV28gYLZCh5FhiC1T99SlLtjPvFtruBVNfz6IqIXtIQf-9RmFEGz8yYMP1UASJ-V3eiMSCL6fTSdQ; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "george",
-  "email": "george@email.com",
-  "password": "password123",
-  "passwordConfirm": "Password*123"
-}
-
-<> 2023-09-20T152706.400.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 118
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBhZTM1N2RiOTdlZDg5ZjcwY2I1ZjQiLCJpYXQiOjE2OTUyMTI0MDMsImV4cCI6MTY5NTIxMzMwM30.o-znttap9N_YB7nqd1LYqBb9q5Llh6nCSvL79KUrOMWmjDMXGbJjWVnFtDoyfKyJdJz_1YAjM7rbg4NFvlp1haIfC9nvmEd0B3cGtpqDp2O-xrMv-A3KgLeYWI-qsVykoLeAlRMY210lqOojkUFwkzz9wwKzDkaB6SfJJGIXTSKk0uPrNaa596ZL_pW8gVBnmRp4v9qBVJ3seiL0pGphN36RrNSvrvC1vDaw9jcy2w3C98YAM4JBiFxXCdDP1sM587TIcVAWOrV28gYLZCh5FhiC1T99SlLtjPvFtruBVNfz6IqIXtIQf-9RmFEGz8yYMP1UASJ-V3eiMSCL6fTSdQ; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "george",
-  "email": "george@email.com",
-  "password": "password123",
-  "passwordConfirm": "Password123"
-}
-
-<> 2023-09-20T152658.400.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 118
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Cookie: accessToken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTBhZTM1N2RiOTdlZDg5ZjcwY2I1ZjQiLCJpYXQiOjE2OTUyMTI0MDMsImV4cCI6MTY5NTIxMzMwM30.o-znttap9N_YB7nqd1LYqBb9q5Llh6nCSvL79KUrOMWmjDMXGbJjWVnFtDoyfKyJdJz_1YAjM7rbg4NFvlp1haIfC9nvmEd0B3cGtpqDp2O-xrMv-A3KgLeYWI-qsVykoLeAlRMY210lqOojkUFwkzz9wwKzDkaB6SfJJGIXTSKk0uPrNaa596ZL_pW8gVBnmRp4v9qBVJ3seiL0pGphN36RrNSvrvC1vDaw9jcy2w3C98YAM4JBiFxXCdDP1sM587TIcVAWOrV28gYLZCh5FhiC1T99SlLtjPvFtruBVNfz6IqIXtIQf-9RmFEGz8yYMP1UASJ-V3eiMSCL6fTSdQ; logged_in=true
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "george",
-  "email": "george@email.com",
-  "password": "password123",
-  "passwordConfirm": "password123"
-}
-
-<> 2023-09-20T152649.400.json
-
-###
-
-POST http://localhost:8000/api/auth/login
-content-type: application/json
-Content-Length: 61
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "email": "admin@email.com",
-  "password": "password123"
-}
-
-<> 2023-09-20T152003.200.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 116
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "admin",
-  "email": "admin@email.com",
-  "password": "password123",
-  "passwordConfirm": "password123"
-}
-
-<> 2023-09-20T151935.201.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 116
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "Admin",
-  "email": "admin@email.com",
-  "password": "password123",
-  "passwordConfirm": "password123"
-}
-
-<> 2023-09-15T005543.201.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 121
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "Admin",
-  "email": "admin@email.com",
-  "password": "password123",
-  "passwordConfirmation": "password123"
-}
-
-<> 2023-09-15T005534.400.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 117
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "Admin",
-  "email": "admin@email.com",
-  "password": "admin",
-  "passwordConfirmation": "password123"
-}
-
-<> 2023-09-15T005510.400.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 109
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "Admin",
-  "email": "admin@email.com",
-  "password": "admin",
-  "passwordConfirmation": "admin"
-}
-
-<> 2023-09-15T005446.400.json
-
-###
-
-POST http://localhost:8000/api/auth/register
-content-type: application/json
-Content-Length: 109
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "user": "admin",
-  "email": "admin@email.com",
-  "password": "admin",
-  "passwordConfirmation": "admin"
-}
-
-<> 2023-09-15T005428.400.json
 
 ###
 

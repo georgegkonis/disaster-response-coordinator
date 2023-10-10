@@ -1,4 +1,4 @@
-export const categorySchema = {
+export const categoryJsonSchema = {
     type: "array",
     items: {
         type: "object",

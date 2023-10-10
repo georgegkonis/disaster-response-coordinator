@@ -3,16 +3,18 @@ import { requireUser } from '../middleware/require-user';
 import express from 'express';
 import { restrictTo } from '../middleware/restrict-to';
 import { Role } from '../enums/role.enum';
-import { deleteAllStoresHandler, uploadStoresHandler } from '../controllers/store.controller';
+import { deleteAllStoresHandler, getStoresHandler, uploadStoresHandler } from '../controllers/store.controller';
 import { parseFileToJson } from '../middleware/parse-file';
 import { validateJson } from '../middleware/validate-json';
-import { storeSchema } from '../schemas/store.schema';
+import { storeJsonSchema } from '../schemas/store-json.schema';
 
 const router = express.Router();
 
 router.use(deserializeUser, requireUser);
 
-router.post('/upload', restrictTo(Role.ADMIN), parseFileToJson, validateJson(storeSchema), uploadStoresHandler);
+router.get('/', getStoresHandler);
+
+router.post('/upload', restrictTo(Role.ADMIN), parseFileToJson, validateJson(storeJsonSchema), uploadStoresHandler);
 
 router.delete('/all', restrictTo(Role.ADMIN), deleteAllStoresHandler);
 

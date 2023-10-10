@@ -1,17 +1,16 @@
-import { getModelForClass, index, pre, prop } from '@typegoose/typegoose';
+import { getModelForClass, index, prop } from '@typegoose/typegoose';
 
-@index({ creatorId: 'hashed' })
-@index({ storeId: 'hashed' })
+@index({ creatorId: 'hashed', productId: 'hashed', categoryId: 'hashed', storeId: 'hashed' })
 export class Offer {
-
-    @prop({ unique: true, required: true })
-    id: string;
 
     @prop({ required: true })
     creatorId: string;
 
     @prop({ required: true })
     productId: string;
+
+    @prop({ required: true })
+    categoryId: string;
 
     @prop({ required: true })
     storeId: string;

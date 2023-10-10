@@ -1,7 +1,35 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
 import AppError from '../errors/app-error';
-import { deleteAllStores, insertAndUpdateStores } from '../services/store.service';
+import { deleteAllStores, insertAndUpdateStores, getStores } from '../services/store.service';
+import { Offer } from '../models/offer.model';
+import { getOffers } from '../services/offer.service';
+import { Store } from '../models/store.model';
+
+export const getStoresHandler = async (
+    req: Request<{}, {}, {}, { name?: string, categoryId?: string}>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { name, categoryId } = req.query;
+
+        let stores = await getStores(name);
+
+        if (categoryId) {
+            const offers = await getOffers(categoryId);
+
+            const storeIds: number[] = offers
+                .filter((offer: Offer) => offer.likes > 0 || offer.dislikes > 0)
+                .map((offer: any) => offer.storeId);
+
+            stores = stores.filter((store: Store) => storeIds.includes(store.id));
+        }
+        res.status(StatusCode.OK).json(stores);
+    } catch (err: any) {
+        next(err);
+    }
+};
 
 export const uploadStoresHandler = async (
     req: Request,
@@ -33,4 +61,4 @@ export const deleteAllStoresHandler = async (
     } catch (err: any) {
         next(err);
     }
-}
+};

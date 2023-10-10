@@ -1,5 +1,5 @@
 // storeSchema.ts
-export const storeSchema = {
+export const storeJsonSchema = {
     type: "array",
     items: {
         type: "object",
