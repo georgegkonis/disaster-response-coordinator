@@ -8,6 +8,7 @@ interface DropdownOption {
 
 @Component({
     selector: 'app-file-upload',
+    styleUrls: ['./management.component.scss'],
     templateUrl: './management.component.html'
 })
 export class ManagementComponent {
@@ -20,6 +21,8 @@ export class ManagementComponent {
 
     selectedOption: string = 'products';
     url: string = `http://localhost:8000/api/${this.selectedOption}/upload`;
+    data: any;
+    tableCols: any;
 
     constructor(
         private messageService: MessageService
@@ -32,5 +35,9 @@ export class ManagementComponent {
     onChange(): void {
         this.url = `http://localhost:8000/api/${this.selectedOption}/upload`;
         console.log(this.url)
+    }
+
+    onDelete(): void {
+
     }
 }
