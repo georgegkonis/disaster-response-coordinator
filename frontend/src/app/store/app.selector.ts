@@ -17,3 +17,18 @@ export const selectCurrentRole = createSelector(
     selectAppState,
     (state: AppState) => state.currentRole
 );
+
+export const selectAllUsers = createSelector(
+    selectAppState,
+    (state: AppState) => state.allUsers
+);
+
+export const selectStores = createSelector(
+    selectAppState,
+    (state: AppState) => state.stores
+);
+
+export const selectCategories = createSelector(
+    selectAppState,
+    (state: AppState) => state.categories
+);

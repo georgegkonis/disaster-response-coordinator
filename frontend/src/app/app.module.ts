@@ -29,7 +29,7 @@ import { ManagementComponent } from './components/management/management.componen
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { MapComponent } from './components/map/map.component';
+import { OffersMapComponent } from './components/offers-map/offers-map.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +41,7 @@ import { MapComponent } from './components/map/map.component';
         DashboardComponent,
         NotFoundComponent,
         ManagementComponent,
-        MapComponent
+        OffersMapComponent
     ],
     imports: [
         BrowserModule,

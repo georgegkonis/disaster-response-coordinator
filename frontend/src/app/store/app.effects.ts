@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { AuthActions, CategoryActions, ProductActions, StoreActions, UserActions } from './app.actions';
+import { AuthActions, CategoryActions, ProductActions, ComStoreActions, UserActions } from './app.actions';
 import { LoginRequest, RegisterRequest, UpdateUserRequest } from '../models/requests.model';
 import { MessageService } from 'primeng/api';
 import { GetUsersResponse, LoginResponse } from '../models/responses.model';
@@ -13,6 +13,7 @@ import { UserService } from '../services/user.service';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { StoreService } from '../services/store.service';
+import { ComStore } from '../models/app.model';
 
 @Injectable()
 export class AppEffects {
@@ -41,8 +42,7 @@ export class AppEffects {
                     catchError(() => of(AuthActions.loginFailure()))
                 )
             )
-        )
-    );
+        ));
 
     register$ = createEffect(() =>
         this.actions$.pipe(
@@ -57,8 +57,7 @@ export class AppEffects {
                     catchError(() => of(AuthActions.registerFailure()))
                 )
             )
-        )
-    );
+        ));
 
     logout$ = createEffect(() =>
         this.actions$.pipe(
@@ -73,8 +72,7 @@ export class AppEffects {
                     catchError(() => of(AuthActions.logoutFailure()))
                 )
             )
-        )
-    );
+        ));
 
     getAllUsers$ = createEffect(() =>
         this.actions$.pipe(
@@ -85,8 +83,7 @@ export class AppEffects {
                     catchError(() => of(UserActions.getAllFailure()))
                 )
             )
-        )
-    );
+        ));
 
     getCurrentUser$ = createEffect(() =>
         this.actions$.pipe(
@@ -97,8 +94,7 @@ export class AppEffects {
                     catchError(() => of(UserActions.getCurrentFailure()))
                 )
             )
-        )
-    );
+        ));
 
     updateCurrentUser$ = createEffect(() =>
         this.actions$.pipe(
@@ -113,8 +109,7 @@ export class AppEffects {
                     catchError(() => of(UserActions.updateCurrentFailure()))
                 )
             )
-        )
-    );
+        ));
 
     deleteAllProducts$ = createEffect(() =>
         this.actions$.pipe(
@@ -129,8 +124,7 @@ export class AppEffects {
                     catchError(() => of(ProductActions.deleteAllFailure()))
                 )
             )
-        )
-    );
+        ));
 
     deleteAllCategories$ = createEffect(() =>
         this.actions$.pipe(
@@ -139,30 +133,50 @@ export class AppEffects {
                 this.categoryService.deleteAll().pipe(
                     map(() => {
                             this.showSuccessMessage('All categories deleted');
-                            return ProductActions.deleteAllSuccess();
+                            return CategoryActions.deleteAllSuccess();
                         }
                     ),
-                    catchError(() => of(ProductActions.deleteAllFailure()))
+                    catchError(() => of(CategoryActions.deleteAllFailure()))
                 )
             )
-        )
-    );
+        ));
 
     deleteAllStores$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(StoreActions.deleteAll),
+            ofType(ComStoreActions.deleteAll),
             mergeMap(() =>
                 this.storeService.deleteAll().pipe(
                     map(() => {
                             this.showSuccessMessage('All stores deleted');
-                            return ProductActions.deleteAllSuccess();
+                            return ComStoreActions.deleteAllSuccess();
                         }
                     ),
-                    catchError(() => of(ProductActions.deleteAllFailure()))
+                    catchError(() => of(ComStoreActions.deleteAllFailure()))
                 )
             )
-        )
-    );
+        ));
+
+    getAllStores$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ComStoreActions.getAll),
+            mergeMap((request) =>
+                this.storeService.getAll(request.name, request.categoryId).pipe(
+                    map((stores) => ComStoreActions.getAllSuccess({ stores })),
+                    catchError(() => of(ComStoreActions.getAllFailure()))
+                )
+            )
+        ));
+
+    getAllCategories$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CategoryActions.getAll),
+            mergeMap(() =>
+                this.categoryService.getAll().pipe(
+                    map((categories) => CategoryActions.getAllSuccess({ categories })),
+                    catchError(() => of(CategoryActions.getAllFailure()))
+                )
+            )
+        ));
 
     private showSuccessMessage(message: string): void {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: message });

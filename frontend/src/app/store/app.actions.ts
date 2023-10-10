@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { LoginRequest, RegisterRequest, UpdateUserRequest } from '../models/requests.model';
 import { GetUsersResponse, LoginResponse } from '../models/responses.model';
 import { User } from '../models/user.model';
+import { Category, ComStore } from '../models/app.model';
 
 export namespace AuthActions {
 
@@ -141,6 +142,23 @@ export namespace CategoryActions {
 
     const namespace: string = '[Categories]';
 
+    //#region Get All Categories
+
+    export const getAll = createAction(
+        `${namespace} Get All Categories`
+    );
+
+    export const getAllSuccess = createAction(
+        `${namespace} Get All Categories Success`,
+        props<{ categories: Category[] }>()
+    );
+
+    export const getAllFailure = createAction(
+        `${namespace} Get All Categories Failure`
+    );
+
+    //#endregion
+
     //#region Delete All Categories
 
     export const deleteAll = createAction(
@@ -158,9 +176,27 @@ export namespace CategoryActions {
     //#endregion
 }
 
-export namespace StoreActions {
+export namespace ComStoreActions {
 
     const namespace: string = '[Stores]';
+
+    //#region Get Stores
+
+    export const getAll = createAction(
+        `${namespace} Get All Stores`,
+        props<{ name?: string, categoryId?: string }>()
+    );
+
+    export const getAllSuccess = createAction(
+        `${namespace} Get All Stores Success`,
+        props<{ stores: ComStore[] }>()
+    );
+
+    export const getAllFailure = createAction(
+        `${namespace} Get All Stores Failure`
+    );
+
+    //#endregion
 
     //#region Delete All Stores
 

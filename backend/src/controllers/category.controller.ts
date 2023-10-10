@@ -5,6 +5,20 @@ import { deleteAllCategories, insertAndUpdateCategories } from '../services/cate
 import CategoryModel, { Category, Subcategory } from '../models/category.model';
 import ProductModel, { Product } from '../models/product.model';
 
+export const getCategoriesHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const categories = await CategoryModel.find().lean();
+
+        res.status(StatusCode.OK).json(categories);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
 export const uploadCategoriesHandler = async (
     req: Request,
     res: Response,

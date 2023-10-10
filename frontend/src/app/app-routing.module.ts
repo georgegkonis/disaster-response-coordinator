@@ -10,7 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { roleGuard } from './guards/role.guard';
 import { Role } from './enums/user-role.enum';
 import { ManagementComponent } from './components/management/management.component';
-import { MapComponent } from './components/map/map.component';
+import { OffersMapComponent } from './components/offers-map/offers-map.component';
 
 const routes: Routes = [
     {
@@ -32,7 +32,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'map',
-                component: MapComponent,
+                component: OffersMapComponent,
             },
             {
                 path: 'profile',

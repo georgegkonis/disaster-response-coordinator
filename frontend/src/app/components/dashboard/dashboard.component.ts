@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         this.menuItems = [
             {
-                label: 'Map',
+                label: 'Product Offers',
                 icon: 'pi pi-fw pi-map-marker',
                 routerLink: '/dashboard/map'
             },

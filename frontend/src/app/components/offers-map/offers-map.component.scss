@@ -1,0 +1,23 @@
+@import "colors";
+
+.filters-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 2rem;
+}
+
+
+#map {
+  min-height: 80vh; // Adjust as needed
+  width: calc(100% - 40px); // 20px gap on each side
+  margin: 20px; // 10px vertical, 20px horizontal gap
+  border-radius: 20px;
+  position: relative;
+}
+
+
+
+
+

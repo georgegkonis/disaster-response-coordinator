@@ -1,20 +1,25 @@
 import { createReducer, on } from '@ngrx/store';
-import { AuthActions, UserActions } from './app.actions';
+import { AuthActions, CategoryActions, ComStoreActions, UserActions } from './app.actions';
 import { User } from '../models/user.model';
 import { Role } from '../enums/user-role.enum';
+import { Category, ComStore } from '../models/app.model';
 
 export interface AppState {
     isAuthenticated: boolean;
     currentUser: User | null;
     currentRole: Role | null;
-    allUsers: Array<User>;
+    allUsers: User[];
+    stores: ComStore[];
+    categories: Category[];
 }
 
 export const initialState: AppState = {
     isAuthenticated: false,
     currentUser: null,
     currentRole: null,
-    allUsers: []
+    allUsers: [],
+    stores: [],
+    categories: []
 };
 
 export const appReducer = createReducer(
@@ -31,6 +36,12 @@ export const appReducer = createReducer(
 
     on(UserActions.updateCurrentSuccess, (state, user) =>
         updateState(state, { currentUser: user })),
+
+    on(ComStoreActions.getAllSuccess, (state, { stores }) =>
+        updateState(state, { stores: [...stores] })),
+
+    on(CategoryActions.getAllSuccess, (state, { categories }) =>
+        updateState(state, { categories: [...categories] })),
 
     on(AuthActions.logoutSuccess, () => initialState)
 );

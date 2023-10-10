@@ -1,5 +1,4 @@
-import { getModelForClass, index, prop, Ref } from '@typegoose/typegoose';
-import { Category, Subcategory } from './category.model';
+import { getModelForClass, index, prop } from '@typegoose/typegoose';
 
 @index({ id: 'asc', name: 'text', category: 'asc', subcategory: 'asc' })
 export class Product {
@@ -11,7 +10,7 @@ export class Product {
     name: string;
 
     @prop({ required: true })
-    category: Ref<Category>;
+    category: string;
 
     @prop({ required: true })
     subcategory: string;

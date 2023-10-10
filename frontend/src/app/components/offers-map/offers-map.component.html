@@ -1,0 +1,13 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="filters-form">
+
+        <input pInputText type="text" formControlName="name" placeholder="Search Text"/>
+
+        <p-dropdown [options]="dropdownCategories" formControlName="categoryId"></p-dropdown>
+
+        <p-button label="Search" type="submit"></p-button>
+
+    </div>
+</form>
+
+<div id="map"></div>
