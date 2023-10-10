@@ -63,23 +63,6 @@ export namespace UserActions {
 
     const namespace: string = '[Users]';
 
-    //#region Get Current User
-
-    export const getCurrent = createAction(
-        `${namespace} Get Current User`
-    );
-
-    export const getCurrentSuccess = createAction(
-        `${namespace} Get Current User Success`,
-        props<User>()
-    );
-
-    export const getCurrentFailure = createAction(
-        `${namespace} Get Current User Failure`
-    );
-
-    //#endregion
-
     //#region Get All Users
 
     export const getAll = createAction(
@@ -97,7 +80,24 @@ export namespace UserActions {
 
     //#endregion
 
-    //#region Update User
+    //#region Get Current User
+
+    export const getCurrent = createAction(
+        `${namespace} Get Current User`
+    );
+
+    export const getCurrentSuccess = createAction(
+        `${namespace} Get Current Success User`,
+        props<User>()
+    );
+
+    export const getCurrentFailure = createAction(
+        `${namespace} Get Current Failure User`
+    );
+
+    //#endregion
+
+    //#region Update Current User
 
     export const updateCurrent = createAction(
         `${namespace} Update Current User`,
@@ -114,4 +114,19 @@ export namespace UserActions {
     );
 
     //#endregion
+}
+
+export namespace ProductActions {
+
+    const namespace: string = '[Products]';
+}
+
+export namespace CategoryActions {
+
+    const namespace: string = '[Categories]';
+}
+
+export namespace StoreActions {
+
+    const namespace: string = '[Stores]';
 }

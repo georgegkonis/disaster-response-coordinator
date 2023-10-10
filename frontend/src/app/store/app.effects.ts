@@ -28,7 +28,7 @@ export class AppEffects {
             mergeMap((payload: LoginRequest) =>
                 this.authService.login(payload).pipe(
                     map((response: LoginResponse) => {
-                        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful' });
+                        this.showSuccessMessage('Login successful');
                         this.router.navigate(['/dashboard']).then();
                         return AuthActions.loginSuccess(response);
                     }),
@@ -44,7 +44,7 @@ export class AppEffects {
             mergeMap((payload: RegisterRequest) =>
                 this.authService.register(payload).pipe(
                     map(() => {
-                        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registration successful' });
+                        this.showSuccessMessage('Registration successful');
                         this.router.navigate(['/login']).then();
                         return AuthActions.registerSuccess();
                     }),
@@ -60,7 +60,7 @@ export class AppEffects {
             mergeMap(() =>
                 this.authService.logout().pipe(
                     map(() => {
-                        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Logout successful' });
+                        this.showSuccessMessage('Logout successful')
                         this.router.navigate(['/']).then();
                         return AuthActions.logoutSuccess();
                     }),
@@ -100,7 +100,7 @@ export class AppEffects {
             mergeMap((request: UpdateUserRequest) =>
                 this.userService.updateCurrent(request).pipe(
                     map((user: User) => {
-                            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Profile updated' });
+                            this.showSuccessMessage('User updated');
                             return UserActions.updateCurrentSuccess(user);
                         }
                     ),
@@ -109,4 +109,8 @@ export class AppEffects {
             )
         )
     );
+
+    private showSuccessMessage(message: string): void {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+    }
 }
