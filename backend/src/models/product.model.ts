@@ -1,20 +1,20 @@
 import { getModelForClass, index, prop, Ref } from '@typegoose/typegoose';
 import { Category, Subcategory } from './category.model';
 
-@index({ id: 'hashed', name: 'text', category: 'asc', subcategory: 'asc' })
+@index({ id: 'asc', name: 'text', category: 'asc', subcategory: 'asc' })
 export class Product {
 
-    @prop({ unique: true, required: true })
+    @prop({ required: true, unique: true })
     id: string;
 
     @prop({ required: true })
     name: string;
 
-    @prop({ ref: 'Category', required: true })
+    @prop({ required: true })
     category: Ref<Category>;
 
-    @prop({ ref: 'Subcategory', required: true })
-    subcategory: Ref<Subcategory>;
+    @prop({ required: true })
+    subcategory: string;
 }
 
 const productModel = getModelForClass(Product);

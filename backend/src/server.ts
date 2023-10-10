@@ -9,6 +9,10 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/db.config';
 import userRouter from './routes/user.route';
 import authRouter from './routes/auth.route';
+import productRoute from './routes/product.route';
+import multer from 'multer';
+import categoryRoute from './routes/category.route';
+import storeRoute from './routes/store.route';
 
 const app = express();
 
@@ -29,9 +33,16 @@ app.use(
     })
 );
 
+// File Upload
+const upload = multer({ dest: 'uploads/' });
+app.use(upload.any());
+
 // Routes
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/products', productRoute);
+app.use('/api/categories', categoryRoute);
+app.use('/api/stores', storeRoute);
 
 // Unknown Routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
