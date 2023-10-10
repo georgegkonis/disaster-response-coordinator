@@ -9,6 +9,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { roleGuard } from './guards/role.guard';
 import { Role } from './enums/user-role.enum';
+import { ManagementComponent } from './components/management/management.component';
 
 const routes: Routes = [
     {
@@ -33,23 +34,11 @@ const routes: Routes = [
                 component: ProfileComponent
             },
             {
-                path: 'products',
-                component: NotFoundComponent,
+                path: 'management',
+                component: ManagementComponent,
                 canActivate: [roleGuard],
                 data: { role: Role.Admin }
-            },
-            {
-                path: 'stores',
-                component: NotFoundComponent,
-                canActivate: [roleGuard],
-                data: { role: Role.Admin }
-            },
-            {
-                path: 'statistics',
-                component: NotFoundComponent,
-                canActivate: [roleGuard],
-                data: { role: Role.Admin }
-            },
+            }
         ]
     },
     {

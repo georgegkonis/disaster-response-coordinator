@@ -9,7 +9,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { appReducer } from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -25,6 +25,9 @@ import { HttpCredentialsInterceptor } from './interceptors/http-credentials.inte
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenubarModule } from 'primeng/menubar';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ManagementComponent } from './components/management/management.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
     declarations: [
@@ -34,7 +37,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
         RegisterComponent,
         ProfileComponent,
         DashboardComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        ManagementComponent
     ],
     imports: [
         BrowserModule,
@@ -49,7 +53,10 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
         HttpClientModule,
         BrowserAnimationsModule,
         ToastModule,
-        MenubarModule
+        MenubarModule,
+        DropdownModule,
+        FileUploadModule,
+        FormsModule
     ],
     providers: [
         MessageService,

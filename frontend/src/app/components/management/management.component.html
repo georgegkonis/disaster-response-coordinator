@@ -1,0 +1,6 @@
+<div>
+    <label for="typeSelect">Select Type:</label>
+    <p-dropdown id="typeSelect" (onChange)="onChange()" [options]="options" [(ngModel)]="selectedOption" optionValue="value" optionLabel="label"></p-dropdown>
+</div>
+
+<p-fileUpload [url]="url" name="data" accept=".json" (onUpload)="onUpload()"></p-fileUpload>
