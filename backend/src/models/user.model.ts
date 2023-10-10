@@ -31,6 +31,9 @@ export class User {
     @prop({ default: Role.USER })
     role: Role;
 
+    @prop({ default: 0 })
+    score: number;
+
     // Instance method to check if passwords match
     async comparePasswords(hashedPassword: string, candidatePassword: string) {
         return await bcrypt.compare(candidatePassword, hashedPassword);

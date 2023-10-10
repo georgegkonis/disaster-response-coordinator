@@ -15,6 +15,17 @@ export class Product {
 
     @prop({ required: true })
     subcategory: string;
+
+    @prop()
+    prices: ProductPrice[];
+}
+
+export class ProductPrice {
+    @prop({ required: true })
+    date: Date;
+
+    @prop({ required: true })
+    price: number;
 }
 
 const productModel = getModelForClass(Product);
