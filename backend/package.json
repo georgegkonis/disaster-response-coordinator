@@ -1,6 +1,6 @@
 {
-  "name": "product-offers-platform-api",
-  "description": "Product Offers Platform API",
+  "name": "disaster-response-coordinator-api",
+  "description": "Disaster Response Coordinator API",
   "author": "georgegkonis",
   "version": "1.0.0",
   "main": "server.js",
