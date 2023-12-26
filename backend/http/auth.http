@@ -1,6 +1,6 @@
 ### Register
 
-POST {{host}}/api/auth/register
+POST {{host}}/{{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 
 ### Login
 
-POST {{host}}/api/auth/login
+POST {{host}}/{{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
@@ -22,5 +22,4 @@ Content-Type: application/json
 
 ### Logout
 
-POST {{host}}/api/auth/logout
-Content-Type: application/json
+POST {{host}}/{{baseUrl}}/auth/logout

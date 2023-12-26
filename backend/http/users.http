@@ -1,10 +1,10 @@
 ### Get Me
 
-GET {{host}}/api/users/me
+GET {{host}}/{{baseUrl}}/users/me
 
 ### Update Me
 
-PATCH {{host}}/api/users/me
+PATCH {{host}}/{{baseUrl}}/users/me
 Content-Type: application/json
 
 {
@@ -14,16 +14,16 @@ Content-Type: application/json
 
 ### Delete Me
 
-DELETE {{host}}/api/users/me
+DELETE {{host}}/{{baseUrl}}/users/me
 
 ### Get All
 
-GET {{host}}/api/users
+GET {{host}}/{{baseUrl}}/users
 
 ### Get
 
-GET {{host}}/api/users/{{id}}
+GET {{host}}/{{baseUrl}}/users/{{id}}
 
 ### Delete
 
-DELETE {{host}}/api/users/{{id}}
+DELETE {{host}}/{{baseUrl}}/users/{{id}}
