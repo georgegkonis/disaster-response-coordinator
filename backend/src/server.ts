@@ -14,7 +14,6 @@ import multer from 'multer';
 import categoryRoute from './routes/category.route';
 import storeRoute from './routes/store.route';
 import offerRoute from './routes/offer.route';
-import { MongoErrorCodes } from './constants/error-codes';
 import { handleErrors } from './middleware/handle-errors';
 
 const app = express();
@@ -41,12 +40,16 @@ const upload = multer({ dest: 'uploads/' });
 app.use(upload.any());
 
 // Routes
-app.use('/api/users', userRouter);
-app.use('/api/auth', authRouter);
-app.use('/api/products', productRoute);
-app.use('/api/categories', categoryRoute);
-app.use('/api/stores', storeRoute);
-app.use('/api/offers', offerRoute);
+const apiRouter = express.Router();
+
+apiRouter.use('/users', userRouter);
+apiRouter.use('/auth', authRouter);
+apiRouter.use('/products', productRoute);
+apiRouter.use('/categories', categoryRoute);
+apiRouter.use('/stores', storeRoute);
+apiRouter.use('/offers', offerRoute);
+
+app.use('/drc-api/v1', apiRouter);
 
 // Unknown Routes
 app.all('*', (req: Request, _res: Response, next: NextFunction) => {
