@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="auth | Register" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Authentication" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/auth.http" requestIdentifier="Register" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>
