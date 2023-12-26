@@ -14,6 +14,8 @@ import multer from 'multer';
 import categoryRoute from './routes/category.route';
 import storeRoute from './routes/store.route';
 import offerRoute from './routes/offer.route';
+import { MongoErrorCodes } from './constants/error-codes';
+import { handleErrors } from './middleware/handle-errors';
 
 const app = express();
 
@@ -47,23 +49,14 @@ app.use('/api/stores', storeRoute);
 app.use('/api/offers', offerRoute);
 
 // Unknown Routes
-app.all('*', (req: Request, res: Response, next: NextFunction) => {
+app.all('*', (req: Request, _res: Response, next: NextFunction) => {
     const err = new Error(`Route ${req.originalUrl} not found`) as any;
     err.statusCode = StatusCode.NOT_FOUND;
     next(err);
 });
 
 // Global Error Handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    err.status = err.status || 'error';
-    err.statusCode = err.statusCode || StatusCode.SERVER_ERROR;
-
-    res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message,
-        additionalInfo: err.additionalInfo
-    });
-});
+app.use(handleErrors);
 
 const port = config.get<number>('port');
 app.listen(port, () => {
