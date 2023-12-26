@@ -17,14 +17,18 @@ const router = express.Router();
 
 router.use(deserializeUser, requireUser);
 
+// Get all users
 router.get('/', restrictTo(Role.ADMIN), getAllUsersHandler);
 
+// Get current user
 router.get('/me', getMeHandler);
 
+// Update current user
 router.patch('/me', validate(updateUserSchema), updateMeHandler);
 
 router.get('/:id', restrictTo(Role.ADMIN), getUserHandler);
 
+// Delete user by id
 router.delete('/:id', restrictTo(Role.ADMIN), deleteUserHandler);
 
 export default router;
