@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+    deleteMeHandler,
     deleteUserHandler,
     getAllUsersHandler,
     getMeHandler,
@@ -26,6 +27,10 @@ router.get('/me', getMeHandler);
 // Update current user
 router.patch('/me', validate(updateUserSchema), updateMeHandler);
 
+// Delete current user
+router.delete('/me', deleteMeHandler);
+
+// Get user by id
 router.get('/:id', restrictTo(Role.ADMIN), getUserHandler);
 
 // Delete user by id
