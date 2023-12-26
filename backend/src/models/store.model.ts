@@ -15,7 +15,7 @@ export class Store {
     @prop({ required: true })
     lon: number;
 
-    @prop({ type: () => Object })
+    @prop({ allowMixed: 0, type: () => Object })
     tags: Record<string, string>;
 }
 

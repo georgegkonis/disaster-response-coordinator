@@ -28,11 +28,8 @@ export class User {
     @prop({ required: true, minlength: 8, maxLength: 32, select: false })
     password: string;
 
-    @prop({ default: Role.CITIZEN })
+    @prop({ default: Role.CITIZEN, allowMixed: 0 })
     role: Role;
-
-    @prop({ default: 0 })
-    score: number;
 
     // Instance method to check if passwords match
     async comparePasswords(hashedPassword: string, candidatePassword: string) {

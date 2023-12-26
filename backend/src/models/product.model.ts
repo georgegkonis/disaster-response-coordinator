@@ -15,7 +15,7 @@ export class Product {
     @prop({ required: true })
     subcategory: string;
 
-    @prop()
+    @prop({ allowMixed: 0 })
     prices: ProductPrice[];
 }
 
