@@ -7,6 +7,7 @@ import { signJwt } from '../utils/jwt';
 import redisClient from '../config/redis.config';
 import { DocumentType } from '@typegoose/typegoose';
 import { SignOptions } from 'jsonwebtoken';
+import UserNotFoundError from '../errors/user-not-found-error';
 
 export const createUser = async (input: Partial<User>) => {
     const user = await userModel.create(input);
@@ -15,7 +16,9 @@ export const createUser = async (input: Partial<User>) => {
 
 export const updateUser = async (id: string, input: Partial<User>) => {
     const user = await userModel.findById(id);
-    if (!user) throw new Error('User not found');
+
+    if (!user) throw new UserNotFoundError();
+
     Object.assign(user, input);
     await user.save();
     return omit(user.toJSON(), excludedFields);
@@ -23,7 +26,9 @@ export const updateUser = async (id: string, input: Partial<User>) => {
 
 export const deleteUser = async (id: string) => {
     const user = await userModel.findByIdAndDelete(id);
-    if (!user) throw new Error('User not found');
+
+    if (!user) throw new UserNotFoundError()
+
     return omit(user.toJSON(), excludedFields);
 };
 
