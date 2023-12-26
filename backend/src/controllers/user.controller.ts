@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { deleteUser, findAllUsers, findUserById, updateUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { UpdateUserInput } from '../schemas/user.schema';
+import { MongoErrorCodes } from '../constants/error-codes';
 export const getMeHandler = (
     _req: Request,
     res: Response,
@@ -24,6 +25,9 @@ export const updateMeHandler = async (
         const user = await updateUser(res.locals.user._id, req.body);
         res.status(StatusCode.OK).json(user);
     } catch (err: any) {
+        if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
+            err.message = 'Username already exists'
+        }
         next(err);
     }
 };

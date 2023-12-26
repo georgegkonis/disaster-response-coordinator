@@ -40,10 +40,7 @@ export const registerHandler = async (
         });
     } catch (err: any) {
         if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
-            return res.status(StatusCode.CONFLICT).json({
-                status: 'fail',
-                message: 'Email/Username already exists'
-            });
+            err.message = 'Username or email already exists'
         }
         next(err);
     }
