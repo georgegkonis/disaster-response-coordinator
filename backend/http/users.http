@@ -1,0 +1,4 @@
+### Me
+
+GET http://localhost:8000/api/users/me
+Content-Type: application/json
