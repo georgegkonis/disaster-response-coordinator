@@ -77,7 +77,7 @@ export const loginHandler = async (
     }
 };
 
-export const logoutHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const logoutHandler = async (_req: Request, res: Response, next: NextFunction) => {
     try {
         // Clear the cookie
         res.clearCookie('accessToken');

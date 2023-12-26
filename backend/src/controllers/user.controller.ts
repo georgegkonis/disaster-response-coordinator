@@ -33,7 +33,7 @@ export const updateMeHandler = async (
 };
 
 export const deleteMeHandler = async (
-    req: Request<void>,
+    _req: Request<void>,
     res: Response,
     next: NextFunction
 ) => {
@@ -59,7 +59,7 @@ export const getUserHandler = async (
 };
 
 export const getAllUsersHandler = async (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {
