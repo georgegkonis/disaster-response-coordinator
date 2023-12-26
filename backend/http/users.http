@@ -1,4 +1,29 @@
-### Me
+### Get Me
 
-GET http://localhost:8000/api/users/me
+GET {{host}}/api/users/me
+
+### Update Me
+
+PATCH {{host}}/api/users/me
 Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "Password1234!"
+}
+
+### Delete Me
+
+DELETE {{host}}/api/users/me
+
+### Get All
+
+GET {{host}}/api/users
+
+### Get
+
+GET {{host}}/api/users/{{id}}
+
+### Delete
+
+DELETE {{host}}/api/users/{{id}}

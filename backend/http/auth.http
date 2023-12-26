@@ -1,26 +1,26 @@
 ### Register
 
-POST http://localhost:8000/api/auth/register
+POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
-  "username": "user1",
+  "username": "user3",
   "password": "Password123!",
   "passwordConfirm": "Password123!",
-  "email": "user1@email.com"
+  "email": "user3@email.com"
 }
 
 ### Login
 
-POST http://localhost:8000/api/auth/login
+POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "user1",
+  "username": "user2",
   "password": "Password123!"
 }
 
 ### Logout
 
-POST http://localhost:8000/api/auth/logout
-Content-Type: appl ication/json
+POST {{host}}/api/auth/logout
+Content-Type: application/json
