@@ -1,14 +1,13 @@
 import config from 'config';
 import { CookieOptions, NextFunction, Request, Response } from 'express';
 import { CreateUserInput, LoginUserInput } from '../schemas/user.schema';
-import { createUser, findUser, signToken } from '../services/user.service';
-import AppError from '../errors/app-error';
+import { createUser, findUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/error-codes';
-import redisClient from '../config/redis.config';
-
-// Exclude this fields from the response
-export const excludedFields = ['password'];
+import { signToken } from '../services/auth.service';
+import InvalidCredentialsError from '../errors/invalid-credentials-error';
+import { deleteUserCache } from '../services/cache.service';
+import { Status } from '../enums/status.enum';
 
 // Cookie options
 const accessTokenCookieOptions: CookieOptions = {
@@ -28,19 +27,15 @@ export const registerHandler = async (
     next: NextFunction
 ) => {
     try {
-        const user = await createUser({
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email
-        });
+        await createUser(req.body);
 
         res.status(StatusCode.CREATED).json({
-            status: 'success',
-            data: { user }
+            status: Status.SUCCESS,
+            message: 'User created successfully'
         });
     } catch (err: any) {
         if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
-            err.message = 'Username or email already exists'
+            err.message = 'Username or email already exists';
         }
         next(err);
     }
@@ -53,11 +48,11 @@ export const loginHandler = async (
 ) => {
     try {
         // Get the user from the collection
-        const user = await findUser({ username: req.body.username });
+        const user = await findUser({ username: req.body.username }, {}, true);
 
         // Check if user exist and password is correct
         if (!user || !(await user.comparePasswords(user.password, req.body.password))) {
-            return next(new AppError('Invalid username or password', StatusCode.UNAUTHORIZED));
+            return next(new InvalidCredentialsError());
         }
 
         // Create an Access Token
@@ -67,10 +62,10 @@ export const loginHandler = async (
         res.cookie('accessToken', accessToken, accessTokenCookieOptions);
         res.cookie('loggedIn', true, { ...accessTokenCookieOptions, httpOnly: false });
 
-        // Send Access Token
         res.status(StatusCode.OK).json({
-            status: 'success',
-            role: user.role
+            status: Status.SUCCESS,
+            message: 'Logged in successfully',
+            data: { userRole: user.role }
         });
     } catch (err: any) {
         next(err);
@@ -88,17 +83,10 @@ export const logoutHandler = async (
         res.clearCookie('loggedIn');
 
         const userId = res.locals.user._id.toString();
-        redisClient.del(userId)
-            .then(() => {
-                console.log('User data removed from Redis for user:', userId);
-            })
-            .catch(err => {
-                console.error('Error removing user data from Redis:', err);
-            });
+        deleteUserCache(userId);
 
-        // Send Access Token
         res.status(StatusCode.OK).json({
-            status: 'success',
+            status: Status.SUCCESS,
             message: 'Logged out successfully'
         });
     } catch (err: any) {
