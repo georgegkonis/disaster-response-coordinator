@@ -1,6 +1,7 @@
 import { getModelForClass, index, modelOptions, pre, prop } from '@typegoose/typegoose';
 import bcrypt from 'bcryptjs';
 import { Role } from '../enums/role.enum';
+import { Types } from 'mongoose';
 
 @index({ username: 1, email: 1 })
 @pre<User>('save', async function () {
@@ -13,6 +14,9 @@ import { Role } from '../enums/role.enum';
     }
 })
 export class User {
+    @prop({ auto: true })
+    _id: Types.ObjectId;
+
     @prop({ unique: true, required: true })
     username: string;
 
