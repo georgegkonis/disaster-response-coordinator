@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { findUserById } from '../services/user.service';
+import { getUser } from '../services/user.service';
 import AppError from '../errors/app-error';
 import redisClient from '../config/redis.config';
 import { verifyJwt } from '../utils/jwt';
@@ -43,7 +43,7 @@ export const deserializeUser = async (
         }
 
         // Check if user still exist
-        const user = await findUserById(JSON.parse(session)._id);
+        const user = await getUser(JSON.parse(session)._id);
 
         if (!user) {
             return next(new AppError(`User with that token no longer exist`, StatusCode.UNAUTHORIZED));
