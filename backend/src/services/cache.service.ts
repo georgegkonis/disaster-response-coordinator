@@ -7,7 +7,7 @@ export function setUserCache(id: string, user: User): void {
         .catch(err => console.error('Error updating user data in Redis:', err));
 }
 
-export function setUserCacheIfExists(id: string, user: User): void {
+export function updateUserCache(id: string, user: User): void {
     redisClient.exists(id)
         .then(exists => { if (exists) setUserCache(id, user); })
         .catch(err => console.error('Error checking if user exists in Redis:', err));
