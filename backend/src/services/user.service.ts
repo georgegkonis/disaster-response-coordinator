@@ -1,64 +1,63 @@
-import { omit } from 'lodash';
-import { FilterQuery, QueryOptions } from 'mongoose';
-import config from 'config';
+import { FilterQuery, QueryOptions, Types } from 'mongoose';
 import userModel, { User } from '../models/user.model';
-import { excludedFields } from '../controllers/auth.controller';
-import { signJwt } from '../utils/jwt';
-import redisClient from '../config/redis.config';
-import { DocumentType } from '@typegoose/typegoose';
-import { SignOptions } from 'jsonwebtoken';
 import UserNotFoundError from '../errors/user-not-found-error';
+import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
+import { deleteUserCache, updateUserCache } from './cache.service';
+import ObjectId = Types.ObjectId;
 
-export const createUser = async (input: Partial<User>) => {
-    const user = await userModel.create(input);
-    return omit(user.toJSON(), excludedFields);
+export const createUser = async (
+    input: CreateUserInput
+): Promise<User> => {
+    return await userModel.create(input);
 };
 
-export const updateUser = async (id: string, input: Partial<User>) => {
+export const updateUser = async (
+    id: string,
+    input: UpdateUserInput
+): Promise<User> => {
+    const user = await userModel.findById(new ObjectId(id));
+
+    if (!user) throw new UserNotFoundError();
+
+    user.set(input);
+    await user.save();
+
+    updateUserCache(id, user);
+
+    return user;
+};
+
+export const deleteUser = async (
+    id: string
+): Promise<void> => {
+    await userModel.findByIdAndDelete(id);
+
+    deleteUserCache(id);
+};
+
+export const getUser = async (
+    id: string
+): Promise<User> => {
     const user = await userModel.findById(id);
 
     if (!user) throw new UserNotFoundError();
 
-    Object.assign(user, input);
-    await user.save();
-    return omit(user.toJSON(), excludedFields);
-};
-
-export const deleteUser = async (id: string) => {
-    const user = await userModel.findByIdAndDelete(id);
-
-    if (!user) throw new UserNotFoundError()
-
-    return omit(user.toJSON(), excludedFields);
-};
-
-export const findUserById = async (id: string) => {
-    const user = await userModel.findById(id).lean();
-    return omit(user, excludedFields);
-};
-
-export const findAllUsers = async () => {
-    return userModel.find();
+    return user;
 };
 
 export const findUser = async (
     query: FilterQuery<User>,
+    options: QueryOptions = {},
+    includePassword: boolean = false
+): Promise<User | null> => {
+    return includePassword
+        ? userModel.findOne<User>(query, {}, options).select('+password').exec()
+        : userModel.findOne<User>(query, {}, options);
+};
+
+export const findUsers = async (
+    query: FilterQuery<User>,
     options: QueryOptions = {}
-) => {
-    return userModel.findOne(query, {}, options).select('+password');
+): Promise<User[]> => {
+    return userModel.find(query, {}, options);
 };
-
-export const signToken = async (user: DocumentType<User>) => {
-    let payload: Object = { sub: user._id };
-    let options: SignOptions = { expiresIn: `${config.get<number>('accessTokenExpiresIn')}m` };
-
-    const accessToken: string = signJwt(payload, options);
-
-    // Convert the ObjectId to a string
-    redisClient.set(user._id.toString(), JSON.stringify(user), { EX: 60 * 60 }).then();
-
-    // Return access token
-    return { accessToken };
-};
-
-
