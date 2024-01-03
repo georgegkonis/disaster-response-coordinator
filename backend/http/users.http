@@ -8,8 +8,8 @@ PATCH {{host}}/{{baseUrl}}/users/me
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "Password1234!"
+  "username": "user2",
+  "password": "Password123!"
 }
 
 ### Delete Me
