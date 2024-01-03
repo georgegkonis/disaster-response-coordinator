@@ -5,15 +5,19 @@ import { StatusCode } from '../enums/status-code.enum';
 
 export const validate = (schema: AnyZodObject) => (
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction
 ) => {
     try {
-        schema.parse({
+        const parsedData = schema.parse({
             params: req.params,
             query: req.query,
             body: req.body
         });
+
+        req.params = parsedData.params;
+        req.query = parsedData.query;
+        req.body = parsedData.body;
 
         next();
     } catch (err: any) {

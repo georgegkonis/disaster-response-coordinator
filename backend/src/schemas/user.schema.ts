@@ -12,7 +12,7 @@ export const registerUserSchema = object({
         passwordConfirm: string({ required_error: 'Please confirm your password' }),
         email: string({ required_error: 'Email is required' })
             .email('Invalid email')
-    }).refine((data) => data.password === data.passwordConfirm, {
+    }).strip().refine((data) => data.password === data.passwordConfirm, {
         path: ['passwordConfirm'],
         message: 'Passwords do not match'
     })
@@ -22,7 +22,7 @@ export const loginUserSchema = object({
     body: object({
         username: string({ required_error: 'Username is required' }),
         password: string({ required_error: 'Password is required' })
-    })
+    }).strip()
 });
 
 export const updateUserSchema = object({
@@ -34,7 +34,7 @@ export const updateUserSchema = object({
             .max(32, 'Password must be less than 32 characters')
             .refine(passCharsCheck, 'Password must contain at least 1 number, 1 capital letter and 1 special character')
             .optional()
-    })
+    }).strip()
 });
 
 export type CreateUserInput = TypeOf<typeof registerUserSchema>['body'];
