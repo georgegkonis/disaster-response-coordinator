@@ -58,7 +58,7 @@ export const findUser = async (
 };
 
 export const findUsers = async (
-    query: FilterQuery<User>,
+    query: FilterQuery<User> = {},
     options: QueryOptions = {}
 ) => {
     const users: User[] = await userModel.find<User>(query, {}, options);

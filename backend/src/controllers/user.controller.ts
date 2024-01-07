@@ -76,7 +76,7 @@ export const getAllUsersHandler = async (
     next: NextFunction
 ) => {
     try {
-        const users = await findUsers({});
+        const users = await findUsers();
 
         res.status(StatusCode.OK).json(users);
     } catch (err: any) {
