@@ -3,7 +3,7 @@ import { CookieOptions, NextFunction, Request, Response } from 'express';
 import { CreateUserInput, LoginUserInput } from '../schemas/user.schema';
 import { createUser, findUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
-import { MongoErrorCodes } from '../constants/error-codes';
+import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { signToken } from '../services/auth.service';
 import InvalidCredentialsError from '../errors/invalid-credentials-error';
 import { deleteUserCache } from '../services/cache.service';

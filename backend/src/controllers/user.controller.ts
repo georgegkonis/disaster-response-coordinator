@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { deleteUser, findUsers, getUser, updateUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { UpdateUserInput } from '../schemas/user.schema';
-import { MongoErrorCodes } from '../constants/error-codes';
+import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { deleteUserCache, updateUserCache } from '../services/cache.service';
 
 export const getMeHandler = (
