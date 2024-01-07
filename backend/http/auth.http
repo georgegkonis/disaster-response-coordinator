@@ -4,10 +4,10 @@ POST {{host}}/{{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
-  "username": "user7",
+  "username": "admin",
   "password": "Password123!",
   "passwordConfirm": "Password123!",
-  "email": "user7@email.com"
+  "email": "admin@email.com"
 }
 
 ### Login

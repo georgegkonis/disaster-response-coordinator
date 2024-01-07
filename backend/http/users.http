@@ -8,8 +8,14 @@ PATCH {{host}}/{{baseUrl}}/users/me
 Content-Type: application/json
 
 {
-  "username": "user2",
-  "password": "Password123!"
+  "username": "admin",
+  "password": "Password123!",
+  "details": {
+    "firstName": "George",
+    "lastName": "Gkonis",
+    "phoneNumber": "00306955773209",
+    "address": "25is Martiou 13B, 14671 Athens, Greece"
+  }
 }
 
 ### Delete Me
