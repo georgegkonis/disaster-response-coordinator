@@ -3,6 +3,7 @@ import { deleteUser, findUsers, getUser, updateUser } from '../services/user.ser
 import { StatusCode } from '../enums/status-code.enum';
 import { UpdateUserInput } from '../schemas/user.schema';
 import { MongoErrorCodes } from '../constants/error-codes';
+import { deleteUserCache, updateUserCache } from '../services/cache.service';
 
 export const getMeHandler = (
     _req: Request,
@@ -24,7 +25,10 @@ export const updateMeHandler = async (
     next: NextFunction
 ) => {
     try {
-        const user = await updateUser(res.locals.user._id, req.body);
+        const id: string = res.locals.user._id;
+        const user = await updateUser(id, req.body);
+
+        updateUserCache(id, user)
 
         res.status(StatusCode.OK).json(user);
     } catch (err: any) {
@@ -36,12 +40,15 @@ export const updateMeHandler = async (
 };
 
 export const deleteMeHandler = async (
-    _req: Request<void>,
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        await deleteUser(res.locals.user._id);
+        const id: string = res.locals.user._id;
+        await deleteUser(id);
+
+        deleteUserCache(id)
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
@@ -50,7 +57,7 @@ export const deleteMeHandler = async (
 };
 
 export const getUserHandler = async (
-    req: Request,
+    req: Request<{ id: string }>,
     res: Response,
     next: NextFunction
 ) => {
@@ -78,12 +85,14 @@ export const getAllUsersHandler = async (
 };
 
 export const deleteUserHandler = async (
-    req: Request,
+    req: Request<{ id: string }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
         await deleteUser(req.params.id);
+
+        deleteUserCache(req.params.id)
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {

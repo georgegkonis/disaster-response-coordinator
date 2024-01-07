@@ -1,44 +1,44 @@
-import { FilterQuery, QueryOptions, Types } from 'mongoose';
+import { FilterQuery, QueryOptions } from 'mongoose';
 import userModel, { User } from '../models/user.model';
 import UserNotFoundError from '../errors/user-not-found-error';
 import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
-import { deleteUserCache, updateUserCache } from './cache.service';
-import ObjectId = Types.ObjectId;
+import { omit } from 'lodash';
+import bcrypt from 'bcryptjs';
 
 export const createUser = async (
     input: CreateUserInput
-): Promise<User> => {
-    return await userModel.create(input);
+) => {
+    input.password = await encryptPassword(input.password);
+
+    await userModel.create(input);
 };
 
 export const updateUser = async (
     id: string,
     input: UpdateUserInput
-): Promise<User> => {
-    const user = await userModel.findById(new ObjectId(id));
+) => {
+    if (input.password) input.password = await encryptPassword(input.password);
+
+    const user: User | null = await userModel.findByIdAndUpdate<User>(id, input, { new: true });
 
     if (!user) throw new UserNotFoundError();
-
-    user.set(input);
-    await user.save();
-
-    updateUserCache(id, user);
 
     return user;
 };
 
 export const deleteUser = async (
     id: string
-): Promise<void> => {
-    await userModel.findByIdAndDelete(id);
-
-    deleteUserCache(id);
+) => {
+    await userModel.findByIdAndDelete<User>(id);
 };
 
 export const getUser = async (
-    id: string
-): Promise<User> => {
-    const user = await userModel.findById(id);
+    id: string,
+    includePassword: boolean = false
+) => {
+    const user: User | null = includePassword
+        ? await userModel.findById<User>(id).select('+password').exec()
+        : await userModel.findById<User>(id);
 
     if (!user) throw new UserNotFoundError();
 
@@ -49,15 +49,23 @@ export const findUser = async (
     query: FilterQuery<User>,
     options: QueryOptions = {},
     includePassword: boolean = false
-): Promise<User | null> => {
-    return includePassword
-        ? userModel.findOne<User>(query, {}, options).select('+password').exec()
-        : userModel.findOne<User>(query, {}, options);
+) => {
+    const user: User | null = includePassword
+        ? await userModel.findOne<User>(query, {}, options).select('+password').exec()
+        : await userModel.findOne<User>(query, {}, options);
+
+    return user;
 };
 
 export const findUsers = async (
     query: FilterQuery<User>,
     options: QueryOptions = {}
-): Promise<User[]> => {
-    return userModel.find(query, {}, options);
+) => {
+    const users: User[] = await userModel.find<User>(query, {}, options);
+
+    return users;
 };
+
+async function encryptPassword(password: string) {
+    return await bcrypt.hash(password, 10);
+}
