@@ -2,6 +2,26 @@ import { object, string, TypeOf } from 'zod';
 
 const passCharsCheck: any = (pass: string) => /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,32}$/.test(pass);
 
+const userDetailsShape = object({
+    firstName: string()
+        .min(2, 'First name must be more than 2 characters')
+        .max(32, 'First name must be less than 32 characters')
+        .optional(),
+    lastName: string()
+        .min(2, 'Last name must be more than 2 characters')
+        .max(32, 'Last name must be less than 32 characters')
+        .optional(),
+    phoneNumber: string()
+        .min(10, 'Phone number must be more than 10 characters')
+        .max(16, 'Phone number must be less than 16 characters')
+        .regex(/^\+?[0-9]+$/, 'Phone number must contain only numbers')
+        .optional(),
+    address: string()
+        .min(1, 'Address cannot be empty')
+        .max(256, 'Address must be less than 256 characters')
+        .optional()
+}).shape;
+
 export const registerUserSchema = object({
     body: object({
         username: string({ required_error: 'Username is required' }),
@@ -33,6 +53,8 @@ export const updateUserSchema = object({
             .min(8, 'Password must be more than 8 characters')
             .max(32, 'Password must be less than 32 characters')
             .refine(passCharsCheck, 'Password must contain at least 1 number, 1 capital letter and 1 special character')
+            .optional(),
+        details: object(userDetailsShape)
             .optional()
     }).strip()
 });
