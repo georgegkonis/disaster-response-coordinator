@@ -21,7 +21,7 @@ export const updateUser = async (
 
     const user: User | null = await userModel.findByIdAndUpdate<User>(id, input, { new: true });
 
-    if (!user) throw new UserNotFoundError();
+    if (!user) throw new UserNotFoundError(id);
 
     return user;
 };
@@ -40,7 +40,7 @@ export const getUser = async (
         ? await userModel.findById<User>(id).select('+password').exec()
         : await userModel.findById<User>(id);
 
-    if (!user) throw new UserNotFoundError();
+    if (!user) throw new UserNotFoundError(id);
 
     return user;
 };
