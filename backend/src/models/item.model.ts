@@ -27,6 +27,9 @@ export class Item {
 
     @prop({ required: true, type: () => [ItemDetail], _id: false })
     details!: ItemDetail[];
+
+    @prop({ default: 0 })
+    quantity?: number;
 }
 
 const itemModel = getModelForClass(Item);
