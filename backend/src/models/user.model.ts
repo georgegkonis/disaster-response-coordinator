@@ -1,33 +1,49 @@
-import { getModelForClass, index, modelOptions, pre, prop } from '@typegoose/typegoose';
+import { getModelForClass, index, modelOptions, pre, prop, Severity } from '@typegoose/typegoose';
 import bcrypt from 'bcryptjs';
 import { Role } from '../enums/role.enum';
 import { Types } from 'mongoose';
 
+class ContactInfo {
+    @prop({})
+    public firstName?: string;
+
+    @prop({})
+    public lastName?: string;
+
+    @prop({})
+    public phoneNumber?: string;
+
+    @prop({})
+    public address?: string;
+}
+
 @index({ username: 1, email: 1 })
-@pre<User>('save', async function () {
-    if (!this.isModified('password')) return;
-    this['password'] = await bcrypt.hash(this['password'], 12);
-})
 @modelOptions({
     schemaOptions: {
         timestamps: true
+    },
+    options: {
+        allowMixed: Severity.ALLOW
     }
 })
 export class User {
-    @prop({ auto: true })
-    _id: Types.ObjectId;
+    @prop({ auto: true, select: true })
+    public _id?: Types.ObjectId;
 
     @prop({ unique: true, required: true })
-    username: string;
+    public username!: string;
 
     @prop({ unique: true, required: true })
-    email: string;
+    public email!: string;
 
     @prop({ required: true, select: false })
-    password: string;
+    public password!: string;
 
-    @prop({ default: Role.CITIZEN, allowMixed: 0 })
-    role: Role;
+    @prop({ default: Role.CITIZEN })
+    public role?: Role;
+
+    @prop({ _id: false })
+    public details?: ContactInfo;
 
     async comparePasswords(hashedPassword: string, candidatePassword: string) {
         return await bcrypt.compare(candidatePassword, hashedPassword);
@@ -35,5 +51,6 @@ export class User {
 }
 
 const userModel = getModelForClass(User);
+
 export default userModel;
 
