@@ -1,0 +1,23 @@
+### Upload Categories and Items
+
+POST {{host}}/{{baseUrl}}/warehouse/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="data.json"
+Content-Type: application/json
+
+< C:\Users\georg\Development\WebStorm\disaster-response-coordinator\data\data.json
+--WebAppBoundary--
+
+### Get Categories
+
+GET {{host}}/{{baseUrl}}/warehouse/categories?name=Food
+Content-Type: application/json
+
+
+
+### Get Items
+
+GET {{host}}/{{baseUrl}}/warehouse/items
+Content-Type: application/json

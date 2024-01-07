@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "Password123!",
+  "password": "sdf!",
   "details": {
     "firstName": "George",
     "lastName": "Gkonis",
