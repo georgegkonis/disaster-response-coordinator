@@ -3,7 +3,7 @@ import AppError from '../errors/app-error';
 import { StatusCode } from '../enums/status-code.enum';
 
 export const requireUser = (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {

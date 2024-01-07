@@ -3,9 +3,9 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
 import AppError from '../errors/app-error';
 
-export const parseFileToJson = async (
+export const parseJsonData = async (
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction
 ) => {
     if (!req.files || !Array.isArray(req.files)) {
@@ -20,7 +20,7 @@ export const parseFileToJson = async (
 
     try {
         const rawData = await fs.readFile(file.path);
-        req.body.jsonData = JSON.parse(rawData.toString());
+        req.body = JSON.parse(rawData.toString());
 
         // Delete the file after reading its contents
         await fs.unlink(file.path);

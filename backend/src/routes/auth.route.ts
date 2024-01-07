@@ -1,9 +1,9 @@
 import express from 'express';
 import { loginHandler, logoutHandler, registerHandler } from '../controllers/auth.controller';
-import { validate } from '../middleware/validate';
+import { validate } from '../middleware/validate.middleware';
 import { registerUserSchema, loginUserSchema } from '../schemas/user.schema';
-import { deserializeUser } from '../middleware/deserialize-user';
-import { requireUser } from '../middleware/require-user';
+import { deserializeUser } from '../middleware/deserialize-user.middleware';
+import { requireUser } from '../middleware/require-user.middleware';
 
 const router = express.Router();
 

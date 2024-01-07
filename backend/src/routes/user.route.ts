@@ -7,11 +7,11 @@ import {
     getUserHandler,
     updateMeHandler
 } from '../controllers/user.controller';
-import { deserializeUser } from '../middleware/deserialize-user';
-import { requireUser } from '../middleware/require-user';
-import { restrictTo } from '../middleware/restrict-to';
+import { deserializeUser } from '../middleware/deserialize-user.middleware';
+import { requireUser } from '../middleware/require-user.middleware';
+import { restrictTo } from '../middleware/restrict-to.middleware';
 import { Role } from '../enums/role.enum';
-import { validate } from '../middleware/validate';
+import { validate } from '../middleware/validate.middleware';
 import { updateUserSchema } from '../schemas/user.schema';
 
 const router = express.Router();
