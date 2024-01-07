@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { deleteUser, findUsers, getUser, updateUser } from '../services/user.service';
+import { createUser, deleteUser, findUsers, getUser, updateUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
-import { UpdateUserInput } from '../schemas/user.schema';
 import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { deleteUserCache, updateUserCache } from '../services/cache.service';
+import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
 
 export const getMeHandler = (
     _req: Request,
@@ -28,7 +28,7 @@ export const updateMeHandler = async (
         const id: string = res.locals.user._id;
         const user = await updateUser(id, req.body);
 
-        updateUserCache(id, user)
+        updateUserCache(id, user);
 
         res.status(StatusCode.OK).json(user);
     } catch (err: any) {
@@ -48,10 +48,27 @@ export const deleteMeHandler = async (
         const id: string = res.locals.user._id;
         await deleteUser(id);
 
-        deleteUserCache(id)
+        deleteUserCache(id);
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
+        next(err);
+    }
+};
+
+export const createUserHandler = async (
+    req: Request<{}, {}, CreateUserInput>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await createUser(req.body);
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
+            err.message = 'Username already exists';
+        }
         next(err);
     }
 };
@@ -92,11 +109,10 @@ export const deleteUserHandler = async (
     try {
         await deleteUser(req.params.id);
 
-        deleteUserCache(req.params.id)
+        deleteUserCache(req.params.id);
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
         next(err);
     }
 };
-

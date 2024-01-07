@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+    createUserHandler,
     deleteMeHandler,
     deleteUserHandler,
     getAllUsersHandler,
@@ -12,11 +13,14 @@ import { requireUser } from '../middleware/require-user.middleware';
 import { restrictTo } from '../middleware/restrict-to.middleware';
 import { Role } from '../enums/role.enum';
 import { validate } from '../middleware/validate.middleware';
-import { updateUserSchema } from '../schemas/user.schema';
+import { createUserSchema, updateUserSchema } from '../schemas/user.schema';
 
 const router = express.Router();
 
 router.use(deserializeUser, requireUser);
+
+// Create user
+router.post('/', restrictTo(Role.ADMIN), validate(createUserSchema), createUserHandler);
 
 // Get all users
 router.get('/', restrictTo(Role.ADMIN), getAllUsersHandler);

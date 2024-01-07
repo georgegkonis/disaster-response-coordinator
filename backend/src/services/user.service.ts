@@ -1,12 +1,12 @@
 import { FilterQuery, QueryOptions } from 'mongoose';
 import userModel, { User } from '../models/user.model';
 import UserNotFoundError from '../errors/user-not-found-error';
-import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
-import { omit } from 'lodash';
+import { RegisterInput } from '../schemas/auth.schema';
 import bcrypt from 'bcryptjs';
+import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
 
 export const createUser = async (
-    input: CreateUserInput
+    input: RegisterInput | CreateUserInput
 ) => {
     input.password = await encryptPassword(input.password);
 

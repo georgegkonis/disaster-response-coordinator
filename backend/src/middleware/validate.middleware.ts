@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject, ZodError } from 'zod';
-import AppError from '../errors/app-error';
-import { StatusCode } from '../enums/status-code.enum';
 import ValidationError from '../errors/validation-error';
 
 export const validate = (schema: AnyZodObject) => (

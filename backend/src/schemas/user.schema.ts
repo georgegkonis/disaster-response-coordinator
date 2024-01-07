@@ -1,6 +1,5 @@
 import { object, string, TypeOf } from 'zod';
-
-const passCharsCheck: any = (pass: string) => /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,32}$/.test(pass);
+import { passCharsCheck, roleCheck } from '../utils/checks';
 
 const userDetailsShape = object({
     firstName: string()
@@ -22,26 +21,17 @@ const userDetailsShape = object({
         .optional()
 }).shape;
 
-export const registerUserSchema = object({
+export const createUserSchema = object({
     body: object({
         username: string({ required_error: 'Username is required' }),
         password: string({ required_error: 'Password is required' })
             .min(8, 'Password must be more than 8 characters')
             .max(32, 'Password must be less than 32 characters')
             .refine(passCharsCheck, 'Password must contain at least 1 number, 1 capital letter and 1 special character'),
-        passwordConfirm: string({ required_error: 'Please confirm your password' }),
         email: string({ required_error: 'Email is required' })
-            .email('Invalid email')
-    }).strip().refine((data) => data.password === data.passwordConfirm, {
-        path: ['passwordConfirm'],
-        message: 'Passwords do not match'
-    })
-});
-
-export const loginUserSchema = object({
-    body: object({
-        username: string({ required_error: 'Username is required' }),
-        password: string({ required_error: 'Password is required' })
+            .email('Invalid email'),
+        role: string({ required_error: 'Role is required' })
+            .refine(roleCheck, { message: 'Role must be either user or rescuer' })
     }).strip()
 });
 
@@ -59,6 +49,5 @@ export const updateUserSchema = object({
     }).strip()
 });
 
-export type CreateUserInput = TypeOf<typeof registerUserSchema>['body'];
-export type LoginUserInput = TypeOf<typeof loginUserSchema>['body'];
+export type CreateUserInput = TypeOf<typeof createUserSchema>['body'];
 export type UpdateUserInput = TypeOf<typeof updateUserSchema>['body'];

@@ -1,6 +1,6 @@
 import config from 'config';
 import { CookieOptions, NextFunction, Request, Response } from 'express';
-import { CreateUserInput, LoginUserInput } from '../schemas/user.schema';
+import { RegisterInput, LoginInput } from '../schemas/auth.schema';
 import { createUser, findUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/mongo-error-codes';
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production')
     accessTokenCookieOptions.secure = true;
 
 export const registerHandler = async (
-    req: Request<{}, {}, CreateUserInput>,
+    req: Request<{}, {}, RegisterInput>,
     res: Response,
     next: NextFunction
 ) => {
@@ -31,7 +31,7 @@ export const registerHandler = async (
 
         res.status(StatusCode.CREATED).json({
             status: Status.SUCCESS,
-            message: 'User created successfully'
+            message: 'Registered successfully'
         });
     } catch (err: any) {
         if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
@@ -42,7 +42,7 @@ export const registerHandler = async (
 };
 
 export const loginHandler = async (
-    req: Request<{}, {}, LoginUserInput>,
+    req: Request<{}, {}, LoginInput>,
     res: Response,
     next: NextFunction
 ) => {

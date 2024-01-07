@@ -22,6 +22,18 @@ Content-Type: application/json
 
 DELETE {{host}}/{{baseUrl}}/users/me
 
+### Create
+
+POST {{host}}/{{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "rescuer2",
+  "password": "Password123!",
+  "email": "rescuer2@email.com",
+  "role": "rescuer"
+}
+
 ### Get All
 
 GET {{host}}/{{baseUrl}}/users
