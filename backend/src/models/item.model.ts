@@ -17,7 +17,7 @@ class ItemDetail {
 })
 export class Item {
     @prop({ unique: true, required: true })
-    id!: string;
+    id!: number;
 
     @prop({ required: true })
     name!: string;

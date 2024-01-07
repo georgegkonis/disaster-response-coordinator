@@ -7,7 +7,8 @@ const detailSchema = object({
 
 const itemSchema = object({
     id: string({ required_error: 'Item ID is required' })
-        .min(1, { message: 'Item ID cannot be empty' }),
+        .min(1, { message: 'Item ID cannot be empty' })
+        .refine(value => !isNaN(Number(value)), { message: 'Item ID must be a string that can be parsed into a number' }),
     name: string({ required_error: 'Item name is required' }),
     category: string({ required_error: 'Item category is required' })
         .min(1, { message: 'Item category cannot be empty' }),
@@ -17,7 +18,8 @@ const itemSchema = object({
 
 const categorySchema = object({
     id: string({ required_error: 'Category ID is required' })
-        .min(1, { message: 'Category ID cannot be empty' }),
+        .min(1, { message: 'Category ID cannot be empty' })
+        .refine(value => !isNaN(Number(value)), { message: 'Category ID must be a string that can be parsed into a number' }),
     category_name: string({ required_error: 'Category name is required' })
 }).strip();
 
