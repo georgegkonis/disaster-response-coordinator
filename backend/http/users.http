@@ -1,8 +1,8 @@
-### Get Me
+### Get me
 
 GET {{host}}/{{baseUrl}}/users/me
 
-### Update Me
+### Update me
 
 PATCH {{host}}/{{baseUrl}}/users/me
 Content-Type: application/json
@@ -18,7 +18,17 @@ Content-Type: application/json
   }
 }
 
-### Delete Me
+### Update my location
+
+PATCH {{host}}/{{baseUrl}}/users/me/location
+Content-Type: application/json
+
+{
+  "latitude": 37.983810,
+  "longitude": 23.727539
+}
+
+### Delete me
 
 DELETE {{host}}/{{baseUrl}}/users/me
 
@@ -34,7 +44,7 @@ Content-Type: application/json
   "role": "rescuer"
 }
 
-### Get All
+### Get all
 
 GET {{host}}/{{baseUrl}}/users
 

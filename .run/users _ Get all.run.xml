@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="users | Get all" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Users" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/users.http" index="6" requestIdentifier="Get all" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>
