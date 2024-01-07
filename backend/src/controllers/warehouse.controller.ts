@@ -21,15 +21,11 @@ export const getCategoriesHandler = async (
 };
 
 export const uploadCategoriesAndItemsHandler = async (
-    req: Request<any, any, { categories: any[], items: any[] }>,
+    req: Request<{}, {}, { categories: any[], items: any[] }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        if (!req.body.items || !req.body.categories) {
-            return next(new AppError('No JSON data found', StatusCode.BAD_REQUEST));
-        }
-
         await insertAndUpdateCategories(req.body.categories);
         await insertAndUpdateItems(req.body.items);
 
