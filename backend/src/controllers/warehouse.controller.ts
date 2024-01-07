@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
 import { deleteAllCategories, findCategories, insertAndUpdateCategories } from '../services/category.service';
-import { deleteAllItems, findItems, insertAndUpdateItems } from '../services/item.service';
+import { deleteAllItems, findItems, insertAndUpdateItems, updateQuantity } from '../services/item.service';
 import { Status } from '../enums/status.enum';
 
 export const getCategoriesHandler = async (
@@ -59,7 +59,21 @@ export const deleteAllCategoriesAndItemsHandler = async (
         await deleteAllCategories();
         await deleteAllItems();
 
-        res.status(StatusCode.OK).json({ message: 'All categories deleted successfully' });
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const updateItemQuantityHandler = async (
+    req: Request<{ id: string }, {}, { quantity: number }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const item = await updateQuantity(req.params.id, req.body.quantity);
+
+        res.status(StatusCode.OK).json(item);
     } catch (err: any) {
         next(err);
     }

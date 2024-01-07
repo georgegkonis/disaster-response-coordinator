@@ -12,12 +12,20 @@ Content-Type: application/json
 
 ### Get Categories
 
-GET {{host}}/{{baseUrl}}/warehouse/categories?name=Food
-Content-Type: application/json
-
-
+GET {{host}}/{{baseUrl}}/warehouse/categories
+#    ?name=Food
 
 ### Get Items
 
 GET {{host}}/{{baseUrl}}/warehouse/items
+#    ?category=9
+#    &name=t22
+
+### Update Item Quantity
+
+PATCH {{host}}/{{baseUrl}}/warehouse/items/{{itemId}}
 Content-Type: application/json
+
+{
+  "quantity": 100
+}

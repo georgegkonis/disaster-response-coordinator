@@ -7,6 +7,7 @@ import {
     deleteAllCategoriesAndItemsHandler,
     getCategoriesHandler,
     getItemsHandler,
+    updateItemQuantityHandler,
     uploadCategoriesAndItemsHandler
 } from '../controllers/warehouse.controller';
 import { parseJsonData } from '../middleware/parse-json-data.middleware';
@@ -24,5 +25,7 @@ router.get('/items', getItemsHandler);
 router.post('/upload', restrictTo(Role.ADMIN), parseJsonData, validate(warehouseSchema), uploadCategoriesAndItemsHandler);
 
 router.delete('/', restrictTo(Role.ADMIN), deleteAllCategoriesAndItemsHandler);
+
+router.patch('/items/:id', restrictTo(Role.ADMIN), updateItemQuantityHandler);
 
 export default router;
