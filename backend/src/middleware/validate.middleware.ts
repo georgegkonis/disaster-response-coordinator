@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject, ZodError } from 'zod';
 import AppError from '../errors/app-error';
 import { StatusCode } from '../enums/status-code.enum';
+import ValidationError from '../errors/validation-error';
 
 export const validate = (schema: AnyZodObject) => (
     req: Request,
@@ -24,11 +25,7 @@ export const validate = (schema: AnyZodObject) => (
         if (err instanceof ZodError) {
             let messages = err.errors.map(error => `${error.code}: ${error.message}`);
 
-            const appError = new AppError(
-                'Validation failed',
-                StatusCode.BAD_REQUEST,
-                messages
-            );
+            const appError = new ValidationError(messages);
             next(appError);
         }
         next(err);
