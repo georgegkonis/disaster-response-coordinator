@@ -13,7 +13,6 @@ import { UserService } from '../services/user.service';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { StoreService } from '../services/store.service';
-import { ComStore } from '../models/app.model';
 
 @Injectable()
 export class AppEffects {
