@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
-import { MongoErrorCodes } from '../constants/error-codes';
 import AppError from '../errors/app-error';
 
 export function handleErrors(
