@@ -15,11 +15,11 @@ class Details {
 }
 
 class Location {
-    @prop({})
-    public latitude?: number;
+    @prop({ required: true })
+    public latitude!: number;
 
-    @prop({})
-    public longitude?: number;
+    @prop({ required: true })
+    public longitude!: number;
 }
 
 @index({ username: 1, email: 1 })
