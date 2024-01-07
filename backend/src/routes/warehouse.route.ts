@@ -6,6 +6,7 @@ import { Role } from '../enums/role.enum';
 import {
     deleteAllCategoriesAndItemsHandler,
     getCategoriesHandler,
+    getItemsHandler,
     uploadCategoriesAndItemsHandler
 } from '../controllers/warehouse.controller';
 import { parseJsonData } from '../middleware/parse-json-data.middleware';
@@ -16,7 +17,9 @@ const router = express.Router();
 
 router.use(deserializeUser, requireUser);
 
-router.get('/', getCategoriesHandler);
+router.get('/categories', getCategoriesHandler);
+
+router.get('/items', getItemsHandler);
 
 router.post('/upload', restrictTo(Role.ADMIN), parseJsonData, validate(warehouseSchema), uploadCategoriesAndItemsHandler);
 

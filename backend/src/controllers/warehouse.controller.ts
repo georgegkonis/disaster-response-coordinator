@@ -1,20 +1,32 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
-import AppError from '../errors/app-error';
-import { deleteAllCategories, insertAndUpdateCategories } from '../services/category.service';
-import CategoryModel from '../models/category.model';
-import { deleteAllItems, insertAndUpdateItems } from '../services/item.service';
+import { deleteAllCategories, findCategories, insertAndUpdateCategories } from '../services/category.service';
+import { deleteAllItems, findItems, insertAndUpdateItems } from '../services/item.service';
 import { Status } from '../enums/status.enum';
 
 export const getCategoriesHandler = async (
-    _req: Request,
+    req: Request<{}, {}, {}, { name?: string }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const categories = await CategoryModel.find().lean();
+        const categories = await findCategories(req.query);
 
         res.status(StatusCode.OK).json(categories);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const getItemsHandler = async (
+    req: Request<{}, {}, {}, { name?: string, category?: string }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const items = await findItems(req.query);
+
+        res.status(StatusCode.OK).json(items);
     } catch (err: any) {
         next(err);
     }
