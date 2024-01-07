@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { Role } from '../enums/role.enum';
 import { Types } from 'mongoose';
 
-class ContactInfo {
+class Details {
     @prop({})
     public firstName?: string;
 
@@ -12,9 +12,14 @@ class ContactInfo {
 
     @prop({})
     public phoneNumber?: string;
+}
+
+class Location {
+    @prop({})
+    public latitude?: number;
 
     @prop({})
-    public address?: string;
+    public longitude?: number;
 }
 
 @index({ username: 1, email: 1 })
@@ -43,7 +48,10 @@ export class User {
     public role?: Role;
 
     @prop({ _id: false })
-    public details?: ContactInfo;
+    public details?: Details;
+
+    @prop({ _id: false })
+    public location?: Location;
 
     async comparePasswords(hashedPassword: string, candidatePassword: string) {
         return await bcrypt.compare(candidatePassword, hashedPassword);

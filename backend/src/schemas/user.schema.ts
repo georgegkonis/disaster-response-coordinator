@@ -1,4 +1,4 @@
-import { object, string, TypeOf } from 'zod';
+import { number, object, string, TypeOf } from 'zod';
 import { passCharsCheck, roleCheck } from '../utils/checks';
 
 const userDetailsShape = object({
@@ -16,9 +16,6 @@ const userDetailsShape = object({
         .regex(/^\+?[0-9]+$/, 'Phone number must contain only numbers')
         .optional(),
     address: string()
-        .min(1, 'Address cannot be empty')
-        .max(256, 'Address must be less than 256 characters')
-        .optional()
 }).shape;
 
 export const createUserSchema = object({
