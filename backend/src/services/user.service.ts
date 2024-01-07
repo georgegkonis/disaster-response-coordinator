@@ -26,6 +26,19 @@ export const updateUser = async (
     return user;
 };
 
+export const updateUserLocation = async (
+    id: string,
+    latitude: number,
+    longitude: number
+) => {
+    const user = await userModel.findById(id);
+
+    if (!user) throw new UserNotFoundError(id);
+
+    user.location = { latitude, longitude };
+    await user.save();
+};
+
 export const deleteUser = async (
     id: string
 ) => {

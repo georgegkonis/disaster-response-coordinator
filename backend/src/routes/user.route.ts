@@ -6,7 +6,7 @@ import {
     getAllUsersHandler,
     getMeHandler,
     getUserHandler,
-    updateMeHandler
+    updateMeHandler, updateMyLocationHandler
 } from '../controllers/user.controller';
 import { deserializeUser } from '../middleware/deserialize-user.middleware';
 import { requireUser } from '../middleware/require-user.middleware';
@@ -30,6 +30,9 @@ router.get('/me', getMeHandler);
 
 // Update current user
 router.patch('/me', validate(updateUserSchema), updateMeHandler);
+
+// Update current user's location
+router.patch('/me/location', updateMyLocationHandler);
 
 // Delete current user
 router.delete('/me', deleteMeHandler);

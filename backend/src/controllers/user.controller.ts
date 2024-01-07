@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { createUser, deleteUser, findUsers, getUser, updateUser } from '../services/user.service';
+import { createUser, deleteUser, findUsers, getUser, updateUser, updateUserLocation } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { deleteUserCache, updateUserCache } from '../services/cache.service';
@@ -38,6 +38,23 @@ export const updateMeHandler = async (
         next(err);
     }
 };
+
+export const updateMyLocationHandler = async (
+    req: Request<{}, {}, { latitude: number, longitude: number }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const id: string = res.locals.user._id;
+        const { latitude, longitude } = req.body;
+
+        await updateUserLocation(id, latitude, longitude);
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        next(err);
+    }
+}
 
 export const deleteMeHandler = async (
     _req: Request,
