@@ -1,22 +1,17 @@
-import { getModelForClass, prop } from '@typegoose/typegoose';
+import { getModelForClass, index, modelOptions, prop } from '@typegoose/typegoose';
 
-export class Subcategory {
-    @prop({ required: true })
-    uuid: string;
-
-    @prop({ required: true })
-    name: string;
-}
-
+@index({ id: 'asc', name: 'text' })
+@modelOptions({
+    schemaOptions: {
+        _id: false
+    }
+})
 export class Category {
     @prop({ unique: true, required: true })
     id: string;
 
-    @prop({ required: true })
+    @prop({ required: true, alias: 'category_name' })
     name: string;
-
-    @prop({ type: () => [Subcategory], required: true })
-    subcategories: Subcategory[];
 }
 
 const categoryModel = getModelForClass(Category);

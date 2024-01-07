@@ -9,12 +9,9 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/db.config';
 import userRouter from './routes/user.route';
 import authRouter from './routes/auth.route';
-import productRoute from './routes/product.route';
 import multer from 'multer';
-import categoryRoute from './routes/category.route';
-import storeRoute from './routes/store.route';
-import offerRoute from './routes/offer.route';
-import { handleErrors } from './middleware/handle-errors';
+import warehouseRoute from './routes/warehouse.route';
+import { handleErrors } from './middleware/handle-errors.middleware';
 
 const app = express();
 
@@ -44,10 +41,7 @@ const apiRouter = express.Router();
 
 apiRouter.use('/users', userRouter);
 apiRouter.use('/auth', authRouter);
-apiRouter.use('/products', productRoute);
-apiRouter.use('/categories', categoryRoute);
-apiRouter.use('/stores', storeRoute);
-apiRouter.use('/offers', offerRoute);
+apiRouter.use('/warehouse', warehouseRoute);
 
 app.use('/disaster-response-coordinator/v1', apiRouter);
 
