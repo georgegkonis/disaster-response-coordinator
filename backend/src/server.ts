@@ -49,7 +49,7 @@ apiRouter.use('/categories', categoryRoute);
 apiRouter.use('/stores', storeRoute);
 apiRouter.use('/offers', offerRoute);
 
-app.use('/drc-api/v1', apiRouter);
+app.use('/disaster-response-coordinator/v1', apiRouter);
 
 // Unknown Routes
 app.all('*', (req: Request, _res: Response, next: NextFunction) => {
