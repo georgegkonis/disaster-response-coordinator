@@ -2,10 +2,10 @@ import { getModelForClass, index, modelOptions, prop } from '@typegoose/typegoos
 
 class ItemDetail {
     @prop({ required: true, alias: 'detail_name' })
-    name: string;
+     name!: string;
 
     @prop({ required: true, alias: 'detail_value' })
-    value: string;
+    value!: string;
 }
 
 @index({ id: 'asc', name: 'text', category: 'asc' })
@@ -17,16 +17,16 @@ class ItemDetail {
 })
 export class Item {
     @prop({ unique: true, required: true })
-    id: string;
+    id!: string;
 
     @prop({ required: true })
-    name: string;
+    name!: string;
 
     @prop({ required: true })
-    category: string;
+    category!: string;
 
     @prop({ required: true, type: () => [ItemDetail], _id: false })
-    details: ItemDetail[];
+    details!: ItemDetail[];
 }
 
 const itemModel = getModelForClass(Item);
