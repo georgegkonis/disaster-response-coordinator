@@ -9,8 +9,9 @@ export const createUser = async (
     input: RegisterInput | CreateUserInput
 ) => {
     input.password = await encryptPassword(input.password);
+    const user: User = await userModel.create(input);
 
-    await userModel.create(input);
+    return user;
 };
 
 export const updateUser = async (
