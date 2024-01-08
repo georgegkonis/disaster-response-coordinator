@@ -2,6 +2,7 @@ import { getModelForClass, index, modelOptions, prop, Severity } from '@typegoos
 import bcrypt from 'bcryptjs';
 import { Role } from '../enums/role.enum';
 import { Types } from 'mongoose';
+import { MapLocation } from './map-location';
 
 class Details {
     @prop({})
@@ -12,14 +13,6 @@ class Details {
 
     @prop({})
     public phoneNumber?: string;
-}
-
-class Location {
-    @prop({ required: true })
-    public latitude!: number;
-
-    @prop({ required: true })
-    public longitude!: number;
 }
 
 @index({ username: 1, email: 1 })
@@ -51,7 +44,7 @@ export class User {
     public details?: Details;
 
     @prop({ _id: false })
-    public location?: Location;
+    public location?: MapLocation;
 
     async comparePasswords(hashedPassword: string, candidatePassword: string) {
         return await bcrypt.compare(candidatePassword, hashedPassword);
