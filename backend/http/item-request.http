@@ -1,0 +1,21 @@
+### Create
+
+POST {{host}}/{{baseUrl}}/item-requests
+Content-Type: application/json
+
+{
+  "item": "659ad4b3b3e6a79f76cf5577",
+  "description": "I need it",
+  "peopleCount": 5
+}
+
+### Get mine
+
+GET {{host}}/{{baseUrl}}/item-requests/me
+#    ?status=pending
+
+### Get all
+
+GET {{host}}/{{baseUrl}}/item-requests
+#    ?citizenId={{citizenId}}
+#    &status=pending

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="warehouse | Get items" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/warehouse.http" index="3" requestIdentifier="Get items" runType="Run single request">
+  <configuration default="false" name="warehouse | Get items" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Warehouse" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/warehouse.http" index="3" requestIdentifier="Get items" runType="Run single request">
     <method v="2" />
   </configuration>
 </component>

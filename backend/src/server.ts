@@ -7,11 +7,12 @@ import config from 'config';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.config';
-import userRouter from './routes/user.route';
-import authRouter from './routes/auth.route';
 import multer from 'multer';
-import warehouseRoute from './routes/warehouse.route';
 import { handleErrors } from './middleware/handle-errors.middleware';
+import userRoute from './routes/user.route';
+import authRoute from './routes/auth.route';
+import warehouseRoute from './routes/warehouse.route';
+import itemRequestRoute from './routes/item-request.route';
 
 const app = express();
 
@@ -39,9 +40,10 @@ app.use(upload.any());
 // Routes
 const apiRouter = express.Router();
 
-apiRouter.use('/users', userRouter);
-apiRouter.use('/auth', authRouter);
+apiRouter.use('/users', userRoute);
+apiRouter.use('/auth', authRoute);
 apiRouter.use('/warehouse', warehouseRoute);
+apiRouter.use('/item-requests', itemRequestRoute);
 
 app.use('/disaster-response-coordinator/v1', apiRouter);
 
