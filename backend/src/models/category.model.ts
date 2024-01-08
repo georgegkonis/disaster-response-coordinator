@@ -8,10 +8,10 @@ import { getModelForClass, index, modelOptions, prop } from '@typegoose/typegoos
 })
 export class Category {
     @prop({ unique: true, required: true })
-    id!: number;
+    public id!: number;
 
     @prop({ required: true, alias: 'category_name' })
-    name!: string;
+    public name!: string;
 }
 
 const categoryModel = getModelForClass(Category);
