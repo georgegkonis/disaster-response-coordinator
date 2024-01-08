@@ -1,4 +1,5 @@
 import { getModelForClass, index, modelOptions, prop } from '@typegoose/typegoose';
+import { Types } from 'mongoose';
 
 class ItemDetail {
     @prop({ required: true, alias: 'detail_name' })
@@ -16,6 +17,9 @@ class ItemDetail {
     }
 })
 export class Item {
+    @prop({ auto: true })
+    public _id?: Types.ObjectId;
+
     @prop({ unique: true, required: true })
     public id!: number;
 

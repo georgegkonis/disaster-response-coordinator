@@ -1,4 +1,5 @@
 import { getModelForClass, index, modelOptions, prop } from '@typegoose/typegoose';
+import { Types } from 'mongoose';
 
 @index({ id: 'asc', name: 'text' })
 @modelOptions({
@@ -7,6 +8,9 @@ import { getModelForClass, index, modelOptions, prop } from '@typegoose/typegoos
     }
 })
 export class Category {
+    @prop({ auto: true })
+    public _id?: Types.ObjectId;
+
     @prop({ unique: true, required: true })
     public id!: number;
 
