@@ -50,6 +50,8 @@ export const updateMyLocationHandler = async (
 
         await updateUserLocation(id, latitude, longitude);
 
+        updateUserCache(id, { location: { latitude, longitude } });
+
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
         next(err);
