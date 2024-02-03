@@ -1,0 +1,25 @@
+### Register
+
+POST {{host}}/{{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "citizen1",
+  "password": "Password123!",
+  "passwordConfirm": "Password123!",
+  "email": "citizen1@email.com"
+}
+
+### Login
+
+POST {{host}}/{{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "citizen1",
+  "password": "Password123!"
+}
+
+### Logout
+
+POST {{host}}/{{baseUrl}}/auth/logout

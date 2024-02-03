@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="auth | Logout" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Authentication" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/auth.http" index="3" requestIdentifier="Logout" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,3 +1,5 @@
+import { StatusCode } from './enums/status-code.enum';
+
 require('dotenv').config();
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
@@ -5,51 +7,55 @@ import config from 'config';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.config';
-import userRouter from './routes/user.route';
-import authRouter from './routes/auth.route';
+import multer from 'multer';
+import { handleErrors } from './middleware/handle-errors.middleware';
+import userRoute from './routes/user.route';
+import authRoute from './routes/auth.route';
+import warehouseRoute from './routes/warehouse.route';
+import itemRequestRoute from './routes/item-request.route';
 
 const app = express();
 
-// Middleware
-
-// 1. Body Parser
+// Body Parser
 app.use(express.json({ limit: '10kb' }));
 
-// 2. Cookie Parser
+// Cookie Parser
 app.use(cookieParser());
 
-// 3. Logger
+// Logger
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
-// 4. Cors
+// Cors
 app.use(
     cors({
         origin: config.get<string>('origin'),
-        credentials: true,
+        credentials: true
     })
 );
 
-// 5. Routes
-app.use('/api/users', userRouter);
-app.use('/api/auth', authRouter);
+// File Upload
+const upload = multer({ dest: 'uploads/' });
+app.use(upload.any());
 
-// UnKnown Routes
-app.all('*', (req: Request, res: Response, next: NextFunction) => {
+// Routes
+const apiRouter = express.Router();
+
+apiRouter.use('/users', userRoute);
+apiRouter.use('/auth', authRoute);
+apiRouter.use('/warehouse', warehouseRoute);
+apiRouter.use('/item-requests', itemRequestRoute);
+
+app.use('/disaster-response-coordinator/v1', apiRouter);
+
+// Unknown Routes
+app.all('*', (req: Request, _res: Response, next: NextFunction) => {
     const err = new Error(`Route ${req.originalUrl} not found`) as any;
-    err.statusCode = 404;
+    err.statusCode = StatusCode.NOT_FOUND;
     next(err);
 });
 
 // Global Error Handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    err.status = err.status || 'error';
-    err.statusCode = err.statusCode || 500;
-
-    res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message,
-    });
-});
+app.use(handleErrors);
 
 const port = config.get<number>('port');
 app.listen(port, () => {

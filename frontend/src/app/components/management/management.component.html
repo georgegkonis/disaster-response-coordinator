@@ -1,0 +1,19 @@
+<div class="management">
+    <div class="management__dropdown">
+        <div>
+            <label for="typeSelect">Select Type:</label>
+            <p-dropdown id="typeSelect"
+                        (onChange)="onChange()"
+                        [options]="options"
+                        [(ngModel)]="selectedOption"
+                        optionValue="value"
+                        optionLabel="label"></p-dropdown>
+        </div>
+
+        <p-button label="Delete" (onClick)="onDelete()"></p-button>
+    </div>
+
+    <div class="management__file-upload w-6 gap-1">
+        <p-fileUpload [url]="url" name="data" accept=".json" (onUpload)="onUpload()"></p-fileUpload>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="item-request | Create" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Item Requests" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/item-request.http" requestIdentifier="Create" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>

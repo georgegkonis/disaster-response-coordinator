@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterModel } from '../../models/register.model';
+import { RegisterRequest } from '../../models/requests.model';
+import { AppState } from '../../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../../store/app.actions';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-register',
@@ -9,23 +13,30 @@ import { RegisterModel } from '../../models/register.model';
 })
 export class RegisterComponent implements OnInit {
     registerForm!: FormGroup;
-    formData!: RegisterModel;
 
-    constructor(private fb: FormBuilder) { }
+    constructor(
+        private formBuilder: FormBuilder,
+        private store: Store<AppState>,
+        private router: Router
+    ) { }
 
     ngOnInit(): void {
-        this.registerForm = this.fb.group({
+        this.registerForm = this.formBuilder.group({
             username: ['', [Validators.required]],
             email: ['', [Validators.required]],
             password: ['', [Validators.required]],
-            passwordConfirmation: ['', [Validators.required]]
+            passwordConfirm: ['', [Validators.required]]
         });
     }
 
-    onRegisterClick(): void {
+    onSubmit(): void {
         if (this.registerForm.valid) {
-            this.formData = this.registerForm.value; // Populate formData with the form values
-            // Handle registration logic here
+            const request: RegisterRequest = this.registerForm.value;
+            this.store.dispatch(AuthActions.register(request));
         }
+    }
+
+    onCancelClick(): void {
+        this.router.navigate(['/']).then();
     }
 }

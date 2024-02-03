@@ -1,6 +1,6 @@
 <div class="login">
-    <h2 class="login__title">login</h2>
-    <form [formGroup]="loginForm">
+    <h2 class="login__title">Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <!-- Username Field -->
         <div class="login__field">
             <label for="username" class="login__field-label">Username</label>
@@ -10,13 +10,25 @@
         <!-- Password Field -->
         <div class="login__field">
             <label for="password" class="login__field-label">Password</label>
-            <input id="password" type="password" pPassword formControlName="password" class="login__field-input">
+            <p-password [feedback]="false"
+                        [toggleMask]="true"
+                        id="password"
+                        formControlName="password"
+                        styleClass="w-full"
+                        inputStyleClass="w-full"></p-password>
         </div>
 
         <!-- Submit Button -->
         <div class="login__buttons">
-            <p-button (onClick)="onLoginClick()" type="submit" label="Login"></p-button>
-            <p-button routerLink="" type="submit" label="Cancel" styleClass="p-button-outlined"></p-button>
+            <p-button [disabled]="!loginForm.valid" type="submit" label="Login" icon="pi pi-check" iconPos="right"></p-button>
+            <p-button (onClick)="onCancelClick()"
+                      type="button"
+                      label="Cancel"
+                      styleClass="p-button-outlined"
+                      icon="pi pi-times"
+                      iconPos="right"></p-button>
         </div>
     </form>
 </div>
+
+

@@ -1,0 +1,23 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="filters-form">
+
+        <input pInputText type="text" formControlName="name" placeholder="Search Text"/>
+
+        <p-dropdown [options]="dropdownCategories" formControlName="categoryId"></p-dropdown>
+
+        <p-button label="Search" type="submit"></p-button>
+
+    </div>
+</form>
+
+<div id="map"></div>
+
+<!--View Offer Dialog-->
+<p-dialog [style]="{width: '25vw'}" [(visible)]="viewOfferVisible">
+    <app-view-offer *ngIf="viewOfferVisible" [comStore]="comStore" (addOfferClick)="onAddOfferClick()"></app-view-offer>
+</p-dialog>
+
+<!--Add Offer Dialog-->
+<p-dialog [style]="{width: '25vw'}" [(visible)]="addOfferVisible">
+    <app-add-offer *ngIf="addOfferVisible" [comStore]="comStore"></app-add-offer>
+</p-dialog>

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginModel } from '../../models/login.model';
+import { LoginRequest } from '../../models/requests.model';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/app.reducer';
+import { AuthActions } from '../../store/app.actions';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -9,21 +13,30 @@ import { LoginModel } from '../../models/login.model';
 })
 export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
-    formData!: LoginModel;
 
-    constructor(private fb: FormBuilder) { }
+    constructor(
+        private formBuilder: FormBuilder,
+        private store: Store<AppState>,
+        private router: Router
+    ) { }
 
     ngOnInit(): void {
-        this.loginForm = this.fb.group({
+        this.loginForm = this.formBuilder.group({
             username: ['', [Validators.required]],
-            password: ['', [Validators.required]],
+            password: ['', [Validators.required]]
         });
     }
 
-    onLoginClick(): void {
+    onSubmit(): void {
         if (this.loginForm.valid) {
-            this.formData = this.loginForm.value; // Populate formData with the form values
-            // Handle registration logic here
+            const request: LoginRequest = this.loginForm.value;
+            this.store.dispatch(AuthActions.login(request));
         }
     }
+
+    onCancelClick(): void {
+        this.loginForm.reset();
+        this.router.navigate(['/']).then();
+    }
 }
+

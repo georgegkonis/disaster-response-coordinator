@@ -1,11 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { deleteUser, findAllUsers, findUserById, updateUser } from '../services/user.service';
+import { createUser, deleteUser, findUsers, getUser, updateUser, updateUserLocation } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
-import { UpdateUserInput } from '../schemas/user.schema';
-
-interface RouteParamsId {
-    id: string;
-}
+import { MongoErrorCodes } from '../constants/mongo-error-codes';
+import { deleteUserCache, updateUserCache } from '../services/cache.service';
+import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
 
 export const getMeHandler = (
     _req: Request,
@@ -14,77 +12,126 @@ export const getMeHandler = (
 ) => {
     try {
         const user = res.locals.user;
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            data: { user }
-        });
+
+        res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         next(err);
     }
 };
 
-export const getUserHandler = async (
-    req: Request,
+export const updateMeHandler = async (
+    req: Request<{}, {}, UpdateUserInput>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const user = await findUserById(req.params.id);
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            data: { user }
-        });
+        const id: string = res.locals.user._id;
+        const user = await updateUser(id, req.body);
+
+        updateUserCache(id, user);
+
+        res.status(StatusCode.OK).json(user);
+    } catch (err: any) {
+        if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
+            err.message = 'Username already exists';
+        }
+        next(err);
+    }
+};
+
+export const updateMyLocationHandler = async (
+    req: Request<{}, {}, { latitude: number, longitude: number }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const id: string = res.locals.user._id;
+        const { latitude, longitude } = req.body;
+
+        await updateUserLocation(id, latitude, longitude);
+
+        updateUserCache(id, { location: { latitude, longitude } });
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        next(err);
+    }
+}
+
+export const deleteMeHandler = async (
+    _req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const id: string = res.locals.user._id;
+        await deleteUser(id);
+
+        deleteUserCache(id);
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const createUserHandler = async (
+    req: Request<{}, {}, CreateUserInput>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await createUser(req.body);
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
+            err.message = 'Username already exists';
+        }
+        next(err);
+    }
+};
+
+export const getUserHandler = async (
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const user = await getUser(req.params.id);
+
+        res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         next(err);
     }
 };
 
 export const getAllUsersHandler = async (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const users = await findAllUsers();
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            result: users.length,
-            data: { users }
-        });
-    } catch (err: any) {
-        next(err);
-    }
-};
+        const users = await findUsers();
 
-export const updateUserHandler = async (
-    req: Request<RouteParamsId, {}, UpdateUserInput>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const user = await updateUser(req.params.id, req.body);
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            data: { user }
-        });
+        res.status(StatusCode.OK).json(users);
     } catch (err: any) {
         next(err);
     }
 };
 
 export const deleteUserHandler = async (
-    req: Request,
+    req: Request<{ id: string }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const user = await deleteUser(req.params.id);
-        res.status(StatusCode.OK).json({
-            status: 'success',
-            data: { user }
-        });
+        await deleteUser(req.params.id);
+
+        deleteUserCache(req.params.id);
+
+        res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
         next(err);
     }
 };
-

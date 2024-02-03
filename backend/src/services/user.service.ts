@@ -1,74 +1,85 @@
-import { omit } from 'lodash';
 import { FilterQuery, QueryOptions } from 'mongoose';
-import config from 'config';
 import userModel, { User } from '../models/user.model';
-import { excludedFields } from '../controllers/auth.controller';
-import { signJwt } from '../utils/jwt';
-import redisClient from '../config/redis.config';
-import { DocumentType } from '@typegoose/typegoose';
-import { SignOptions } from 'jsonwebtoken';
+import UserNotFoundError from '../errors/user-not-found-error';
+import { RegisterInput } from '../schemas/auth.schema';
+import bcrypt from 'bcryptjs';
+import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
 
-/**
- * CreateUser service
- */
-export const createUser = async (input: Partial<User>) => {
-    const user = await userModel.create(input);
-    return omit(user.toJSON(), excludedFields);
+export const createUser = async (
+    input: RegisterInput | CreateUserInput
+) => {
+    input.password = await encryptPassword(input.password);
+    const user: User = await userModel.create(input);
+
+    return user;
 };
 
-export const updateUser = async (id: string, input: Partial<User>) => {
-    const user = await userModel.findByIdAndUpdate({ _id: id }, input, { new: true });
-    if (!user) throw new Error('User not found');
-    return omit(user.toJSON(), excludedFields);
+export const updateUser = async (
+    id: string,
+    input: UpdateUserInput
+) => {
+    if (input.password) input.password = await encryptPassword(input.password);
+
+    const user: User | null = await userModel.findByIdAndUpdate<User>(id, input, { new: true });
+
+    if (!user) throw new UserNotFoundError(id);
+
+    return user;
 };
 
-export const deleteUser = async (id: string) => {
-    const user = await userModel.findByIdAndDelete(id);
-    if (!user) throw new Error('User not found');
-    return omit(user.toJSON(), excludedFields);
+export const updateUserLocation = async (
+    id: string,
+    latitude: number,
+    longitude: number
+) => {
+    const user = await userModel.findById(id);
+
+    if (!user) throw new UserNotFoundError(id);
+
+    user.location = { latitude, longitude };
+    await user.save();
 };
 
-/**
- * Find user by id
- * @param id
- */
-export const findUserById = async (id: string) => {
-    const user = userModel.findById(id).lean();
-    return omit(user, excludedFields);
+export const deleteUser = async (
+    id: string
+) => {
+    await userModel.findByIdAndDelete<User>(id);
 };
 
-/**
- * Find All users
- */
-export const findAllUsers = async () => {
-    return userModel.find();
+export const getUser = async (
+    id: string,
+    includePassword: boolean = false
+) => {
+    const user: User | null = includePassword
+        ? await userModel.findById<User>(id).select('+password').exec()
+        : await userModel.findById<User>(id);
+
+    if (!user) throw new UserNotFoundError(id);
+
+    return user;
 };
 
-/**
- * Find one user by any fields
- */
 export const findUser = async (
     query: FilterQuery<User>,
+    options: QueryOptions = {},
+    includePassword: boolean = false
+) => {
+    const user: User | null = includePassword
+        ? await userModel.findOne<User>(query, {}, options).select('+password').exec()
+        : await userModel.findOne<User>(query, {}, options);
+
+    return user;
+};
+
+export const findUsers = async (
+    query: FilterQuery<User> = {},
     options: QueryOptions = {}
 ) => {
-    return userModel.findOne(query, {}, options).select('+password');
+    const users: User[] = await userModel.find<User>(query, {}, options);
+
+    return users;
 };
 
-/**
- * Sign Token
- * @param user
- */
-export const signToken = async (user: DocumentType<User>) => {
-    let payload: Object = { sub: user._id };
-    let options: SignOptions = { expiresIn: `${config.get<number>('accessTokenExpiresIn')}m` };
-
-    const accessToken: string = signJwt(payload, options);
-
-    // Convert the ObjectId to a string
-    redisClient.set(user._id.toString(), JSON.stringify(user), { EX: 60 * 60 });
-
-    // Return access token
-    return { accessToken };
-};
-
-
+async function encryptPassword(password: string) {
+    return await bcrypt.hash(password, 10);
+}

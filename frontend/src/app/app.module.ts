@@ -2,21 +2,51 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { RouterOutletComponent } from './components/router-outlet/router-outlet.component';
+import { AppShellComponent } from './components/app-shell/app-shell.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './store/app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './store/app.effects';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ProfileComponent } from './components/profile/profile.component';
+import { HttpCredentialsInterceptor } from './interceptors/http-credentials.interceptor';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MenubarModule } from 'primeng/menubar';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ManagementComponent } from './components/management/management.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { OffersMapComponent } from './components/offers-map/offers-map.component';
+import { ViewOfferComponent } from './components/view-offer/view-offer.component';
+import { AddOfferComponent } from './components/add-offer/add-offer.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
     declarations: [
-        RouterOutletComponent,
+        AppShellComponent,
         HomeComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        ProfileComponent,
+        DashboardComponent,
+        NotFoundComponent,
+        ManagementComponent,
+        OffersMapComponent,
+        ViewOfferComponent,
+        AddOfferComponent
     ],
     imports: [
         BrowserModule,
@@ -24,9 +54,26 @@ import { ReactiveFormsModule } from '@angular/forms';
         InputTextModule,
         ButtonModule,
         PasswordModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        StoreModule.forRoot({ app: appReducer }),
+        EffectsModule.forRoot(AppEffects),
+        StoreDevtoolsModule.instrument(),
+        HttpClientModule,
+        BrowserAnimationsModule,
+        ToastModule,
+        MenubarModule,
+        DropdownModule,
+        FileUploadModule,
+        FormsModule,
+        ConfirmDialogModule,
+        DialogModule
     ],
-    providers: [],
-    bootstrap: [RouterOutletComponent]
+    providers: [
+        MessageService,
+        ConfirmationService,
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, deps: [MessageService] },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpCredentialsInterceptor, multi: true }
+    ],
+    bootstrap: [AppShellComponent]
 })
 export class AppModule {}
