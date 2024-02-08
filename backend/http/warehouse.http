@@ -7,7 +7,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="data.json"
 Content-Type: application/json
 
-< C:\Users\georg\Development\WebStorm\disaster-response-coordinator\data\data.json
+< C:\Users\georg\Programming\Webstorm\disaster-response-coordinator\data\data.json
 --WebAppBoundary--
 
 ### Get categories
@@ -21,6 +21,33 @@ GET {{host}}/{{baseUrl}}/warehouse/items
 #    ?category=9
 #    &name=t22
 
+### Add Category
+
+POST {{host}}/{{baseUrl}}/warehouse/categories
+Content-Type: application/json
+
+{
+    "id": "1",
+    "name": "Food"
+}
+
+### Add item
+
+POST {{host}}/{{baseUrl}}/warehouse/items
+Content-Type: application/json
+
+{
+    "id": "2",
+    "name": "Power",
+    "category": "65c5524e75ef47b68360fbd3",
+    "details": [
+        {
+            "name": "price",
+            "value": "100"
+        }
+    ]
+}
+
 ### Update item quantity
 
 PATCH {{host}}/{{baseUrl}}/warehouse/items/{{itemId}}
@@ -29,3 +56,7 @@ Content-Type: application/json
 {
   "quantity": 100
 }
+
+### Delete all categories and items
+
+DELETE {{host}}/{{baseUrl}}/warehouse
