@@ -1,11 +1,22 @@
 import categoryModel, { Category } from '../models/category.model';
 import { FilterQuery, QueryOptions } from 'mongoose';
+import CategoryNotFoundError from '../errors/category-not-found.error';
 
-export const insertAndUpdateCategories = async (categories: any[]) => {
+export const createCategory = async (
+    input: Partial<Category>
+)=> {
+    const category: Category = await categoryModel.create(input);
+
+    return category;
+}
+
+export const insertAndUpdateCategories = async (
+    categories: any[]
+) => {
     const bulkOps = categories.map((category: any) => ({
         updateOne: {
             filter: { id: category.id },
-            update: { $set: { id: category.id, name: category.category_name } },
+            update: { $set: { ...category, name: category.category_name } },
             upsert: true
         }
     }));

@@ -1,8 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
-import { deleteAllCategories, findCategories, insertAndUpdateCategories } from '../services/category.service';
-import { deleteAllItems, findItems, insertAndUpdateItems, updateQuantity } from '../services/item.service';
+import {
+    createCategory,
+    deleteAllCategories,
+    findCategories,
+    insertAndUpdateCategories
+} from '../services/category.service';
+import { createItem, deleteAllItems, findItems, insertAndUpdateItems, updateItemQuantity } from '../services/item.service';
 import { Status } from '../enums/status.enum';
+import { Category } from '../models/category.model';
+import { Item } from '../models/item.model';
 
 export const getCategoriesHandler = async (
     req: Request<{}, {}, {}, { name?: string }>,
@@ -32,6 +39,34 @@ export const getItemsHandler = async (
     }
 };
 
+export const createCategoryHandler = async (
+    req: Request<{}, {}, Partial<Category>>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const category = await createCategory(req.body);
+
+        res.status(StatusCode.CREATED).json(category);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const createItemHandler = async (
+    req: Request<{}, {}, Partial<Item>>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const item = await createItem(req.body);
+
+        res.status(StatusCode.CREATED).json(item);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
 export const uploadCategoriesAndItemsHandler = async (
     req: Request<{}, {}, { categories: any[], items: any[] }>,
     res: Response,
@@ -39,7 +74,10 @@ export const uploadCategoriesAndItemsHandler = async (
 ) => {
     try {
         await insertAndUpdateCategories(req.body.categories);
-        await insertAndUpdateItems(req.body.items);
+
+        const items = await mapItemCategoryIdsToObjectIds(req.body.items);
+
+        await insertAndUpdateItems(items);
 
         res.status(StatusCode.OK).json({
             status: Status.SUCCESS,
@@ -71,7 +109,7 @@ export const updateItemQuantityHandler = async (
     next: NextFunction
 ) => {
     try {
-        const item = await updateQuantity(req.params.id, req.body.quantity);
+        const item = await updateItemQuantity(req.params.id, req.body.quantity);
 
         res.status(StatusCode.OK).json(item);
     } catch (err: any) {
@@ -79,3 +117,12 @@ export const updateItemQuantityHandler = async (
     }
 };
 
+const mapItemCategoryIdsToObjectIds = async (items: any[]) => {
+    const categories = await findCategories();
+
+    return items.map((item: any) => {
+        const category = categories.find((category: Category) => category.id.toString() === item.category);
+
+        if (category) return { ...item, category: category._id!.toHexString() };
+    });
+};

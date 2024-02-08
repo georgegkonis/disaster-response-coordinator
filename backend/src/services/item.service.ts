@@ -2,6 +2,14 @@ import itemModel, { Item } from '../models/item.model';
 import { FilterQuery, QueryOptions } from 'mongoose';
 import ItemNotFoundError from '../errors/item-not-found-error';
 
+export const createItem = async (
+    input: Partial<Item>
+) => {
+    const item: Item = await itemModel.create(input);
+
+    return item;
+};
+
 export const insertAndUpdateItems = async (jsonData: any[]) => {
     const bulkOps = jsonData.map((item: Item) => ({
         updateOne: {
@@ -27,7 +35,7 @@ export const deleteAllItems = async () => {
     await itemModel.deleteMany();
 };
 
-export const updateQuantity = async (
+export const updateItemQuantity = async (
     id: string,
     quantity: number
 ) => {
@@ -40,4 +48,4 @@ export const updateQuantity = async (
     if (!item) throw new ItemNotFoundError(id);
 
     return item;
-}
+};

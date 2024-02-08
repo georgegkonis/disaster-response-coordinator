@@ -4,6 +4,7 @@ import express from 'express';
 import { restrictTo } from '../middleware/restrict-to.middleware';
 import { Role } from '../enums/role.enum';
 import {
+    createCategoryHandler, createItemHandler,
     deleteAllCategoriesAndItemsHandler,
     getCategoriesHandler,
     getItemsHandler,
@@ -11,21 +12,32 @@ import {
     uploadCategoriesAndItemsHandler
 } from '../controllers/warehouse.controller';
 import { parseJsonData } from '../middleware/parse-json-data.middleware';
-import { warehouseSchema } from '../schemas/warehouse.schema';
+import { createCategorySchema, createItemSchema, warehouseJsonSchema } from '../schemas/warehouse.schema';
 import { validate } from '../middleware/validate.middleware';
 
 const router = express.Router();
 
 router.use(deserializeUser, requireUser);
 
+// Upload categories and items
+router.post('/upload', restrictTo(Role.ADMIN), parseJsonData, validate(warehouseJsonSchema), uploadCategoriesAndItemsHandler);
+
+// Add category
+router.post('/categories', restrictTo(Role.ADMIN), validate(createCategorySchema), createCategoryHandler);
+
+// Add item
+router.post('/items', restrictTo(Role.ADMIN), validate(createItemSchema), createItemHandler);
+
+// Get categories
 router.get('/categories', getCategoriesHandler);
 
+// Get items
 router.get('/items', getItemsHandler);
 
-router.post('/upload', restrictTo(Role.ADMIN), parseJsonData, validate(warehouseSchema), uploadCategoriesAndItemsHandler);
-
+// Delete all categories and items
 router.delete('/', restrictTo(Role.ADMIN), deleteAllCategoriesAndItemsHandler);
 
+// Update item quantity
 router.patch('/items/:id', restrictTo(Role.ADMIN), updateItemQuantityHandler);
 
 export default router;
