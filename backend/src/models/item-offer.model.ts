@@ -5,7 +5,7 @@ import { Item } from './item.model';
 
 @modelOptions({
     schemaOptions: {
-        collection: 'item-offers',
+        collection: 'item_offers',
         timestamps: true
     }
 })

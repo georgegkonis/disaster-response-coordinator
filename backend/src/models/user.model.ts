@@ -18,6 +18,7 @@ class Details {
 @index({ username: 1, email: 1 })
 @modelOptions({
     schemaOptions: {
+        collection: 'users',
         timestamps: true
     },
     options: {

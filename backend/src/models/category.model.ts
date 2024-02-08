@@ -4,7 +4,8 @@ import { Types } from 'mongoose';
 @index({ id: 'asc', name: 'text' })
 @modelOptions({
     schemaOptions: {
-        _id: false
+        collection: 'categories',
+        timestamps: true
     }
 })
 export class Category {

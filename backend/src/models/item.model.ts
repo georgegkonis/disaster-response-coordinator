@@ -1,5 +1,6 @@
-import { getModelForClass, index, modelOptions, prop } from '@typegoose/typegoose';
+import { getModelForClass, index, modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { Types } from 'mongoose';
+import { Category } from './category.model';
 
 class ItemDetail {
     @prop({ required: true, alias: 'detail_name' })
@@ -13,7 +14,7 @@ class ItemDetail {
 @modelOptions({
     schemaOptions: {
         collection: 'items',
-        _id: false
+        timestamps: true
     }
 })
 export class Item {
@@ -26,8 +27,8 @@ export class Item {
     @prop({ required: true })
     public name!: string;
 
-    @prop({ required: true })
-    public category!: string;
+    @prop({ required: true, ref: () => Category })
+    public category!: Ref<Category>;
 
     @prop({ required: true, type: () => [ItemDetail], _id: false })
     public details!: ItemDetail[];
