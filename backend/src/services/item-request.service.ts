@@ -1,13 +1,21 @@
-import { ItemRequestStatus } from '../enums/request-status.enum';
 import itemRequestModel, { ItemRequest } from '../models/item-request.model';
-import RequestNotFoundError from '../errors/request-not-found-error';
-import { CreateItemRequestInput } from '../schemas/item-request.schema';
+import ItemRequestNotFoundError from '../errors/request-not-found-error';
 import { FilterQuery, QueryOptions } from 'mongoose';
 
 export const createItemRequest = async (
-    input: CreateItemRequestInput
+    input: ItemRequest
 ) => {
     const request: ItemRequest = await itemRequestModel.create(input);
+
+    return request;
+};
+
+export const getItemRequest = async (
+    id: string
+) => {
+    const request: ItemRequest | null = await itemRequestModel.findById(id).lean();
+
+    if (!request) throw new ItemRequestNotFoundError(id);
 
     return request;
 };
@@ -21,17 +29,19 @@ export const findItemRequests = async (
     return requests;
 };
 
-export const updateItemRequestStatus = async (
+export const updateItemRequest = async (
     id: string,
-    status: ItemRequestStatus
+    input: Partial<ItemRequest>
 ) => {
-    const request: ItemRequest | null = await itemRequestModel.findByIdAndUpdate<ItemRequest>(
-        id,
-        { $set: { status: status } },
-        { new: true }
-    );
+    const request: ItemRequest | null = await itemRequestModel.findByIdAndUpdate(id, input, { new: true });
 
-    if (!request) throw new RequestNotFoundError(id);
+    if (!request) throw new ItemRequestNotFoundError(id);
 
     return request;
 };
+
+export const deleteItemRequest = async (
+    id: string
+) => {
+    await itemRequestModel.findByIdAndDelete(id);
+}

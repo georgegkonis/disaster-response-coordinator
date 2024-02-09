@@ -13,6 +13,7 @@ import userRoute from './routes/user.route';
 import authRoute from './routes/auth.route';
 import warehouseRoute from './routes/warehouse.route';
 import itemRequestRoute from './routes/item-request.route';
+import itemOfferRoute from './routes/item-offer.route';
 
 const app = express();
 
@@ -44,6 +45,7 @@ apiRouter.use('/users', userRoute);
 apiRouter.use('/auth', authRoute);
 apiRouter.use('/warehouse', warehouseRoute);
 apiRouter.use('/item-requests', itemRequestRoute);
+apiRouter.use('/item-offers', itemOfferRoute);
 
 app.use('/disaster-response-coordinator/v1', apiRouter);
 

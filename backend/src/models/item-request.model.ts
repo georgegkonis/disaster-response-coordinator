@@ -1,11 +1,11 @@
-import { getModelForClass, index, modelOptions, prop, Ref, Severity } from '@typegoose/typegoose';
-import { ItemRequestStatus } from '../enums/request-status.enum';
+import { getModelForClass, index, modelOptions, Prop, prop, Ref, Severity } from '@typegoose/typegoose';
+import { TaskStatus } from '../enums/task-status.enum';
 import { MapLocation } from './map-location';
 import { User } from './user.model';
 import { Item } from './item.model';
 import { Types } from 'mongoose';
 
-@index({ citizenId: 'asc', itemId: 'asc', status: 'asc' })
+@index({ item: 'asc', citizen: 'asc', status: 'asc', rescuer: 'asc', acceptedAt: 'desc' })
 @modelOptions({
     schemaOptions: {
         collection: 'item_requests',
@@ -31,11 +31,14 @@ export class ItemRequest {
     @prop({ required: true })
     public peopleCount!: number;
 
-    @prop({ required: true, _id: false })
-    public coordinates!: MapLocation;
+    @prop({ default: TaskStatus.PENDING })
+    public status?: TaskStatus;
 
-    @prop({ default: ItemRequestStatus.PENDING })
-    public status?: ItemRequestStatus;
+    @Prop({ ref: () => User })
+    public rescuer?: Ref<User>;
+
+    @Prop()
+    public acceptedAt?: Date;
 }
 
 const itemRequestModel = getModelForClass(ItemRequest);

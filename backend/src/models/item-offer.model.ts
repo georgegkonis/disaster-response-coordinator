@@ -1,8 +1,10 @@
 import { Types } from 'mongoose';
-import { modelOptions, Prop, Ref } from '@typegoose/typegoose';
+import { getModelForClass, index, modelOptions, Prop, Ref } from '@typegoose/typegoose';
 import { User } from './user.model';
 import { Item } from './item.model';
+import { TaskStatus } from '../enums/task-status.enum';
 
+@index({ item: 'asc', citizen: 'asc', status: 'asc', rescuer: 'asc', acceptedAt: 'desc' })
 @modelOptions({
     schemaOptions: {
         collection: 'item_offers',
@@ -22,9 +24,16 @@ export class ItemOffer {
     @Prop({ required: true })
     public quantity!: number;
 
+    @Prop({ default: TaskStatus.PENDING })
+    public status?: TaskStatus;
+
     @Prop({ ref: () => User })
     public rescuer?: Ref<User>;
 
     @Prop()
-    public pickedUpAt?: Date;
+    public acceptedAt?: Date;
 }
+
+const itemOfferModel = getModelForClass(ItemOffer);
+
+export default itemOfferModel;
