@@ -8,7 +8,7 @@ export const signJwt = (payload: Object, options: SignOptions = {}) => {
     ).toString('ascii');
     return jwt.sign(payload, privateKey, {
         ...(options && options),
-        algorithm: 'RS256',
+        algorithm: 'RS256'
     });
 };
 

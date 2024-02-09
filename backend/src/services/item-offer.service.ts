@@ -18,7 +18,7 @@ export const getItemOffer = async (
     if (!itemOffer) throw new NotFoundError('item offer', id);
 
     return itemOffer;
-}
+};
 
 export const findItemOffers = async (
     filter: FilterQuery<ItemOffer> = {},
@@ -44,4 +44,4 @@ export const deleteItemOffer = async (
     id: string
 ) => {
     await itemOfferModel.findByIdAndDelete(id);
-}
+};

@@ -52,4 +52,4 @@ export const getIncrementedCategoryId = async () => {
     const maxId = category ? category.id : 0;
 
     return maxId + 1;
-}
+};

@@ -6,8 +6,8 @@ POST {{host}}/{{baseUrl}}/item-offers
 Content-Type: application/json
 
 {
-    "item": "65c675e6177263200fc1eaab",
-    "quantity": 1
+  "item": "65c675e6177263200fc1eaab",
+  "quantity": 1
 }
 
 ### Get all

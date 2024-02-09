@@ -1,6 +1,6 @@
 import config from 'config';
 import { CookieOptions, NextFunction, Request, Response } from 'express';
-import { RegisterInput, LoginInput } from '../schemas/auth.schema';
+import { LoginInput, RegisterInput } from '../schemas/auth.schema';
 import { comparePasswords, createUser, findUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/mongo-error-codes';

@@ -18,7 +18,7 @@ POST {{host}}/{{baseUrl}}/warehouse/categories
 Content-Type: application/json
 
 {
-    "name": "Food"
+  "name": "Food"
 }
 
 ### Add item
@@ -27,14 +27,14 @@ POST {{host}}/{{baseUrl}}/warehouse/items
 Content-Type: application/json
 
 {
-    "name": "Milko",
-    "category": "65c675c7177263200fc1ea9c",
-    "details": [
-        {
-            "name": "price",
-            "value": "100"
-        }
-    ]
+  "name": "Milko",
+  "category": "65c675c7177263200fc1ea9c",
+  "details": [
+    {
+      "name": "price",
+      "value": "100"
+    }
+  ]
 }
 
 ### Get categories

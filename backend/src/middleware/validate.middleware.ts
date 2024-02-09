@@ -22,9 +22,9 @@ export const validate = (schema: AnyZodObject) => (
     } catch (err: any) {
         if (err instanceof ZodError) {
             const messages = err.errors.map(error => {
-                const field = error.path[error.path.length - 1]
+                const field = error.path[error.path.length - 1];
 
-                return `${field}: ${error.message}`
+                return `${field}: ${error.message}`;
             });
 
             next(new BadRequestError('Validation failed', messages));

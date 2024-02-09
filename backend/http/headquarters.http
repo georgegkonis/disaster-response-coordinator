@@ -6,10 +6,10 @@ POST {{host}}/{{baseUrl}}/headquarters
 Content-Type: application/json
 
 {
-    "location": {
-        "latitude": 1.0,
-        "longitude": 1.0
-    }
+  "location": {
+    "latitude": 1.0,
+    "longitude": 1.0
+  }
 }
 
 ### Get All

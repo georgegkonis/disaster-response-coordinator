@@ -6,9 +6,9 @@ POST {{host}}/{{baseUrl}}/item-requests
 Content-Type: application/json
 
 {
-    "item": "65c675a8fa63db786131a788",
-    "description": "I need it",
-    "peopleCount": 5
+  "item": "65c675a8fa63db786131a788",
+  "description": "I need it",
+  "peopleCount": 5
 }
 
 ### Get all
@@ -30,7 +30,7 @@ PATCH {{host}}/{{baseUrl}}/item-requests/{{requestId}}/status
 Content-Type: application/json
 
 {
-    "status": "pending"
+  "status": "pending"
 }
 
 ### Delete

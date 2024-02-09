@@ -44,4 +44,4 @@ export const deleteItemRequest = async (
     id: string
 ) => {
     await itemRequestModel.findByIdAndDelete(id);
-}
+};

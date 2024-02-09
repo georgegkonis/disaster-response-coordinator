@@ -4,7 +4,8 @@ import express from 'express';
 import { restrictTo } from '../middleware/restrict-to.middleware';
 import { Role } from '../enums/role.enum';
 import {
-    createCategoryHandler, createItemHandler,
+    createCategoryHandler,
+    createItemHandler,
     deleteAllCategoriesAndItemsHandler,
     getCategoriesHandler,
     getItemsHandler,

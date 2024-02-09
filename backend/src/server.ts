@@ -1,6 +1,4 @@
 import { StatusCode } from './enums/status-code.enum';
-
-require('dotenv').config();
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import config from 'config';
@@ -16,6 +14,8 @@ import itemRequestRoute from './routes/item-request.route';
 import itemOfferRoute from './routes/item-offer.route';
 import announcementRoute from './routes/announcement.route';
 import headquartersRoute from './routes/headquarters.route';
+
+require('dotenv').config();
 
 const app = express();
 

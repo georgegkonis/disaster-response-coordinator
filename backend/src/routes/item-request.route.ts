@@ -6,12 +6,12 @@ import { Role } from '../enums/role.enum';
 import { validate } from '../middleware/validate.middleware';
 import { createItemRequestSchema, updateItemRequestStatusSchema } from '../schemas/item-request.schema';
 import {
-    createItemRequestHandler, deleteItemRequestHandler,
+    createItemRequestHandler,
+    deleteItemRequestHandler,
     getItemRequestsHandler,
     getMyItemRequestsHandler,
     updateItemRequestStatusHandler
 } from '../controllers/item-request.controller';
-import { updateItemRequest } from '../services/item-request.service';
 
 const router = express.Router();
 

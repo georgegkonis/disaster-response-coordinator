@@ -1,6 +1,5 @@
 import { getModelForClass, index, modelOptions, Prop, prop, Ref, Severity } from '@typegoose/typegoose';
 import { TaskStatus } from '../enums/task-status.enum';
-import { MapLocation } from './map-location';
 import { User } from './user.model';
 import { Item } from './item.model';
 import { Types } from 'mongoose';

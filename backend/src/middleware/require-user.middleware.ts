@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import AppError from '../errors/app-error';
-import { StatusCode } from '../enums/status-code.enum';
 import UnauthorizedError from '../errors/unauthorized-error';
 
 export const requireUser = (

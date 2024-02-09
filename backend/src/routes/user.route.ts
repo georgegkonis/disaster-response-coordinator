@@ -3,10 +3,11 @@ import {
     createUserHandler,
     deleteMeHandler,
     deleteUserHandler,
-    getUsersHandler,
     getMeHandler,
     getUserHandler,
-    updateMeHandler, updateMyLocationHandler
+    getUsersHandler,
+    updateMeHandler,
+    updateMyLocationHandler
 } from '../controllers/user.controller';
 import { deserializeUser } from '../middleware/deserialize-user.middleware';
 import { requireUser } from '../middleware/require-user.middleware';

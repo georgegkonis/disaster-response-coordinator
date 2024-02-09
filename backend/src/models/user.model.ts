@@ -1,5 +1,4 @@
 import { getModelForClass, index, modelOptions, prop, Severity } from '@typegoose/typegoose';
-import bcrypt from 'bcryptjs';
 import { Role } from '../enums/role.enum';
 import { Types } from 'mongoose';
 import { MapLocation } from './map-location';

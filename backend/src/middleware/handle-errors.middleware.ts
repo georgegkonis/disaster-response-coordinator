@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
 import AppError from '../errors/app-error';
- import { Status } from '../enums/status.enum';
+import { Status } from '../enums/status.enum';
 
 export function handleErrors(
     err: AppError | any,

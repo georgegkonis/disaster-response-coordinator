@@ -61,4 +61,4 @@ export const getIncrementedItemId = async () => {
     const maxId = item ? item.id : 0;
 
     return maxId + 1;
-}
+};

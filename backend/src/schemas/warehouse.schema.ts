@@ -1,4 +1,4 @@
-import { object, string, array, number, TypeOf } from 'zod';
+import { array, number, object, string, TypeOf } from 'zod';
 import { isValidObjectId } from 'mongoose';
 import { Ref } from '@typegoose/typegoose';
 import { Category } from '../models/category.model';

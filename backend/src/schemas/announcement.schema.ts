@@ -9,7 +9,7 @@ export const createAnnouncementSchema = object({
     body: object({
         items: array(
             string().refine(isValidObjectId, 'Invalid ID format')
-        ).min(1).refine(duplicateItemsCheck, 'Duplicate values are not allowed'),
+        ).min(1).refine(duplicateItemsCheck, 'Duplicate values are not allowed')
     }).strip()
 });
 

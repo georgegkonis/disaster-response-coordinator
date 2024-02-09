@@ -6,10 +6,10 @@ POST {{host}}/{{baseUrl}}/users
 Content-Type: application/json
 
 {
-    "username": "rescuer2",
-    "password": "Password123!",
-    "email": "rescuer2@email.com",
-    "role": "rescuer"
+  "username": "rescuer2",
+  "password": "Password123!",
+  "email": "rescuer2@email.com",
+  "role": "rescuer"
 }
 
 ### Get all
@@ -30,12 +30,12 @@ PATCH {{host}}/{{baseUrl}}/users/me
 Content-Type: application/json
 
 {
-    "details": {
-        "firstName": "Giorgos",
-        "lastName": "Gkonis",
-        "phoneNumber": "+306955773209",
-        "address": "25is Martiou 13B, 14671 Athens, Greece"
-    }
+  "details": {
+    "firstName": "Giorgos",
+    "lastName": "Gkonis",
+    "phoneNumber": "+306955773209",
+    "address": "25is Martiou 13B, 14671 Athens, Greece"
+  }
 }
 
 ### Update my location
@@ -44,8 +44,8 @@ PATCH {{host}}/{{baseUrl}}/users/me/location
 Content-Type: application/json
 
 {
-    "latitude": 37.983810,
-    "longitude": 37.983810
+  "latitude": 37.983810,
+  "longitude": 37.983810
 }
 
 ### Delete me
