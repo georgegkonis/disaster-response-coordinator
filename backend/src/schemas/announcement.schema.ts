@@ -3,12 +3,13 @@ import { isValidObjectId } from 'mongoose';
 import { Item } from '../models/item.model';
 import { Ref } from '@typegoose/typegoose';
 
-const itemSchema = string().refine(isValidObjectId, { message: 'Invalid item ID' });
+const duplicateItemsCheck = (items: string[]): boolean => items.length === new Set(items).size;
+
 export const createAnnouncementSchema = object({
     body: object({
-        items: array(itemSchema, { required_error: 'Items are required' })
-            .min(1, 'At least 1 item is required')
-            .refine(items => items.length === new Set(items).size, { message: 'Duplicate items are not allowed' })
+        items: array(
+            string().refine(isValidObjectId, 'Invalid ID format')
+        ).min(1).refine(duplicateItemsCheck, 'Duplicate values are not allowed'),
     }).strip()
 });
 

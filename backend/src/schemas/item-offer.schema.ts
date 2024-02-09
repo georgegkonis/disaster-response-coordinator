@@ -7,23 +7,20 @@ import { Item } from '../models/item.model';
 
 export const createItemOfferSchema = object({
     body: object({
-        item: string({ required_error: 'Item ID is required' })
-            .refine(isValidObjectId, 'Invalid item ID'),
-        quantity: number({ required_error: 'Quantity is required' })
-            .min(1, 'Quantity must be greater than 0')
+        item: string().refine(isValidObjectId, 'Invalid ID format'),
+        quantity: number().min(1)
     }).strip()
 });
 
 export const updateItemOfferStatusSchema = object({
     params: object({
-        id: string({ required_error: 'Item offer ID is required' })
-            .refine(isValidObjectId, 'Invalid item offer ID')
+        id: string().refine(isValidObjectId, 'Invalid ID format')
     }),
+
     body: object({
-        status: z.enum([TaskStatus.ACCEPTED, TaskStatus.COMPLETED, TaskStatus.PENDING], { required_error: 'Status is required' })
+        status: z.enum([TaskStatus.ACCEPTED, TaskStatus.COMPLETED, TaskStatus.PENDING])
     }).strip()
 });
 
 export type CreateItemOfferInput = TypeOf<typeof createItemOfferSchema>['body'] & { item: Ref<Item>, citizen: Ref<User> };
-
 export type UpdateItemOfferStatusInput = TypeOf<typeof updateItemOfferStatusSchema>['body'] & { rescuer: Ref<User>, acceptedAt?: Date };
