@@ -88,7 +88,7 @@ export const createUserHandler = async (
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
         if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
-            err.message = 'Username already exists';
+             err.message = 'Username or email already exists';
         }
         next(err);
     }
