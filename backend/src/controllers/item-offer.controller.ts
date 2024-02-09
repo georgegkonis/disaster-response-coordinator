@@ -85,7 +85,7 @@ export const deleteItemOfferHandler = async (
     next: NextFunction
 ) => {
     try {
-        await verifyItemOfferCanBeDeleted(req.params.id, res.locals.user._id);
+        await canBeDeleted(req.params.id, res.locals.user._id.toHexString());
 
         await deleteItemOffer(req.params.id);
 
@@ -95,7 +95,7 @@ export const deleteItemOfferHandler = async (
     }
 };
 
-async function verifyItemOfferCanBeDeleted(id: string, userId: string) {
+async function canBeDeleted(id: string, userId: string) {
     const offer = await getItemOffer(id);
 
     if (offer.citizen._id.toHexString() !== userId) {

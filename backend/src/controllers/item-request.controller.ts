@@ -91,17 +91,7 @@ export const deleteItemRequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const request = await getItemRequest(req.params.id);
-
-        if (request.citizen._id.toHexString() !== res.locals.user._id.toHexString()) {
-            next(new UnauthorizedError('You are not authorized to delete this item request'));
-            return;
-        }
-
-        if (request.status === TaskStatus.COMPLETED) {
-            next(new ForbiddenError('You cannot delete a completed item request'));
-            return;
-        }
+        await canBeDeleted(req.params.id, res.locals.user._id.toHexString());
 
         await deleteItemRequest(req.params.id);
 
@@ -110,3 +100,15 @@ export const deleteItemRequestHandler = async (
         next(error);
     }
 };
+
+async function canBeDeleted(id: string, userId: string) {
+    const request = await getItemRequest(id);
+
+    if (request.citizen._id.toHexString() !== userId) {
+        throw new UnauthorizedError('You are not authorized to delete this item request');
+    }
+
+    if (request.status === TaskStatus.COMPLETED) {
+        throw new ForbiddenError('You cannot delete a completed item request');
+    }
+}
