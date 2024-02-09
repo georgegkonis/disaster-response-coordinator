@@ -1,4 +1,4 @@
-@itemId = 5f5e3e3e75ef47b68360fbd3
+@itemId = 65c675a8fa63db786131a811
 
 ### Upload categories and items
 
@@ -12,24 +12,12 @@ Content-Type: application/json
 < C:\Users\georg\Programming\Webstorm\disaster-response-coordinator\data\data.json
 --WebAppBoundary--
 
-### Get categories
-
-GET {{host}}/{{baseUrl}}/warehouse/categories
-#    ?name=Food
-
-### Get items
-
-GET {{host}}/{{baseUrl}}/warehouse/items
-#    ?category=9
-#    &name=t22
-
 ### Add Category
 
 POST {{host}}/{{baseUrl}}/warehouse/categories
 Content-Type: application/json
 
 {
-    "id": "1",
     "name": "Food"
 }
 
@@ -39,9 +27,8 @@ POST {{host}}/{{baseUrl}}/warehouse/items
 Content-Type: application/json
 
 {
-    "id": "2",
-    "name": "Power",
-    "category": "65c5524e75ef47b68360fbd3",
+    "name": "Milko",
+    "category": "65c675c7177263200fc1ea9c",
     "details": [
         {
             "name": "price",
@@ -50,13 +37,24 @@ Content-Type: application/json
     ]
 }
 
+### Get categories
+
+GET {{host}}/{{baseUrl}}/warehouse/categories
+#    ?name=Food
+
+### Get items
+
+GET {{host}}/{{baseUrl}}/warehouse/items
+#    ?name=Tampons
+#    &category=65c674f2177263200fc1ea61
+
 ### Update item quantity
 
 PATCH {{host}}/{{baseUrl}}/warehouse/items/{{itemId}}
 Content-Type: application/json
 
 {
-  "quantity": 100
+  "quantity": 1
 }
 
 ### Delete all categories and items

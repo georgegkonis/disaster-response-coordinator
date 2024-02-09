@@ -1,4 +1,4 @@
-@requestId = 65c6079d780844096593f469
+@requestId = 65c67bfa4ab244b97d2730fb
 
 ### Create
 
@@ -6,7 +6,7 @@ POST {{host}}/{{baseUrl}}/item-requests
 Content-Type: application/json
 
 {
-    "item": "65c5fb76fa63db7861314a31",
+    "item": "65c675a8fa63db786131a788",
     "description": "I need it",
     "peopleCount": 5
 }

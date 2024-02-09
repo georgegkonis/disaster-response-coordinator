@@ -1,4 +1,4 @@
-@itemOfferId = 65c6078a780844096593f460
+@itemOfferId = 65c67b43e7ccbd10066bbe1f
 
 ### Create
 
@@ -6,7 +6,7 @@ POST {{host}}/{{baseUrl}}/item-offers
 Content-Type: application/json
 
 {
-    "item": "65c5fb76fa63db7861314a21",
+    "item": "65c675e6177263200fc1eaab",
     "quantity": 1
 }
 

@@ -1,4 +1,4 @@
-@announcementId = 65c62c0db09e97d1911229f0
+@announcementId = 65c678ec90e44ea4b2b9f566
 
 ### Create
 
@@ -6,7 +6,7 @@ POST {{host}}/{{baseUrl}}/announcements
 Content-Type: application/json
 
 {
-    "items": ["65c5fb76fa63db7861314a21", "65c5fb76fa63db7861314a32"]
+    "items": ["65c675a8fa63db786131a787", "65c675a8fa63db786131a78a", "65c675a8fa63db786131a799"]
 }
 
 ### Get All
