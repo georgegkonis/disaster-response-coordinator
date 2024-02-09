@@ -10,6 +10,16 @@ export const createItem = async (
     return item;
 };
 
+export const getItem = async (
+    id: string
+) => {
+    const item: Item | null = await itemModel.findById(id).lean();
+
+    if (!item) throw new ItemNotFoundError(id);
+
+    return item;
+};
+
 export const insertAndUpdateItems = async (jsonData: any[]) => {
     const bulkOps = jsonData.map((item: Item) => ({
         updateOne: {

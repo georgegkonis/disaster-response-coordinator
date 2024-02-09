@@ -4,11 +4,21 @@ import CategoryNotFoundError from '../errors/category-not-found.error';
 
 export const createCategory = async (
     input: Partial<Category>
-)=> {
+) => {
     const category: Category = await categoryModel.create(input);
 
     return category;
-}
+};
+
+export const getCategory = async (
+    id: string
+) => {
+    const category: Category | null = await categoryModel.findById(id).lean();
+
+    if (!category) throw new CategoryNotFoundError(id);
+
+    return category;
+};
 
 export const insertAndUpdateCategories = async (
     categories: any[]
