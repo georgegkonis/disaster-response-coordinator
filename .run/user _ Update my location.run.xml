@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="user | Update my location" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="User" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/user.http" index="3" requestIdentifier="Update my location" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>
