@@ -117,7 +117,7 @@ export const updateItemQuantityHandler = async (
     }
 };
 
-const mapItemCategoryIdsToObjectIds = async (items: any[]) => {
+async function mapItemCategoryIdsToObjectIds(items: any[]) {
     const categories = await findCategories();
 
     return items.map((item: any) => {
@@ -125,4 +125,4 @@ const mapItemCategoryIdsToObjectIds = async (items: any[]) => {
 
         if (category) return { ...item, category: category._id!.toHexString() };
     });
-};
+}
