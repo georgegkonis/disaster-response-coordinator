@@ -14,6 +14,8 @@ import authRoute from './routes/auth.route';
 import warehouseRoute from './routes/warehouse.route';
 import itemRequestRoute from './routes/item-request.route';
 import itemOfferRoute from './routes/item-offer.route';
+import announcementRoute from './routes/announcement.route';
+import headquartersRoute from './routes/headquarters.route';
 
 const app = express();
 
@@ -46,6 +48,8 @@ apiRouter.use('/auth', authRoute);
 apiRouter.use('/warehouse', warehouseRoute);
 apiRouter.use('/item-requests', itemRequestRoute);
 apiRouter.use('/item-offers', itemOfferRoute);
+apiRouter.use('/announcements', announcementRoute);
+apiRouter.use('/headquarters', headquartersRoute);
 
 app.use('/disaster-response-coordinator/v1', apiRouter);
 

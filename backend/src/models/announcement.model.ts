@@ -1,5 +1,5 @@
 import { Item } from './item.model';
-import { modelOptions, Prop, Ref } from '@typegoose/typegoose';
+import { getModelForClass, modelOptions, Prop, Ref } from '@typegoose/typegoose';
 import { Types } from 'mongoose';
 
 @modelOptions({
@@ -15,3 +15,7 @@ export class Announcement {
     @Prop({ required: true, ref: () => Item })
     public items!: Ref<Item>[];
 }
+
+const announcementModel = getModelForClass(Announcement);
+
+export default announcementModel;
