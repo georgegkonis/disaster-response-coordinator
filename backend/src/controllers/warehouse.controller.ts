@@ -4,12 +4,64 @@ import {
     createCategory,
     deleteAllCategories,
     findCategories,
+    getCategory,
     insertAndUpdateCategories
 } from '../services/category.service';
 import { createItem, deleteAllItems, findItems, insertAndUpdateItems, updateItemQuantity } from '../services/item.service';
 import { Status } from '../enums/status.enum';
 import { Category } from '../models/category.model';
-import { Item } from '../models/item.model';
+import { CreateCategoryInput, CreateItemInput, UpdateItemQuantityInput, WarehouseJsonInput } from '../schemas/warehouse.schema';
+
+export const uploadCategoriesAndItemsHandler = async (
+    req: Request<{}, {}, WarehouseJsonInput>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await insertAndUpdateCategories(req.body.categories);
+
+        const validItems = await mapItemCategoryIdsToObjectIds(req.body.items);
+
+        await insertAndUpdateItems(validItems);
+
+        res.status(StatusCode.OK).json({
+            status: Status.SUCCESS,
+            message: 'Categories and items uploaded successfully'
+        });
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const createCategoryHandler = async (
+    req: Request<{}, {}, CreateCategoryInput>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const category = await createCategory(req.body);
+
+        res.status(StatusCode.CREATED).json(category);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const createItemHandler = async (
+    req: Request<{}, {}, CreateItemInput>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await getCategory(req.body.category);
+
+        const item = await createItem(req.body);
+
+        res.status(StatusCode.CREATED).json(item);
+    } catch (err: any) {
+        next(err);
+    }
+};
 
 export const getCategoriesHandler = async (
     req: Request<{}, {}, {}, { name?: string }>,
@@ -39,50 +91,15 @@ export const getItemsHandler = async (
     }
 };
 
-export const createCategoryHandler = async (
-    req: Request<{}, {}, Partial<Category>>,
+export const updateItemQuantityHandler = async (
+    req: Request<{ id: string }, {}, UpdateItemQuantityInput>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const category = await createCategory(req.body);
+        const item = await updateItemQuantity(req.params.id, req.body.quantity);
 
-        res.status(StatusCode.CREATED).json(category);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const createItemHandler = async (
-    req: Request<{}, {}, Partial<Item>>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const item = await createItem(req.body);
-
-        res.status(StatusCode.CREATED).json(item);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const uploadCategoriesAndItemsHandler = async (
-    req: Request<{}, {}, { categories: any[], items: any[] }>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        await insertAndUpdateCategories(req.body.categories);
-
-        const items = await mapItemCategoryIdsToObjectIds(req.body.items);
-
-        await insertAndUpdateItems(items);
-
-        res.status(StatusCode.OK).json({
-            status: Status.SUCCESS,
-            message: 'Categories and items uploaded successfully'
-        });
+        res.status(StatusCode.OK).json(item);
     } catch (err: any) {
         next(err);
     }
@@ -103,22 +120,9 @@ export const deleteAllCategoriesAndItemsHandler = async (
     }
 };
 
-export const updateItemQuantityHandler = async (
-    req: Request<{ id: string }, {}, { quantity: number }>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const item = await updateItemQuantity(req.params.id, req.body.quantity);
-
-        res.status(StatusCode.OK).json(item);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
 async function mapItemCategoryIdsToObjectIds(items: any[]) {
-    const categories = await findCategories();
+    const ids = items.map((item: any) => Number(item.category));
+    const categories = await findCategories({ id: { $in: ids } });
 
     return items.map((item: any) => {
         const category = categories.find((category: Category) => category.id.toString() === item.category);

@@ -1,82 +1,70 @@
 import { object, string, array, number, TypeOf } from 'zod';
+import { isValidObjectId } from 'mongoose';
+import { Ref } from '@typegoose/typegoose';
+import { Category } from '../models/category.model';
 
 //#region JSON Schemas
 
-const detailJsonSchema = object({
-    detail_name: string({ required_error: 'Detail name is required' }),
-    detail_value: string({ required_error: 'Detail value is required' })
+const detailJsonShape = object({
+    detail_name: string(),
+    detail_value: string()
 }).strip();
 
 const itemJsonSchema = object({
-    id: string({ required_error: 'Item ID is required' })
-        .min(1, { message: 'Item ID cannot be empty' })
-        .refine(value => !isNaN(Number(value)), { message: 'Item ID must be a string that can be parsed into a number' }),
-    name: string({ required_error: 'Item name is required' }),
-    category: string({ required_error: 'Item category is required' })
-        .min(1, { message: 'Item category cannot be empty' }),
-    details: array(detailJsonSchema, { required_error: 'Item details are required' })
-        .min(1, { message: 'Item details cannot be empty' })
+    id: string().min(1).refine(value => !isNaN(Number(value)), 'Item ID must be a string that can be parsed into a number'),
+    name: string(),
+    category: string().min(1).refine(value => !isNaN(Number(value)), 'Item category must be a string that can be parsed into a number'),
+    details: array(detailJsonShape).min(1)
 }).strip();
 
 const categoryJsonSchema = object({
-    id: string({ required_error: 'Category ID is required' })
-        .min(1, { message: 'Category ID cannot be empty' })
-        .refine(value => !isNaN(Number(value)), { message: 'Category ID must be a string that can be parsed into a number' }),
-    category_name: string({ required_error: 'Category name is required' })
+    id: string().min(1).refine(value => !isNaN(Number(value)), 'Category ID must be a string that can be parsed into a number'),
+    category_name: string()
 }).strip();
 
 export const warehouseJsonSchema = object({
     body: object({
         code: number().optional(),
         message: string().optional(),
-        items: array(itemJsonSchema, { required_error: 'Items are required' }),
-        categories: array(categoryJsonSchema, { required_error: 'Categories are required' })
+        items: array(itemJsonSchema),
+        categories: array(categoryJsonSchema)
     }).strip()
 });
 
 //#endregion
 
-const detailSchema = object({
-    name: string({ required_error: 'Detail name is required' }),
-    value: string({ required_error: 'Detail value is required' })
+const detailShape = object({
+    name: string().min(1),
+    value: string().min(1)
 }).strip();
 
 export const createItemSchema = object({
     body: object({
-        id: string({ required_error: 'Item ID is required' })
-            .min(1, { message: 'Item ID cannot be empty' })
-            .refine(value => !isNaN(Number(value)), { message: 'Item ID must be a string that can be parsed into a number' }),
-        name: string({ required_error: 'Item name is required' }),
-        category: string({ required_error: 'Item category is required' })
-            .min(1, { message: 'Item category cannot be empty' }),
-        details: array(detailSchema, { required_error: 'Item details are required' })
-            .min(1, { message: 'Item details cannot be empty' })
+        id: number().min(0),
+        name: string().min(1),
+        category: string().refine(isValidObjectId, 'Invalid ID format'),
+        details: array(detailShape).min(1)
     }).strip()
 });
 
 export const createCategorySchema = object({
     body: object({
-        id: string({ required_error: 'Category ID is required' })
-            .min(1, { message: 'Category ID cannot be empty' })
-            .refine(value => !isNaN(Number(value)), { message: 'Category ID must be a string that can be parsed into a number' }),
-        name: string({ required_error: 'Category name is required' })
+        id: number().min(0),
+        name: string().min(1)
     }).strip()
 });
 
 export const updateItemQuantitySchema = object({
     params: object({
-        id: string({ required_error: 'Item ID is required' })
-            .min(1, { message: 'Item ID cannot be empty' })
-            .refine(value => !isNaN(Number(value)), { message: 'Item ID must be a string that can be parsed into a number' })
+        id: string().refine(isValidObjectId, 'Invalid ID format')
     }).strip(),
+
     body: object({
-        quantity: number({ required_error: 'Item quantity is required' })
-            .min(1, { message: 'Item quantity must be greater than 0' })
+        quantity: number().min(0)
     }).strip()
 });
 
-export type CreateItemInput = TypeOf<typeof createItemSchema>['body'];
-
+export type WarehouseJsonInput = TypeOf<typeof warehouseJsonSchema>['body'];
+export type CreateItemInput = TypeOf<typeof createItemSchema>['body'] & { category: Ref<Category> };
 export type CreateCategoryInput = TypeOf<typeof createCategorySchema>['body'];
-
 export type UpdateItemQuantityInput = TypeOf<typeof updateItemQuantitySchema>['body'];

@@ -3,9 +3,9 @@ import { FilterQuery, QueryOptions } from 'mongoose';
 import NotFoundError from '../errors/not-found-error';
 
 export const createCategory = async (
-    input: Partial<Category>
+    input: Category
 ) => {
-    const category: Category = await categoryModel.create(input);
+    const category: Category = await categoryModel.create<Category>(input);
 
     return category;
 };

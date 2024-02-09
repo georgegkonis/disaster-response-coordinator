@@ -3,9 +3,9 @@ import { FilterQuery, QueryOptions } from 'mongoose';
 import NotFoundError from '../errors/not-found-error';
 
 export const createItem = async (
-    input: Partial<Item>
+    input: Item
 ) => {
-    const item: Item = await itemModel.create(input);
+    const item: Item = await itemModel.create<Item>(input);
 
     return item;
 };
@@ -49,11 +49,7 @@ export const updateItemQuantity = async (
     id: string,
     quantity: number
 ) => {
-    const item: Item | null = await itemModel.findOneAndUpdate<Item>(
-        { id },
-        { $set: { quantity } },
-        { new: true }
-    );
+    const item: Item | null = await itemModel.findByIdAndUpdate<Item>(id, { $set: { quantity } }, { new: true });
 
     if (!item) throw new NotFoundError('item', id);
 
