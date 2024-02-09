@@ -1,21 +1,38 @@
+@requestId = 65c6079d780844096593f469
+
 ### Create
 
 POST {{host}}/{{baseUrl}}/item-requests
 Content-Type: application/json
 
 {
-  "item": "659ad4b3b3e6a79f76cf5577",
-  "description": "I need it",
-  "peopleCount": 5
+    "item": "65c5fb76fa63db7861314a31",
+    "description": "I need it",
+    "peopleCount": 5
 }
+
+### Get all
+
+GET {{host}}/{{baseUrl}}/item-requests
+#    ?status=pending
+#    &item=65c5fb76fa63db7861314a31
+#    &citizen=65c5fb76fa63db7861314a31
 
 ### Get mine
 
 GET {{host}}/{{baseUrl}}/item-requests/me
 #    ?status=pending
+#    &item=65c5fb76fa63db7861314a31
 
-### Get all
+### Update status
 
-GET {{host}}/{{baseUrl}}/item-requests
-#    ?citizenId={{citizenId}}
-#    &status=pending
+PATCH {{host}}/{{baseUrl}}/item-requests/{{requestId}}/status
+Content-Type: application/json
+
+{
+    "status": "pending"
+}
+
+### Delete
+
+DELETE {{host}}/{{baseUrl}}/item-requests/{{requestId}}

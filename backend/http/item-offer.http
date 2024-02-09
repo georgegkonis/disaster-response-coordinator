@@ -1,0 +1,37 @@
+@itemOfferId = 65c6078a780844096593f460
+
+### Create
+
+POST {{host}}/{{baseUrl}}/item-offers
+Content-Type: application/json
+
+{
+    "item": "65c5fb76fa63db7861314a21",
+    "quantity": 1
+}
+
+### Get all
+
+GET {{host}}/{{baseUrl}}/item-offers
+#    ?status=pending
+#    &item=65c5fb76fa63db7861314a21
+#    &citizen=65c5f9e3fa63db7861314a1f
+
+### Get mine
+
+GET {{host}}/{{baseUrl}}/item-offers/me
+#    ?status=pending
+#    &item=65c5fb76fa63db7861314a21
+
+### Update status
+
+PATCH {{host}}/{{baseUrl}}/item-offers/{{itemOfferId}}/status
+Content-Type: application/json
+
+{
+  "status": "accepted"
+}
+
+### Delete
+
+DELETE {{host}}/{{baseUrl}}/item-offers/{{itemOfferId}}

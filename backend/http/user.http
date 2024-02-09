@@ -8,8 +8,6 @@ PATCH {{host}}/{{baseUrl}}/users/me
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "sdf!",
   "details": {
     "firstName": "George",
     "lastName": "Gkonis",
