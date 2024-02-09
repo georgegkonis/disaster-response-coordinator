@@ -1,0 +1,21 @@
+@headquartersId = 65c62c4fb09e97d191122a02
+
+### Create
+
+POST {{host}}/{{baseUrl}}/headquarters
+Content-Type: application/json
+
+{
+    "location": {
+        "latitude": 1.0,
+        "longitude": 1.0
+    }
+}
+
+### Get All
+
+GET {{host}}/{{baseUrl}}/headquarters
+
+### Delete
+
+DELETE {{host}}/{{baseUrl}}/headquarters/{{headquartersId}}

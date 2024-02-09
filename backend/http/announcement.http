@@ -1,0 +1,18 @@
+@announcementId = 65c62c0db09e97d1911229f0
+
+### Create
+
+POST {{host}}/{{baseUrl}}/announcements
+Content-Type: application/json
+
+{
+    "items": ["65c5fb76fa63db7861314a21", "65c5fb76fa63db7861314a32"]
+}
+
+### Get All
+
+GET {{host}}/{{baseUrl}}/announcements
+
+### Delete
+
+DELETE {{host}}/{{baseUrl}}/announcements/{{announcementId}}

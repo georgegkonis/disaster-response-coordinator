@@ -1,3 +1,5 @@
+@itemId = 5f5e3e3e75ef47b68360fbd3
+
 ### Upload categories and items
 
 POST {{host}}/{{baseUrl}}/warehouse/upload

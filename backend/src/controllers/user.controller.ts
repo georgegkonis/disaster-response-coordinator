@@ -4,6 +4,7 @@ import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { deleteUserCache, updateUserCache } from '../services/cache.service';
 import { CreateUserInput, UpdateUserInput, UpdateUserLocationInput } from '../schemas/user.schema';
+import { Role } from '../enums/role.enum';
 
 export const getMeHandler = (
     _req: Request,
@@ -54,7 +55,7 @@ export const updateMyLocationHandler = async (
     } catch (err: any) {
         next(err);
     }
-}
+};
 
 export const deleteMeHandler = async (
     _req: Request,
@@ -88,7 +89,7 @@ export const createUserHandler = async (
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
         if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
-             err.message = 'Username or email already exists';
+            err.message = 'Username or email already exists';
         }
         next(err);
     }
@@ -108,13 +109,13 @@ export const getUserHandler = async (
     }
 };
 
-export const getAllUsersHandler = async (
-    _req: Request,
+export const getUsersHandler = async (
+    req: Request<{ role?: Role }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const users = await findUsers();
+        const users = await findUsers(req.query);
 
         res.status(StatusCode.OK).json(users);
     } catch (err: any) {

@@ -3,7 +3,7 @@ import {
     createUserHandler,
     deleteMeHandler,
     deleteUserHandler,
-    getAllUsersHandler,
+    getUsersHandler,
     getMeHandler,
     getUserHandler,
     updateMeHandler, updateMyLocationHandler
@@ -23,7 +23,7 @@ router.use(deserializeUser, requireUser);
 router.post('/', restrictTo(Role.ADMIN), validate(createUserSchema), createUserHandler);
 
 // Get all users
-router.get('/', restrictTo(Role.ADMIN), getAllUsersHandler);
+router.get('/', restrictTo(Role.ADMIN), getUsersHandler);
 
 // Get current user
 router.get('/me', getMeHandler);
