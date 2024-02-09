@@ -55,3 +55,10 @@ export const updateItemQuantity = async (
 
     return item;
 };
+
+export const getIncrementedItemId = async () => {
+    const item = await itemModel.findOne().sort('-id').select('id').exec();
+    const maxId = item ? item.id : 0;
+
+    return maxId + 1;
+}

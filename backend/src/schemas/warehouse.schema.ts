@@ -40,7 +40,6 @@ const detailShape = object({
 
 export const createItemSchema = object({
     body: object({
-        id: number().min(0),
         name: string().min(1),
         category: string().refine(isValidObjectId, 'Invalid ID format'),
         details: array(detailShape).min(1)
@@ -49,7 +48,6 @@ export const createItemSchema = object({
 
 export const createCategorySchema = object({
     body: object({
-        id: number().min(0),
         name: string().min(1)
     }).strip()
 });
@@ -65,6 +63,6 @@ export const updateItemQuantitySchema = object({
 });
 
 export type WarehouseJsonInput = TypeOf<typeof warehouseJsonSchema>['body'];
-export type CreateItemInput = TypeOf<typeof createItemSchema>['body'] & { category: Ref<Category> };
-export type CreateCategoryInput = TypeOf<typeof createCategorySchema>['body'];
+export type CreateItemInput = TypeOf<typeof createItemSchema>['body'] & { id: number, category: Ref<Category> };
+export type CreateCategoryInput = TypeOf<typeof createCategorySchema>['body'] & { id: number };
 export type UpdateItemQuantityInput = TypeOf<typeof updateItemQuantitySchema>['body'];

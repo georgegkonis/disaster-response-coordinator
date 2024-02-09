@@ -46,3 +46,10 @@ export const findCategories = async (
 export const deleteAllCategories = async () => {
     await categoryModel.deleteMany();
 };
+
+export const getIncrementedCategoryId = async () => {
+    const category = await categoryModel.findOne().sort('-id').select('id').exec();
+    const maxId = category ? category.id : 0;
+
+    return maxId + 1;
+}

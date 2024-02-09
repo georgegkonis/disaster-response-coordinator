@@ -5,9 +5,17 @@ import {
     deleteAllCategories,
     findCategories,
     getCategory,
+    getIncrementedCategoryId,
     insertAndUpdateCategories
 } from '../services/category.service';
-import { createItem, deleteAllItems, findItems, insertAndUpdateItems, updateItemQuantity } from '../services/item.service';
+import {
+    createItem,
+    deleteAllItems,
+    findItems,
+    getIncrementedItemId,
+    insertAndUpdateItems,
+    updateItemQuantity
+} from '../services/item.service';
 import { Status } from '../enums/status.enum';
 import { Category } from '../models/category.model';
 import { CreateCategoryInput, CreateItemInput, UpdateItemQuantityInput, WarehouseJsonInput } from '../schemas/warehouse.schema';
@@ -39,6 +47,8 @@ export const createCategoryHandler = async (
     next: NextFunction
 ) => {
     try {
+        req.body.id = await getIncrementedCategoryId();
+
         const category = await createCategory(req.body);
 
         res.status(StatusCode.CREATED).json(category);
@@ -54,6 +64,8 @@ export const createItemHandler = async (
 ) => {
     try {
         await getCategory(req.body.category);
+
+        req.body.id = await getIncrementedItemId();
 
         const item = await createItem(req.body);
 
