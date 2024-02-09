@@ -1,7 +1,7 @@
 import config from 'config';
 import { CookieOptions, NextFunction, Request, Response } from 'express';
 import { RegisterInput, LoginInput } from '../schemas/auth.schema';
-import { createUser, findUser } from '../services/user.service';
+import { comparePasswords, createUser, findUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { signToken } from '../services/auth.service';
@@ -51,7 +51,7 @@ export const loginHandler = async (
         const user = await findUser({ username: req.body.username }, {}, true);
 
         // Check if user exist and password is correct
-        if (!user || !(await user.comparePasswords(user.password, req.body.password))) {
+        if (!user || !(await comparePasswords(user.password, req.body.password))) {
             return next(new UnauthorizedError('Invalid username or password'));
         }
 

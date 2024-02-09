@@ -1,5 +1,6 @@
-import { number, object, string, TypeOf } from 'zod';
-import { passCharsCheck, roleCheck } from '../utils/checks';
+import { number, object, string, TypeOf, z } from 'zod';
+import { passCharsCheck } from '../utils/checks';
+import { Role } from '../enums/role.enum';
 
 const userDetailsShape = object({
     firstName: string()
@@ -27,8 +28,7 @@ export const createUserSchema = object({
             .refine(passCharsCheck, 'Password must contain at least 1 number, 1 capital letter and 1 special character'),
         email: string({ required_error: 'Email is required' })
             .email('Invalid email'),
-        role: string({ required_error: 'Role is required' })
-            .refine(roleCheck, { message: 'Role must be either user or rescuer' })
+        role: z.enum([Role.RESCUER], { required_error: 'Role is required', invalid_type_error: 'Invalid role value' })
     }).strip()
 });
 
@@ -46,5 +46,13 @@ export const updateUserSchema = object({
     }).strip()
 });
 
+export const updateUserLocationSchema = object({
+    body: object({
+        latitude: number(),
+        longitude: number()
+    }).strip()
+});
+
 export type CreateUserInput = TypeOf<typeof createUserSchema>['body'];
 export type UpdateUserInput = TypeOf<typeof updateUserSchema>['body'];
+export type UpdateUserLocationInput = TypeOf<typeof updateUserLocationSchema>['body'];

@@ -13,7 +13,7 @@ import { requireUser } from '../middleware/require-user.middleware';
 import { restrictTo } from '../middleware/restrict-to.middleware';
 import { Role } from '../enums/role.enum';
 import { validate } from '../middleware/validate.middleware';
-import { createUserSchema, updateUserSchema } from '../schemas/user.schema';
+import { createUserSchema, updateUserLocationSchema, updateUserSchema } from '../schemas/user.schema';
 
 const router = express.Router();
 
@@ -28,17 +28,17 @@ router.get('/', restrictTo(Role.ADMIN), getAllUsersHandler);
 // Get current user
 router.get('/me', getMeHandler);
 
+// Get user by id
+router.get('/:id', restrictTo(Role.ADMIN), getUserHandler);
+
 // Update current user
 router.patch('/me', validate(updateUserSchema), updateMeHandler);
 
 // Update current user's location
-router.patch('/me/location', updateMyLocationHandler);
+router.patch('/me/location', validate(updateUserLocationSchema), updateMyLocationHandler);
 
 // Delete current user
 router.delete('/me', deleteMeHandler);
-
-// Get user by id
-router.get('/:id', restrictTo(Role.ADMIN), getUserHandler);
 
 // Delete user by id
 router.delete('/:id', restrictTo(Role.ADMIN), deleteUserHandler);

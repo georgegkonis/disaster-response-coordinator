@@ -1,49 +1,15 @@
 import { FilterQuery, QueryOptions } from 'mongoose';
 import userModel, { User } from '../models/user.model';
 import NotFoundError from '../errors/not-found-error';
-import { RegisterInput } from '../schemas/auth.schema';
 import bcrypt from 'bcryptjs';
-import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
 
 export const createUser = async (
-    input: RegisterInput | CreateUserInput
+    input: User
 ) => {
     input.password = await encryptPassword(input.password);
-    const user: User = await userModel.create(input);
+    const user: User = await userModel.create<User>(input);
 
     return user;
-};
-
-export const updateUser = async (
-    id: string,
-    input: UpdateUserInput
-) => {
-    if (input.password) input.password = await encryptPassword(input.password);
-
-    const user: User | null = await userModel.findByIdAndUpdate<User>(id, input, { new: true });
-
-    if (!user) throw new NotFoundError('user', id);
-
-    return user;
-};
-
-export const updateUserLocation = async (
-    id: string,
-    latitude: number,
-    longitude: number
-) => {
-    const user = await userModel.findById(id);
-
-    if (!user) throw new NotFoundError('user', id);
-
-    user.location = { latitude, longitude };
-    await user.save();
-};
-
-export const deleteUser = async (
-    id: string
-) => {
-    await userModel.findByIdAndDelete<User>(id);
 };
 
 export const getUser = async (
@@ -79,6 +45,29 @@ export const findUsers = async (
 
     return users;
 };
+
+export const updateUser = async (
+    id: string,
+    input: Partial<User>
+) => {
+    if (input.password) input.password = await encryptPassword(input.password);
+
+    const user: User | null = await userModel.findByIdAndUpdate<User>(id, input, { new: true });
+
+    if (!user) throw new NotFoundError('user', id);
+
+    return user;
+};
+
+export const deleteUser = async (
+    id: string
+) => {
+    await userModel.findByIdAndDelete<User>(id);
+};
+
+export async function comparePasswords(hashedPassword: string, candidatePassword: string) {
+    return await bcrypt.compare(candidatePassword, hashedPassword);
+}
 
 async function encryptPassword(password: string) {
     return await bcrypt.hash(password, 10);

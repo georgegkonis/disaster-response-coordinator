@@ -46,10 +46,6 @@ export class User {
 
     @prop({ _id: false })
     public location?: MapLocation;
-
-    async comparePasswords(hashedPassword: string, candidatePassword: string) {
-        return await bcrypt.compare(candidatePassword, hashedPassword);
-    }
 }
 
 const userModel = getModelForClass(User);
