@@ -4,7 +4,7 @@ import { LoginRequest, RegisterRequest } from '../models/requests.model';
 import { Observable } from 'rxjs';
 import { LoginResponse } from '../models/responses.model';
 
-const baseUrl = 'http://localhost:8000/api';
+const baseUrl = 'http://localhost:8000/disaster-response-coordinator/v1';
 const authUrl = baseUrl + '/auth';
 
 @Injectable({
@@ -27,5 +27,4 @@ export class AuthService {
     logout(): Observable<void> {
         return this.http.post<void>(authUrl + '/logout', {});
     }
-
 }

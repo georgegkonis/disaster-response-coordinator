@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { GetUsersResponse } from '../models/responses.model';
 import { UpdateUserRequest } from '../models/requests.model';
 
-const baseUrl = 'http://localhost:8000/api';
+const baseUrl = 'http://localhost:8000/disaster-response-coordinator/v1';
 const usersUrl = baseUrl + '/users';
 
 @Injectable({
