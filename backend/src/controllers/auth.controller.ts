@@ -5,9 +5,9 @@ import { createUser, findUser } from '../services/user.service';
 import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { signToken } from '../services/auth.service';
-import InvalidCredentialsError from '../errors/invalid-credentials-error';
 import { deleteUserCache } from '../services/cache.service';
 import { Status } from '../enums/status.enum';
+import UnauthorizedError from '../errors/unauthorized-error';
 
 // Cookie options
 const accessTokenCookieOptions: CookieOptions = {
@@ -52,7 +52,7 @@ export const loginHandler = async (
 
         // Check if user exist and password is correct
         if (!user || !(await user.comparePasswords(user.password, req.body.password))) {
-            return next(new InvalidCredentialsError());
+            return next(new UnauthorizedError('Invalid username or password'));
         }
 
         // Create an Access Token

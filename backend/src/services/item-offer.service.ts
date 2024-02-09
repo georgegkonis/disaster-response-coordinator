@@ -1,6 +1,6 @@
 import itemOfferModel, { ItemOffer } from '../models/item-offer.model';
 import { FilterQuery, QueryOptions } from 'mongoose';
-import ItemOfferNotFoundError from '../errors/item-offer-not-found.error';
+import NotFoundError from '../errors/not-found-error';
 
 export const createItemOffer = async (
     input: ItemOffer
@@ -15,7 +15,7 @@ export const getItemOffer = async (
 ) => {
     const itemOffer: ItemOffer | null = await itemOfferModel.findById(id).lean();
 
-    if (!itemOffer) throw new ItemOfferNotFoundError(id);
+    if (!itemOffer) throw new NotFoundError('item offer', id);
 
     return itemOffer;
 }
@@ -35,7 +35,7 @@ export const updateItemOffer = async (
 ) => {
     const itemOffer: ItemOffer | null = await itemOfferModel.findByIdAndUpdate<ItemOffer>(id, input, { new: true });
 
-    if (!itemOffer) throw new ItemOfferNotFoundError(id);
+    if (!itemOffer) throw new NotFoundError('item offer', id);
 
     return itemOffer;
 };

@@ -1,6 +1,6 @@
 import itemRequestModel, { ItemRequest } from '../models/item-request.model';
-import ItemRequestNotFoundError from '../errors/request-not-found-error';
 import { FilterQuery, QueryOptions } from 'mongoose';
+import NotFoundError from '../errors/not-found-error';
 
 export const createItemRequest = async (
     input: ItemRequest
@@ -15,7 +15,7 @@ export const getItemRequest = async (
 ) => {
     const request: ItemRequest | null = await itemRequestModel.findById(id).lean();
 
-    if (!request) throw new ItemRequestNotFoundError(id);
+    if (!request) throw new NotFoundError('item request', id);
 
     return request;
 };
@@ -35,7 +35,7 @@ export const updateItemRequest = async (
 ) => {
     const request: ItemRequest | null = await itemRequestModel.findByIdAndUpdate(id, input, { new: true });
 
-    if (!request) throw new ItemRequestNotFoundError(id);
+    if (!request) throw new NotFoundError('item request', id);
 
     return request;
 };

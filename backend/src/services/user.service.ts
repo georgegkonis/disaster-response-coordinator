@@ -1,6 +1,6 @@
 import { FilterQuery, QueryOptions } from 'mongoose';
 import userModel, { User } from '../models/user.model';
-import UserNotFoundError from '../errors/user-not-found-error';
+import NotFoundError from '../errors/not-found-error';
 import { RegisterInput } from '../schemas/auth.schema';
 import bcrypt from 'bcryptjs';
 import { CreateUserInput, UpdateUserInput } from '../schemas/user.schema';
@@ -22,7 +22,7 @@ export const updateUser = async (
 
     const user: User | null = await userModel.findByIdAndUpdate<User>(id, input, { new: true });
 
-    if (!user) throw new UserNotFoundError(id);
+    if (!user) throw new NotFoundError('user', id);
 
     return user;
 };
@@ -34,7 +34,7 @@ export const updateUserLocation = async (
 ) => {
     const user = await userModel.findById(id);
 
-    if (!user) throw new UserNotFoundError(id);
+    if (!user) throw new NotFoundError('user', id);
 
     user.location = { latitude, longitude };
     await user.save();
@@ -54,7 +54,7 @@ export const getUser = async (
         ? await userModel.findById<User>(id).select('+password').exec()
         : await userModel.findById<User>(id);
 
-    if (!user) throw new UserNotFoundError(id);
+    if (!user) throw new NotFoundError('user', id);
 
     return user;
 };

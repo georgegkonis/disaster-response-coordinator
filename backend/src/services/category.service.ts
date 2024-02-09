@@ -1,6 +1,6 @@
 import categoryModel, { Category } from '../models/category.model';
 import { FilterQuery, QueryOptions } from 'mongoose';
-import CategoryNotFoundError from '../errors/category-not-found.error';
+import NotFoundError from '../errors/not-found-error';
 
 export const createCategory = async (
     input: Partial<Category>
@@ -15,7 +15,7 @@ export const getCategory = async (
 ) => {
     const category: Category | null = await categoryModel.findById(id).lean();
 
-    if (!category) throw new CategoryNotFoundError(id);
+    if (!category) throw new NotFoundError('category', id);
 
     return category;
 };

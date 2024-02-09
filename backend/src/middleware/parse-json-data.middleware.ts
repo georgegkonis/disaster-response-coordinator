@@ -1,7 +1,6 @@
-import fs from 'fs/promises';  // Import the Promises API of fs
+import fs from 'fs/promises';
 import { NextFunction, Request, Response } from 'express';
-import { StatusCode } from '../enums/status-code.enum';
-import AppError from '../errors/app-error';
+import BadRequestError from '../errors/bad-request-error';
 
 export const parseJsonData = async (
     req: Request,
@@ -9,13 +8,13 @@ export const parseJsonData = async (
     next: NextFunction
 ) => {
     if (!req.files || !Array.isArray(req.files)) {
-        return next(new AppError('No file uploaded', StatusCode.BAD_REQUEST));
+        return next(new BadRequestError('No file uploaded'));
     }
 
     const file = req.files[0];
 
     if (!file || !file.path) {
-        return next(new AppError('File path not found', StatusCode.BAD_REQUEST));
+        return next(new BadRequestError('File path not found'));
     }
 
     try {

@@ -1,6 +1,6 @@
 import itemModel, { Item } from '../models/item.model';
 import { FilterQuery, QueryOptions } from 'mongoose';
-import ItemNotFoundError from '../errors/item-not-found-error';
+import NotFoundError from '../errors/not-found-error';
 
 export const createItem = async (
     input: Partial<Item>
@@ -15,7 +15,7 @@ export const getItem = async (
 ) => {
     const item: Item | null = await itemModel.findById(id).lean();
 
-    if (!item) throw new ItemNotFoundError(id);
+    if (!item) throw new NotFoundError('item', id);
 
     return item;
 };
@@ -55,7 +55,7 @@ export const updateItemQuantity = async (
         { new: true }
     );
 
-    if (!item) throw new ItemNotFoundError(id);
+    if (!item) throw new NotFoundError('item', id);
 
     return item;
 };

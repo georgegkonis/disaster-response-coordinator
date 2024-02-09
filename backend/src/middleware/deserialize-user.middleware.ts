@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { getUser } from '../services/user.service';
-import AppError from '../errors/app-error';
 import redisClient from '../config/redis.config';
 import { verifyJwt } from '../utils/jwt';
-import { StatusCode } from '../enums/status-code.enum';
+import UnauthorizedError from '../errors/unauthorized-error';
 
 export const deserializeUser = async (
     req: Request,
@@ -25,28 +24,28 @@ export const deserializeUser = async (
         }
 
         if (!accessToken) {
-            return next(new AppError('You are not logged in', StatusCode.UNAUTHORIZED));
+            return next(new UnauthorizedError('You are not logged in'));
         }
 
         // Validate Access Token
         const decoded = verifyJwt<{ sub: string }>(accessToken);
 
         if (!decoded) {
-            return next(new AppError(`Invalid token or user doesn't exist`, StatusCode.UNAUTHORIZED));
+            return next(new UnauthorizedError(`Invalid token or user doesn't exist`));
         }
 
         // Check if user has a valid session
         const session = await redisClient.get(decoded.sub);
 
         if (!session) {
-            return next(new AppError(`User session has expired`, StatusCode.UNAUTHORIZED));
+            return next(new UnauthorizedError(`User session has expired`));
         }
 
         // Check if user still exist
         const user = await getUser(JSON.parse(session)._id);
 
         if (!user) {
-            return next(new AppError(`User with that token no longer exist`, StatusCode.UNAUTHORIZED));
+            return next(new UnauthorizedError(`User with that token no longer exist`));
         }
 
         // This is really important (Helps us know if the user is logged in from other controllers)

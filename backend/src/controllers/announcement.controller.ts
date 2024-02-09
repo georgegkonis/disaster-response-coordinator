@@ -4,7 +4,7 @@ import { createAnnouncement, deleteAnnouncement, findAnnouncements } from '../se
 import { CreateAnnouncementInput } from '../schemas/announcement.schema';
 import { QueryOptions } from 'mongoose';
 import { findItems } from '../services/item.service';
-import ObjectsNotFoundError from '../errors/objects-not-found.error';
+import NotFoundError from '../errors/not-found-error';
 
 export const createAnnouncementHandler = async (
     req: Request<{}, {}, CreateAnnouncementInput>,
@@ -52,11 +52,11 @@ export const deleteAnnouncementHandler = async (
     }
 };
 
-async function verifyItems(itemIds: string[]): Promise<void> {
-    const foundItems = await findItems({ _id: { $in: itemIds } });
+async function verifyItems(ids: string[]): Promise<void> {
+    const foundItems = await findItems({ _id: { $in: ids } });
 
-    if (foundItems.length !== itemIds.length) {
-        const notFoundItemIds = itemIds.filter(id => !foundItems.find(item => item._id?.toHexString() === id));
-        throw new ObjectsNotFoundError(notFoundItemIds, 'Items');
+    if (foundItems.length !== ids.length) {
+        const notFoundIds = ids.filter(id => !foundItems.find(item => item._id?.toHexString() === id));
+        throw new NotFoundError('items', notFoundIds);
     }
 }

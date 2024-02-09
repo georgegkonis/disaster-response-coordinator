@@ -5,7 +5,8 @@ import { StatusCode } from '../enums/status-code.enum';
 import { TaskStatus } from '../enums/task-status.enum';
 import { getItem } from '../services/item.service';
 import { QueryOptions } from 'mongoose';
-import AppError from '../errors/app-error';
+import UnauthorizedError from '../errors/unauthorized-error';
+import ForbiddenError from '../errors/forbidden-error';
 
 export const createItemOfferHandler = async (
     req: Request<{}, {}, CreateItemOfferInput>,
@@ -84,17 +85,7 @@ export const deleteItemOfferHandler = async (
     next: NextFunction
 ) => {
     try {
-        const offer = await getItemOffer(req.params.id);
-
-        if (offer.citizen._id.toHexString() !== res.locals.user._id.toHexString()) {
-            next(new AppError('You are not authorized to delete this item offer', StatusCode.UNAUTHORIZED));
-            return;
-        }
-
-        if (offer.status === TaskStatus.COMPLETED) {
-            next(new AppError('You cannot delete a completed item offer', StatusCode.FORBIDDEN));
-            return;
-        }
+        await verifyItemOfferCanBeDeleted(req.params.id, res.locals.user._id);
 
         await deleteItemOffer(req.params.id);
 
@@ -103,3 +94,15 @@ export const deleteItemOfferHandler = async (
         next(error);
     }
 };
+
+async function verifyItemOfferCanBeDeleted(id: string, userId: string) {
+    const offer = await getItemOffer(id);
+
+    if (offer.citizen._id.toHexString() !== userId) {
+        throw new UnauthorizedError('You are not authorized to delete this item offer');
+    }
+
+    if (offer.status === TaskStatus.COMPLETED) {
+        throw new ForbiddenError('You cannot delete a completed item offer');
+    }
+}

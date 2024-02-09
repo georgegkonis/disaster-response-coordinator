@@ -11,7 +11,8 @@ import { StatusCode } from '../enums/status-code.enum';
 import { TaskStatus } from '../enums/task-status.enum';
 import { getItem } from '../services/item.service';
 import { QueryOptions } from 'mongoose';
-import AppError from '../errors/app-error';
+import UnauthorizedError from '../errors/unauthorized-error';
+import ForbiddenError from '../errors/forbidden-error';
 
 export const createItemRequestHandler = async (
     req: Request<{}, {}, CreateItemRequestInput>,
@@ -93,12 +94,12 @@ export const deleteItemRequestHandler = async (
         const request = await getItemRequest(req.params.id);
 
         if (request.citizen._id.toHexString() !== res.locals.user._id.toHexString()) {
-            next(new AppError('You are not authorized to delete this item request', StatusCode.UNAUTHORIZED))
+            next(new UnauthorizedError('You are not authorized to delete this item request'));
             return;
         }
 
         if (request.status === TaskStatus.COMPLETED) {
-            next(new AppError('You cannot delete a completed item request', StatusCode.FORBIDDEN));
+            next(new ForbiddenError('You cannot delete a completed item request'));
             return;
         }
 
