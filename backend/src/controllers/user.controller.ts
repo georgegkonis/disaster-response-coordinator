@@ -64,10 +64,14 @@ export const deleteMeHandler = async (
     next: NextFunction
 ) => {
     try {
-        const id: string = res.locals.user._id;
-        await deleteUser(id);
+        const userId = res.locals.user._id.toString();
 
-        deleteUserCache(id);
+        res.clearCookie('accessToken');
+        res.clearCookie('loggedIn');
+
+        deleteUserCache(userId);
+
+        await deleteUser(userId);
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {

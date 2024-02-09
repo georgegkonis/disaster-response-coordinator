@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="item-request | Update status" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Item Requests" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/item-request.http" index="4" requestIdentifier="Update status" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>

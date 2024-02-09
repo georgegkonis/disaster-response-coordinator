@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="warehouse | Add item" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Warehouse" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/warehouse.http" index="5" requestIdentifier="Add item" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>

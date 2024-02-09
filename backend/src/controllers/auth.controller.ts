@@ -78,11 +78,11 @@ export const logoutHandler = async (
     next: NextFunction
 ) => {
     try {
-        // Clear the cookie
+        const userId = res.locals.user._id.toString();
+
         res.clearCookie('accessToken');
         res.clearCookie('loggedIn');
 
-        const userId = res.locals.user._id.toString();
         deleteUserCache(userId);
 
         res.status(StatusCode.OK).json({
