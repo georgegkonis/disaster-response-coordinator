@@ -4,7 +4,7 @@ import AppError from '../errors/app-error';
 import { Status } from '../enums/status.enum';
 
 export function handleErrors(
-    err: AppError | any,
+    err: any,
     _req: Request,
     res: Response,
     _next: NextFunction
