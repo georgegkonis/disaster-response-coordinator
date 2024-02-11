@@ -14,6 +14,7 @@ import itemRequestRoute from './routes/item-request.route';
 import itemOfferRoute from './routes/item-offer.route';
 import announcementRoute from './routes/announcement.route';
 import headquartersRoute from './routes/headquarters.route';
+import { Environments } from './constants/environments';
 
 require('dotenv').config();
 
@@ -26,7 +27,9 @@ app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 
 // Logger
-if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+if (process.env.NODE_ENV === Environments.development) {
+    app.use(morgan('dev'));
+}
 
 // Cors
 app.use(
@@ -69,4 +72,3 @@ app.listen(port, () => {
     // ? call the connectDB function here
     connectDB();
 });
-

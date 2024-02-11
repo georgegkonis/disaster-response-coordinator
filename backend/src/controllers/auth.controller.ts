@@ -9,6 +9,7 @@ import { deleteUserCache } from '../services/cache.service';
 import { Status } from '../enums/status.enum';
 import UnauthorizedError from '../errors/unauthorized-error';
 import ConflictError from '../errors/conflict.error';
+import { Environments } from '../constants/environments';
 
 // Cookie options
 const accessTokenCookieOptions: CookieOptions = {
@@ -19,8 +20,7 @@ const accessTokenCookieOptions: CookieOptions = {
 };
 
 // Only set secure to true in production
-if (process.env.NODE_ENV === 'production')
-    accessTokenCookieOptions.secure = true;
+if (process.env.NODE_ENV === Environments.production) {accessTokenCookieOptions.secure = true;}
 
 export const registerHandler = async (
     req: Request<{}, {}, RegisterInput>,
