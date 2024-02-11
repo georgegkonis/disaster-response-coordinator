@@ -14,7 +14,7 @@ const userDetailsShape = object({
     phoneNumber: string()
         .min(10, 'Phone number must be more than 10 characters')
         .max(16, 'Phone number must be less than 16 characters')
-        .regex(/^\+?[0-9]+$/, 'Phone number is invalid')
+        .regex(/^\+?\d+$/, 'Phone number is invalid')
         .optional(),
     address: string()
 }).shape;
