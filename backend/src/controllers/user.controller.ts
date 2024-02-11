@@ -5,6 +5,7 @@ import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { deleteUserCache, updateUserCache } from '../services/cache.service';
 import { CreateUserInput, UpdateUserInput, UpdateUserLocationInput } from '../schemas/user.schema';
 import { Role } from '../enums/role.enum';
+import ConflictError from '../errors/conflict.error';
 
 export const getMeHandler = (
     _req: Request,
@@ -34,7 +35,7 @@ export const updateMeHandler = async (
         res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
-            err.message = 'Username already exists';
+            err = new ConflictError('Username already exists');
         }
         next(err);
     }
@@ -89,7 +90,7 @@ export const createUserHandler = async (
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
         if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
-            err.message = 'Username or email already exists';
+            err = new ConflictError('Username or email already exist');
         }
         next(err);
     }

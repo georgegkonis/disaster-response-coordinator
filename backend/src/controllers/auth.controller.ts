@@ -8,6 +8,7 @@ import { signToken } from '../services/auth.service';
 import { deleteUserCache } from '../services/cache.service';
 import { Status } from '../enums/status.enum';
 import UnauthorizedError from '../errors/unauthorized-error';
+import ConflictError from '../errors/conflict.error';
 
 // Cookie options
 const accessTokenCookieOptions: CookieOptions = {
@@ -35,7 +36,7 @@ export const registerHandler = async (
         });
     } catch (err: any) {
         if (err.code === MongoErrorCodes.DUPLICATE_KEY) {
-            err.message = 'Username or email already exists';
+            err = new ConflictError('Username or email already exist');
         }
         next(err);
     }
