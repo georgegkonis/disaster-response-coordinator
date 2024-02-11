@@ -13,7 +13,7 @@ export const parseJsonData = async (
 
     const file = req.files[0];
 
-    if (!file || !file.path) {
+    if (!file?.path) {
         return next(new BadRequestError('File path not found'));
     }
 
