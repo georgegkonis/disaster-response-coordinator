@@ -72,7 +72,7 @@ export const updateMeHandler = async (
     next: NextFunction
 ) => {
     try {
-        const userId: string = res.locals.user._id;
+        const userId: string = res.locals.user._id.toString();
 
         const user = await updateUser(userId, req.body);
         updateUserCache(userId, user);
@@ -92,7 +92,7 @@ export const updateMyLocationHandler = async (
     next: NextFunction
 ) => {
     try {
-        const userId: string = res.locals.user._id;
+        const userId: string = res.locals.user._id.toString();
 
         const user = await updateUser(userId, { location: req.body });
         updateUserCache(userId, user);
@@ -124,7 +124,7 @@ export const deleteMeHandler = async (
     next: NextFunction
 ) => {
     try {
-        const userId = res.locals.user._id;
+        const userId = res.locals.user._id.toString();
 
         res.clearCookie('accessToken');
         res.clearCookie('loggedIn');
