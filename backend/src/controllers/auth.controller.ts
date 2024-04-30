@@ -49,7 +49,7 @@ export const loginHandler = async (
 ) => {
     try {
         // Get the user from the collection
-        const user = await findUser({ username: req.body.username }, {}, true);
+        const user = await findUser({ username: req.body.username }, {}, { projection: '+password' });
 
         // Check if user exist and password is correct
         if (!user || !(await comparePasswords(user.password, req.body.password))) {

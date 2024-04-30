@@ -1,4 +1,4 @@
-import { FilterQuery, QueryOptions } from 'mongoose';
+import { FilterQuery, ProjectionFields, QueryOptions } from 'mongoose';
 import userModel, { User } from '../models/user.model';
 import NotFoundError from '../errors/not-found-error';
 import bcrypt from 'bcryptjs';
@@ -27,12 +27,10 @@ export const getUser = async (
 
 export const findUser = async (
     query: FilterQuery<User>,
-    options: QueryOptions = {},
-    includePassword: boolean = false
+    projection: ProjectionFields<User> = {},
+    options: QueryOptions = {}
 ) => {
-    const user: User | null = includePassword
-        ? await userModel.findOne<User>(query, {}, options).select('+password').exec()
-        : await userModel.findOne<User>(query, {}, options);
+    const user = await userModel.findOne<User>(query, projection, options).lean();
 
     return user;
 };
