@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 import { StatusCode } from './enums/status-code.enum';
 import express, { NextFunction, Request, Response } from 'express';
