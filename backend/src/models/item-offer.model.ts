@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { getModelForClass, index, modelOptions, Prop, Ref } from '@typegoose/typegoose';
+import { getModelForClass, index, modelOptions, Prop, Ref, Severity } from '@typegoose/typegoose';
 import { User } from './user.model';
 import { Item } from './item.model';
 import { TaskStatus } from '../enums/task-status.enum';
@@ -9,6 +9,9 @@ import { TaskStatus } from '../enums/task-status.enum';
     schemaOptions: {
         collection: 'item_offers',
         timestamps: true
+    },
+    options: {
+        allowMixed: Severity.ALLOW
     }
 })
 export class ItemOffer {
