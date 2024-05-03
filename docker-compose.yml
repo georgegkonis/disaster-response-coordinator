@@ -1,4 +1,5 @@
-version: '3.8'
+name: 'disaster-response-coordinator'
+
 services:
   mongo:
     image: mongo:latest
@@ -6,13 +7,11 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE_NAME}
-    env_file:
-      - ./backend/.env
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
     volumes:
       - mongo:/data/db
     ports:
-      - '6000:27017'
+      - '27017:27017'
   redis:
     image: redis:latest
     container_name: redis
@@ -22,4 +21,6 @@ services:
       - redis:/data
 volumes:
   mongo:
+    name: 'drc-mongo-data'
   redis:
+    name: 'drc-redis-data'
