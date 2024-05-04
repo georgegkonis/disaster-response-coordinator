@@ -5,7 +5,7 @@
     <scripts>
       <script value="start" />
     </scripts>
-    <node-interpreter value="docker://disaster-response-coordinator-app:latest/node" />
+    <node-interpreter value="node" />
     <envs />
     <method v="2" />
   </configuration>
