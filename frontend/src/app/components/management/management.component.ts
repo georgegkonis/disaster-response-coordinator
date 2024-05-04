@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
-import { CategoryActions, ProductActions, ComStoreActions } from '../../store/app.actions';
 
 interface DropdownOption {
     label: string;
@@ -49,13 +48,8 @@ export class ManagementComponent {
         this.confirmationService.confirm({
             message: `Are you sure you want to delete all data for ${this.selectedOption}?`,
             accept: () => {
-                if (this.selectedOption === 'products') {
-                    this.store.dispatch(ProductActions.deleteAll());
-                } else if (this.selectedOption === 'stores') {
-                    this.store.dispatch(ComStoreActions.deleteAll());
-                } else if (this.selectedOption === 'categories') {
-                    this.store.dispatch(CategoryActions.deleteAll());
-                }
+                // TODO: implement me
+                console.log('Data deleted');
             }
         });
     }

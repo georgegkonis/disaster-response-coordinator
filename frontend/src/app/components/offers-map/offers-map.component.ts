@@ -1,17 +1,13 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
-import { CategoryActions, ComStoreActions } from '../../store/app.actions';
-import { selectCategories, selectStores } from '../../store/app.selector';
-import { Category, ComStore } from '../../models/app.model';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 type MapNode = {
     lon: number;
     lat: number;
-    store: ComStore;
 };
 
 type DropdownCategory = {
@@ -32,8 +28,6 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
     viewOfferVisible: boolean = false;
     addOfferVisible: boolean = false;
 
-    comStore!: ComStore;
-
     private subscription: Subscription = new Subscription();
     private map: L.Map | null = null;
 
@@ -47,35 +41,35 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private storesSubscription = () => this.store.select(selectStores)
-        .subscribe((stores) => {
-            this.mapNodes = stores.map((store) => ({
-                lon: store.lon,
-                lat: store.lat,
-                store
-            }));
-
-            if (this.map) {
-                this.setStoreMarkers(this.map, this.mapNodes);
-            }
-        });
-
-    private categoriesSubscription = () => this.store.select(selectCategories)
-        .subscribe((categories) => {
-            this.dropdownCategories = categories.map((store: Category) => ({
-                label: store.name,
-                value: store.id
-            }));
-
-            this.dropdownCategories.push({ label: 'All', value: null });
-        });
+    // private storesSubscription = () => this.store.select(selectStores)
+    //     .subscribe((stores) => {
+    //         this.mapNodes = stores.map((store) => ({
+    //             lon: store.lon,
+    //             lat: store.lat,
+    //             store
+    //         }));
+    //
+    //         if (this.map) {
+    //             this.setStoreMarkers(this.map, this.mapNodes);
+    //         }
+    //     });
+    //
+    // private categoriesSubscription = () => this.store.select(selectCategories)
+    //     .subscribe((categories) => {
+    //         this.dropdownCategories = categories.map((store: Category) => ({
+    //             label: store.name,
+    //             value: store.id
+    //         }));
+    //
+    //         this.dropdownCategories.push({ label: 'All', value: null });
+    //     });
 
     ngOnInit(): void {
-        this.store.dispatch(ComStoreActions.getAll({}));
-        this.store.dispatch(CategoryActions.getAll());
-
-        this.subscription.add(this.storesSubscription());
-        this.subscription.add(this.categoriesSubscription());
+        // this.store.dispatch(ComStoreActions.getAll({}));
+        // this.store.dispatch(CategoryActions.getAll());
+        //
+        // this.subscription.add(this.storesSubscription());
+        // this.subscription.add(this.categoriesSubscription());
     }
 
     ngAfterViewInit(): void {
@@ -85,7 +79,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
     onSubmit() {
         const { name, categoryId } = this.searchForm.value;
 
-        this.store.dispatch(ComStoreActions.getAll({ name, categoryId }));
+        // this.store.dispatch(ComStoreActions.getAll({ name, categoryId }));
     }
 
     private initializeMap() {
@@ -117,7 +111,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit {
             ).addTo(map);
 
             marker.on('click', () => {
-                this.comStore = node.store;
+                // this.comStore = node.store;
                 this.viewOfferVisible = true;
             });
         });

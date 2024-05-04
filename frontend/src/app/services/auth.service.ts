@@ -1,30 +1,38 @@
-import { Injectable } from '@angular/core';
+import { APP_SETTINGS, AppSettings } from '../settings/settings';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LoginRequest, RegisterRequest } from '../models/requests.model';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../models/responses.model';
+import { LoginResponse } from '../dto/responses/login-response.dto';
+import { LoginRequest } from '../dto/requests/login-request.dto';
+import { RegisterRequest } from '../dto/requests/register-request.dto';
 
-const baseUrl = 'http://localhost:8000/disaster-response-coordinator/v1';
-const authUrl = baseUrl + '/auth';
-
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
+    private readonly baseUrl: string = '';
+
     constructor(
-        private http: HttpClient
-    ) {}
+        @Inject(APP_SETTINGS) settings: AppSettings,
+        private httpClient: HttpClient
+    ) {
+        this.baseUrl = `${settings.apiUrl}/auth`;
+    }
 
     login(request: LoginRequest): Observable<LoginResponse> {
-        return this.http.post<LoginResponse>(authUrl + '/login', request);
+        const url: string = `${this.baseUrl}/login`;
+
+        return this.httpClient.post<LoginResponse>(url, request);
     };
 
     register(request: RegisterRequest): Observable<void> {
-        return this.http.post<void>(authUrl + '/register', request);
+        const url: string = `${this.baseUrl}/register`;
+
+        return this.httpClient.post<void>(url, request);
     }
 
     logout(): Observable<void> {
-        return this.http.post<void>(authUrl + '/logout', {});
+        const url: string = `${this.baseUrl}/logout`;
+
+        return this.httpClient.post<void>(url, {});
     }
 }

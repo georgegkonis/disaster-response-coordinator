@@ -1,27 +1,30 @@
 import { createAction, props } from '@ngrx/store';
-import { LoginRequest, RegisterRequest, UpdateUserRequest } from '../models/requests.model';
-import { GetUsersResponse, LoginResponse } from '../models/responses.model';
 import { User } from '../models/user.model';
-import { Category, ComStore } from '../models/app.model';
+import { LoginRequest } from '../dto/requests/login-request.dto';
+import { LoginResponse } from '../dto/responses/login-response.dto';
+import { RegisterRequest } from '../dto/requests/register-request.dto';
+
+const SUCCESS: string = '[Success]';
+const FAILURE: string = '[Failure]';
 
 export namespace AuthActions {
 
-    const namespace: string = '[Authentication]';
+    const NAMESPACE: string = '[Authentication]';
 
     //#region Login
 
     export const login = createAction(
-        `${namespace} Login`,
+        `${NAMESPACE} Login`,
         props<LoginRequest>()
     );
 
     export const loginSuccess = createAction(
-        `${namespace} Login Success`,
+        `${NAMESPACE}/${SUCCESS} Login`,
         props<LoginResponse>()
     );
 
     export const loginFailure = createAction(
-        `${namespace} Login Failure`
+        `${NAMESPACE}/${FAILURE} Login`
     );
 
     //#endregion
@@ -29,16 +32,16 @@ export namespace AuthActions {
     //#region Register
 
     export const register = createAction(
-        `${namespace} Register`,
+        `${NAMESPACE} Register`,
         props<RegisterRequest>()
     );
 
     export const registerSuccess = createAction(
-        `${namespace} Register Success`
+        `${NAMESPACE}/${SUCCESS} Register`
     );
 
     export const registerFailure = createAction(
-        `${namespace} Register Failure`
+        `${NAMESPACE}/${FAILURE} Register`
     );
 
     //#endregion
@@ -46,15 +49,15 @@ export namespace AuthActions {
     //#region Logout
 
     export const logout = createAction(
-        `${namespace} Logout`
+        `${NAMESPACE} Logout`
     );
 
     export const logoutSuccess = createAction(
-        `${namespace} Logout Success`
+        `${NAMESPACE}/${SUCCESS} Logout`
     );
 
     export const logoutFailure = createAction(
-        `${namespace} Logout Failure`
+        `${NAMESPACE}/${FAILURE} Logout`
     );
 
     //#endregion
@@ -62,21 +65,21 @@ export namespace AuthActions {
 
 export namespace UserActions {
 
-    const namespace: string = '[Users]';
+    const NAMESPACE: string = '[Users]';
 
     //#region Get All Users
 
     export const getAll = createAction(
-        `${namespace} Get All Users`
+        `${NAMESPACE} Get All Users`
     );
 
     export const getAllSuccess = createAction(
-        `${namespace} Get All Users Success`,
-        props<GetUsersResponse>()
+        `${NAMESPACE}/${SUCCESS} Get All Users`,
+        props<{ users: User[] }>()
     );
 
     export const getAllFailure = createAction(
-        `${namespace} Get All Users Failure`
+        `${NAMESPACE}/${FAILURE} Get All Users`
     );
 
     //#endregion
@@ -84,16 +87,16 @@ export namespace UserActions {
     //#region Get Current User
 
     export const getCurrent = createAction(
-        `${namespace} Get Current User`
+        `${NAMESPACE} Get Current User`
     );
 
     export const getCurrentSuccess = createAction(
-        `${namespace} Get Current Success User`,
+        `${NAMESPACE}/${SUCCESS} Get Current User`,
         props<User>()
     );
 
     export const getCurrentFailure = createAction(
-        `${namespace} Get Current Failure User`
+        `${NAMESPACE}/${FAILURE} Get Current User`
     );
 
     //#endregion
@@ -101,76 +104,17 @@ export namespace UserActions {
     //#region Update Current User
 
     export const updateCurrent = createAction(
-        `${namespace} Update Current User`,
-        props<UpdateUserRequest>()
+        `${NAMESPACE} Update Current User`,
+        props<{ username?: string, password?: string }>()
     );
 
     export const updateCurrentSuccess = createAction(
-        `${namespace} Update Current User Success`,
+        `${NAMESPACE}/${SUCCESS} Update Current User`,
         props<User>()
     );
 
     export const updateCurrentFailure = createAction(
-        `${namespace} Update Current User Failure`
-    );
-
-    //#endregion
-}
-
-export namespace ProductActions {
-
-    const namespace: string = '[Products]';
-
-    //#region Delete All Products
-
-    export const deleteAll = createAction(
-        `${namespace} Delete All Products`
-    );
-
-    export const deleteAllSuccess = createAction(
-        `${namespace} Delete All Products Success`
-    );
-
-    export const deleteAllFailure = createAction(
-        `${namespace} Delete All Products Failure`
-    );
-
-    //#endregion
-}
-
-export namespace CategoryActions {
-
-    const namespace: string = '[Categories]';
-
-    //#region Get All Categories
-
-    export const getAll = createAction(
-        `${namespace} Get All Categories`
-    );
-
-    export const getAllSuccess = createAction(
-        `${namespace} Get All Categories Success`,
-        props<{ categories: Category[] }>()
-    );
-
-    export const getAllFailure = createAction(
-        `${namespace} Get All Categories Failure`
-    );
-
-    //#endregion
-
-    //#region Delete All Categories
-
-    export const deleteAll = createAction(
-        `${namespace} Delete All Categories`
-    );
-
-    export const deleteAllSuccess = createAction(
-        `${namespace} Delete All Categories Success`
-    );
-
-    export const deleteAllFailure = createAction(
-        `${namespace} Delete All Categories Failure`
+        `${NAMESPACE}/${FAILURE} Update Current User`
     );
 
     //#endregion

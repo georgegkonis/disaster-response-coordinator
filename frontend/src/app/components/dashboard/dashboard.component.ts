@@ -3,7 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
 import { AuthActions } from '../../store/app.actions';
-import { selectCurrentRole } from '../../store/app.selector';
+import { roleSelector } from '../../store/app.selector';
 import { Role } from '../../enums/user-role.enum';
 import { Subscription } from 'rxjs';
 
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private subscription: Subscription = new Subscription();
 
-    private currentRoleSubscription = () => this.store.select(selectCurrentRole)
+    private currentRoleSubscription = () => this.store.select(roleSelector)
         .subscribe((role: Role | null) => this.isAdmin = role === Role.Admin);
 
     constructor(

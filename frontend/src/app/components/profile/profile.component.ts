@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UpdateUserRequest } from '../../models/requests.model';
 import { AppState } from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { UserActions } from '../../store/app.actions';
 import { Router } from '@angular/router';
-import { selectCurrentUser } from '../../store/app.selector';
+import { userSelector } from '../../store/app.selector';
 import { Subscription } from 'rxjs';
+import { User } from '../../models/user.model';
 
 @Component({
     selector: 'app-profile',
@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     private subscription: Subscription = new Subscription();
 
-    private currentUserSubscription = () => this.store.select(selectCurrentUser)
+    private currentUserSubscription = () => this.store.select(userSelector)
         .subscribe(user => {
             if (user) {
                 this.profileForm.patchValue(user);
@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     onSubmit(): void {
         if (this.profileForm.dirty) {
-            const request: UpdateUserRequest = {
+            const request: Partial<User> = {
                 username: this.profileForm.value.username ?? undefined,
                 password: this.profileForm.value.password ?? undefined
             };

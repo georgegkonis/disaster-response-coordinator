@@ -30,8 +30,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
-import { ViewOfferComponent } from './components/view-offer/view-offer.component';
-import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
@@ -44,21 +42,16 @@ import { DialogModule } from 'primeng/dialog';
         DashboardComponent,
         NotFoundComponent,
         ManagementComponent,
-        OffersMapComponent,
-        ViewOfferComponent,
-        AddOfferComponent
+        OffersMapComponent
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         AppRoutingModule,
         InputTextModule,
         ButtonModule,
         PasswordModule,
         ReactiveFormsModule,
-        StoreModule.forRoot({ app: appReducer }),
-        EffectsModule.forRoot(AppEffects),
-        StoreDevtoolsModule.instrument(),
-        HttpClientModule,
         BrowserAnimationsModule,
         ToastModule,
         MenubarModule,
@@ -66,7 +59,10 @@ import { DialogModule } from 'primeng/dialog';
         FileUploadModule,
         FormsModule,
         ConfirmDialogModule,
-        DialogModule
+        DialogModule,
+        StoreDevtoolsModule.instrument(),
+        StoreModule.forRoot({ app: appReducer }),
+        EffectsModule.forRoot(AppEffects)
     ],
     providers: [
         MessageService,

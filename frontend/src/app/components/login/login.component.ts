@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginRequest } from '../../models/requests.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
 import { AuthActions } from '../../store/app.actions';
 import { Router } from '@angular/router';
+import { LoginRequest } from '../../dto/requests/login-request.dto';
+
+interface LoginForm {
+    username: FormControl<string>;
+    password: FormControl<string>;
+}
 
 @Component({
     selector: 'app-login',
@@ -12,24 +17,22 @@ import { Router } from '@angular/router';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-    loginForm!: FormGroup;
+
+    loginForm: FormGroup<LoginForm> = new FormGroup<LoginForm>({
+        username: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+        password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
+    });
 
     constructor(
-        private formBuilder: FormBuilder,
         private store: Store<AppState>,
         private router: Router
-    ) { }
+    ) {}
 
-    ngOnInit(): void {
-        this.loginForm = this.formBuilder.group({
-            username: ['', [Validators.required]],
-            password: ['', [Validators.required]]
-        });
-    }
+    ngOnInit(): void {}
 
     onSubmit(): void {
         if (this.loginForm.valid) {
-            const request: LoginRequest = this.loginForm.value;
+            const request: LoginRequest = this.loginForm.getRawValue();
             this.store.dispatch(AuthActions.login(request));
         }
     }
@@ -38,5 +41,7 @@ export class LoginComponent implements OnInit {
         this.loginForm.reset();
         this.router.navigate(['/']).then();
     }
+
+    protected readonly Object = Object;
 }
 

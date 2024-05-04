@@ -12,7 +12,7 @@ import { Role } from './enums/user-role.enum';
 import { ManagementComponent } from './components/management/management.component';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
 
-const routes: Routes = [
+const ROUTES: Routes = [
     {
         path: '',
         component: HomeComponent
@@ -32,7 +32,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'map',
-                component: OffersMapComponent,
+                component: OffersMapComponent
             },
             {
                 path: 'profile',
@@ -57,7 +57,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(ROUTES)],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
