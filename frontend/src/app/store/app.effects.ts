@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { AuthActions, CategoryActions, ProductActions, ComStoreActions, UserActions } from './app.actions';
+import { AuthActions, CategoryActions, ProductActions, UserActions } from './app.actions';
 import { LoginRequest, RegisterRequest, UpdateUserRequest } from '../models/requests.model';
 import { MessageService } from 'primeng/api';
 import { GetUsersResponse, LoginResponse } from '../models/responses.model';
@@ -12,7 +12,6 @@ import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
-import { StoreService } from '../services/store.service';
 
 @Injectable()
 export class AppEffects {
@@ -24,7 +23,6 @@ export class AppEffects {
         private messageService: MessageService,
         private productService: ProductService,
         private categoryService: CategoryService,
-        private storeService: StoreService,
         private router: Router
     ) {}
 
@@ -136,32 +134,6 @@ export class AppEffects {
                         }
                     ),
                     catchError(() => of(CategoryActions.deleteAllFailure()))
-                )
-            )
-        ));
-
-    deleteAllStores$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(ComStoreActions.deleteAll),
-            mergeMap(() =>
-                this.storeService.deleteAll().pipe(
-                    map(() => {
-                            this.showSuccessMessage('All stores deleted');
-                            return ComStoreActions.deleteAllSuccess();
-                        }
-                    ),
-                    catchError(() => of(ComStoreActions.deleteAllFailure()))
-                )
-            )
-        ));
-
-    getAllStores$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(ComStoreActions.getAll),
-            mergeMap((request) =>
-                this.storeService.getAll(request.name, request.categoryId).pipe(
-                    map((stores) => ComStoreActions.getAllSuccess({ stores })),
-                    catchError(() => of(ComStoreActions.getAllFailure()))
                 )
             )
         ));
