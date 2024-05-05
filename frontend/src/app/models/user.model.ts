@@ -1,4 +1,5 @@
 import { UserRole } from '../enums/user-role.enum';
+import { MapLocation } from './map-location.model';
 
 export interface User {
     id: string;
@@ -10,8 +11,5 @@ export interface User {
         lastName: string;
         phoneNumber: string;
     };
-    location?: {
-        latitude: number;
-        longitude: number;
-    };
+    location?: MapLocation;
 }

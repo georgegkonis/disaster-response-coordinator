@@ -1,7 +1,6 @@
+import { MapLocation } from './map-location.model';
+
 export interface Headquarters {
     id: string;
-    location: {
-        latitude: number;
-        longitude: number;
-    };
+    location: MapLocation;
 }
