@@ -33,8 +33,7 @@ Content-Type: application/json
   "details": {
     "firstName": "Giorgos",
     "lastName": "Gkonis",
-    "phoneNumber": "+306955773209",
-    "address": "25is Martiou 13B, 14671 Athens, Greece"
+    "phoneNumber": "+306955773209"
   }
 }
 

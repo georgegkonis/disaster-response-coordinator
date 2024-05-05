@@ -15,8 +15,7 @@ const userDetailsShape = object({
         .min(10, 'Phone number must be more than 10 characters')
         .max(16, 'Phone number must be less than 16 characters')
         .regex(/^\+?\d+$/, 'Phone number is invalid')
-        .optional(),
-    address: string()
+        .optional()
 }).shape;
 
 export const createUserSchema = object({
@@ -52,7 +51,7 @@ export const updateUserLocationSchema = object({
         longitude: number()
     }).strip()
 });
-
+``
 export type CreateUserInput = TypeOf<typeof createUserSchema>['body'];
 export type UpdateUserInput = TypeOf<typeof updateUserSchema>['body'];
 export type UpdateUserLocationInput = TypeOf<typeof updateUserLocationSchema>['body'];
