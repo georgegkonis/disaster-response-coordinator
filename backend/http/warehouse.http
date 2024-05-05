@@ -50,7 +50,7 @@ GET {{host}}/{{baseUrl}}/warehouse/items
 
 ### Update item quantity
 
-PATCH {{host}}/{{baseUrl}}/warehouse/items/{{itemId}}
+PATCH {{host}}/{{baseUrl}}/warehouse/items/{{itemId}}/quantity
 Content-Type: application/json
 
 {

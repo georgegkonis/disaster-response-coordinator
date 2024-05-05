@@ -36,7 +36,7 @@ router.get('/categories', getCategoriesHandler);
 router.get('/items', getItemsHandler);
 
 // Update item quantity
-router.patch('/items/:id', restrictTo(Role.ADMIN), validate(updateItemQuantitySchema), updateItemQuantityHandler);
+router.patch('/items/:id/quantity', restrictTo(Role.ADMIN), validate(updateItemQuantitySchema), updateItemQuantityHandler);
 
 // Delete all categories and items
 router.delete('/', restrictTo(Role.ADMIN), deleteAllCategoriesAndItemsHandler);
