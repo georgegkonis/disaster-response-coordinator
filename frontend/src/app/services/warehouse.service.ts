@@ -22,7 +22,7 @@ export class WarehouseService {
         @Inject(APP_SETTINGS) settings: AppSettings,
         private httpClient: HttpClient
     ) {
-        this.baseUrl = `${settings.apiUrl}/users`;
+        this.baseUrl = `${settings.apiUrl}/warehouse`;
     }
 
     upload(file: File): Observable<ServerResponse<void>> {
