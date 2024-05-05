@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { LoginResponse } from '../dto/responses/login-response.dto';
 import { LoginRequest } from '../dto/requests/login-request.dto';
 import { RegisterRequest } from '../dto/requests/register-request.dto';
+import { ServerResponse } from '../dto/responses/server-response.dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -18,21 +19,21 @@ export class AuthService {
         this.baseUrl = `${settings.apiUrl}/auth`;
     }
 
-    login(request: LoginRequest): Observable<LoginResponse> {
+    login(request: LoginRequest): Observable<ServerResponse<LoginResponse>> {
         const url: string = `${this.baseUrl}/login`;
 
-        return this.httpClient.post<LoginResponse>(url, request);
+        return this.httpClient.post<ServerResponse<LoginResponse>>(url, request);
     };
 
-    register(request: RegisterRequest): Observable<void> {
+    register(request: RegisterRequest): Observable<ServerResponse<void>> {
         const url: string = `${this.baseUrl}/register`;
 
-        return this.httpClient.post<void>(url, request);
+        return this.httpClient.post<ServerResponse<void>>(url, request);
     }
 
-    logout(): Observable<void> {
+    logout(): Observable<ServerResponse<void>> {
         const url: string = `${this.baseUrl}/logout`;
 
-        return this.httpClient.post<void>(url, {});
+        return this.httpClient.post<ServerResponse<void>>(url, {});
     }
 }
