@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
 import { AuthActions } from '../../store/app.actions';
 import { roleSelector } from '../../store/app.selector';
-import { Role } from '../../enums/user-role.enum';
+import { UserRole } from '../../enums/user-role.enum';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private subscription: Subscription = new Subscription();
 
     private currentRoleSubscription = () => this.store.select(roleSelector)
-        .subscribe((role: Role | null) => this.isAdmin = role === Role.Admin);
+        .subscribe((role: UserRole | null) => this.isAdmin = role === UserRole.ADMIN);
 
     constructor(
         private store: Store<AppState>

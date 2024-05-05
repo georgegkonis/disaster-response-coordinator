@@ -1,10 +1,10 @@
-import { Role } from '../enums/user-role.enum';
+import { UserRole } from '../enums/user-role.enum';
 
 export interface User {
     id: string;
     username: string;
     email: string;
-    role: Role;
+    role: UserRole;
     details?: {
         firstName: string;
         lastName: string;
