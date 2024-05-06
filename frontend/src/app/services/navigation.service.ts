@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { routesPaths } from '../constants/routes-paths';
 
@@ -8,7 +8,8 @@ import { routesPaths } from '../constants/routes-paths';
 export class NavigationService {
 
     constructor(
-        private router: Router
+        private router: Router,
+        private activatedRoute: ActivatedRoute
     ) {}
 
     navigateToHome(): void {
@@ -29,5 +30,10 @@ export class NavigationService {
     navigateToDashboard(): void {
         this.router.navigate([routesPaths.DASHBOARD])
             .then(() => console.debug('Navigated to dashboard'));
+    }
+
+    navigateBack(): void {
+        this.router.navigate(['..'], { skipLocationChange: true, relativeTo: this.activatedRoute })
+            .then(() => console.debug('Navigated back'));
     }
 }
