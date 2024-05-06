@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (this.profileForm.dirty) {
             const request: Partial<User> = {
                 username: this.profileForm.value.username ?? undefined,
-                password: this.profileForm.value.password ?? undefined
+                // password: this.profileForm.value.password ?? undefined
             };
             this.store.dispatch(UserActions.updateCurrent(request));
         }

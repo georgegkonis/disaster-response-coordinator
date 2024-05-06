@@ -2,5 +2,5 @@ export interface RegisterRequest {
     username: string;
     email: string;
     password: string;
-    passwordConfirmation: string;
+    passwordConfirm: string;
 }

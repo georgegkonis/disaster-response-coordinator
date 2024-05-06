@@ -24,10 +24,10 @@ export class AppEffects {
         ofType(AuthActions.login),
         mergeMap((payload: LoginRequest) =>
             this.authService.login(payload).pipe(
-                map((response: LoginResponse) => {
+                map((response) => {
                     this.showSuccessMessage('Login successful');
                     this.router.navigate(['/dashboard']).then();
-                    return AuthActions.loginSuccess(response);
+                    return AuthActions.loginSuccess(response.data!);
                 }),
                 catchError(() => of(AuthActions.loginFailure()))
             )
