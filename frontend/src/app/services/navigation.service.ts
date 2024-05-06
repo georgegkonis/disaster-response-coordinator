@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { RoutesPaths } from '../constants/routes-paths';
+import { routesPaths } from '../constants/routes-paths';
 
 @Injectable({
     providedIn: 'root'
@@ -12,22 +12,22 @@ export class NavigationService {
     ) {}
 
     navigateToHome(): void {
-        this.router.navigate([RoutesPaths.HOME])
+        this.router.navigate([routesPaths.HOME])
             .then(() => console.debug('Navigated to home'));
     }
 
     navigateToLogin(): void {
-        this.router.navigate([RoutesPaths.LOGIN])
+        this.router.navigate([routesPaths.LOGIN])
             .then(() => console.debug('Navigated to login'));
     }
 
     navigateToRegister(): void {
-        this.router.navigate([RoutesPaths.REGISTER])
+        this.router.navigate([routesPaths.REGISTER])
             .then(() => console.debug('Navigated to register'));
     }
 
     navigateToDashboard(): void {
-        this.router.navigate([RoutesPaths.DASHBOARD])
+        this.router.navigate([routesPaths.DASHBOARD])
             .then(() => console.debug('Navigated to dashboard'));
     }
 }
