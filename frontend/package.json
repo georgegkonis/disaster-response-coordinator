@@ -24,6 +24,7 @@
     "@ngrx/store-devtools": "^17.1.0",
     "font-awesome": "^4.7.0",
     "leaflet": "^1.9.4",
+    "ngx-cookie-service": "^17.1.0",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primeng": "^17.6.0",
