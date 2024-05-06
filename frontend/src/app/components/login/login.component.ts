@@ -18,7 +18,7 @@ interface LoginForm {
 })
 export class LoginComponent {
 
-    loginForm: FormGroup<LoginForm> = new FormGroup<LoginForm>({
+    protected readonly loginForm: FormGroup<LoginForm> = new FormGroup<LoginForm>({
         username: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
         password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
     });

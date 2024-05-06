@@ -1,6 +1,7 @@
 <div class="login">
     <h2 class="login__title">Login</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
         <!-- Username Field -->
         <div class="login__field">
             <label for="username" class="login__field-label">Username</label>
@@ -18,7 +19,7 @@
                         inputStyleClass="w-full"></p-password>
         </div>
 
-        <!-- Submit Button -->
+        <!-- Buttons -->
         <div class="login__buttons">
             <p-button [disabled]="!loginForm.valid" type="submit" label="Login" icon="pi pi-check" iconPos="right"></p-button>
             <p-button (onClick)="onCancelClick()"

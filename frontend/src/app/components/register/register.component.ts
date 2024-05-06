@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppState } from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../../store/app.actions';
-import { Router } from '@angular/router';
 import { RegisterRequest } from '../../dto/requests/register-request.dto';
 import { NavigationService } from '../../services/navigation.service';
 
@@ -21,7 +20,7 @@ interface RegisterForm {
 })
 export class RegisterComponent {
 
-    registerForm: FormGroup<RegisterForm> = new FormGroup<RegisterForm>({
+    protected readonly registerForm: FormGroup<RegisterForm> = new FormGroup<RegisterForm>({
         username: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
         email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
         password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
@@ -41,6 +40,7 @@ export class RegisterComponent {
     }
 
     onCancelClick(): void {
+        this.registerForm.reset();
         this.navigationService.navigateToHome();
     }
 }
