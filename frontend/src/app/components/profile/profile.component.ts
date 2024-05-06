@@ -1,12 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { AppState } from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { UserActions } from '../../store/app.actions';
 import { userSelector } from '../../store/app.selector';
 import { Subscription } from 'rxjs';
-import { User } from '../../models/user.model';
 import { NavigationService } from '../../services/navigation.service';
+import { UpdateUserRequest } from '../../dto/requests/update-user-request.dto';
+
+interface UserForm {
+    username: FormControl<string>,
+    email: FormControl<string>,
+    password: FormControl<string>,
+    details: FormGroup<UserDetailsForm>
+}
+
+interface UserDetailsForm {
+    firstName: FormControl<string>,
+    lastName: FormControl<string>,
+    phoneNumber: FormControl<string>
+}
 
 @Component({
     selector: 'app-profile',
@@ -14,51 +27,54 @@ import { NavigationService } from '../../services/navigation.service';
     styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-    profileForm!: FormGroup;
 
-    private subscription: Subscription = new Subscription();
+    private readonly subscriptions: Subscription[] = [];
 
-    private currentUserSubscription = () => this.store.select(userSelector)
+    protected readonly userForm: FormGroup<UserForm> = new FormGroup<UserForm>({
+        username: new FormControl<string>('', { nonNullable: true }),
+        email: new FormControl<string>('', { nonNullable: true }),
+        password: new FormControl<string>('', { nonNullable: true }),
+        details: new FormGroup<UserDetailsForm>({
+            firstName: new FormControl<string>('', { nonNullable: true }),
+            lastName: new FormControl<string>('', { nonNullable: true }),
+            phoneNumber: new FormControl<string>('', { nonNullable: true })
+        })
+    });
+
+    private userSubscription = () => this.store.select(userSelector)
         .subscribe(user => {
-            if (user) {
-                this.profileForm.patchValue(user);
-            }
+            if (!user) return;
+            this.userForm.patchValue(user);
         });
 
     constructor(
-        private formBuilder: FormBuilder,
         private store: Store<AppState>,
         private navigationService: NavigationService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
-        this.store.dispatch(UserActions.getCurrent());
+        this.subscriptions.push(this.userSubscription());
 
-        this.profileForm = this.formBuilder.group({
-            username: [null],
-            email: [{ value: '', disabled: true }],
-            password: [null]
-        });
-
-        this.subscription.add(this.currentUserSubscription());
+        this.store.dispatch(UserActions.getMe());
     }
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     onSubmit(): void {
-        if (this.profileForm.dirty) {
-            const request: Partial<User> = {
-                username: this.profileForm.value.username ?? undefined
-                // password: this.profileForm.value.password ?? undefined
+        if (this.userForm.dirty) {
+            const request: UpdateUserRequest = {
+                username: this.userForm.controls.username.dirty ? this.userForm.controls.username.value : undefined,
+                password: this.userForm.controls.password.dirty ? this.userForm.controls.password.value : undefined,
+                details: this.userForm.controls.details.getRawValue()
             };
-            this.store.dispatch(UserActions.updateCurrent(request));
+            this.store.dispatch(UserActions.updateMe({ request }));
         }
-        this.navigationService.navigateToDashboard();
     }
 
     onCancelClick(): void {
+        this.userForm.reset();
         this.navigationService.navigateToDashboard();
     }
 }

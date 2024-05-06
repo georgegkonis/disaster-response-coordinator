@@ -31,7 +31,7 @@ export class LoginComponent {
     onSubmit(): void {
         if (this.loginForm.valid) {
             const request: LoginRequest = this.loginForm.getRawValue();
-            this.store.dispatch(AuthActions.login(request));
+            this.store.dispatch(AuthActions.login({ request }));
         }
     }
 

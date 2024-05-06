@@ -9,11 +9,11 @@ interface DropdownOption {
 }
 
 @Component({
-    selector: 'app-file-upload',
-    styleUrls: ['./management.component.scss'],
-    templateUrl: './management.component.html'
+    selector: 'app-warehouse',
+    styleUrls: ['./warehouse.component.scss'],
+    templateUrl: './warehouse.component.html'
 })
-export class ManagementComponent {
+export class WarehouseComponent {
 
     readonly options: DropdownOption[] = [
         { label: 'Products', value: 'products' },

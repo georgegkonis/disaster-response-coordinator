@@ -1,6 +1,6 @@
 <div class="profile">
     <h2 class="profile__title">Your Profile</h2>
-    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
         <!-- Username Field -->
         <div class="profile__field">
@@ -11,7 +11,7 @@
         <!-- Email Field -->
         <div class="profile__field">
             <label for="email" class="profile__field-label">Email</label>
-            <input id="email" type="email" pInputText formControlName="email" class="profile__field-input">
+            <input [readonly]="true" id="email" type="email" pInputText formControlName="email" class="profile__field-input">
         </div>
 
         <!-- Password Field -->
@@ -25,9 +25,28 @@
                         inputStyleClass="w-full"></p-password>
         </div>
 
-        <!-- Submit Button -->
+        <!-- First Name Field -->
+        <div class="profile__field">
+            <label for="firstName" class="profile__field-label">First Name</label>
+            <input id="firstName" type="text" pInputText formControlName="firstName" class="profile__field-input">
+
+        </div>
+
+        <!-- Last Name Field -->
+        <div class="profile__field">
+            <label for="lastName" class="profile__field-label">Last Name</label>
+            <input id="lastName" type="text" pInputText formControlName="lastName" class="profile__field-input">
+        </div>
+
+        <!-- Phone Field -->
+        <div class="profile__field">
+            <label for="phone" class="profile__field-label">Phone</label>
+            <input id="phone" type="text" pInputText formControlName="phone" class="profile__field-input">
+        </div>
+
+        <!-- Buttons -->
         <div class="profile__buttons">
-            <p-button [disabled]="!profileForm.dirty" type="submit" label="Update"></p-button>
+            <p-button [disabled]="!userForm.dirty" type="submit" label="Update"></p-button>
             <p-button (onClick)="onCancelClick()" type="button" label="Cancel" styleClass="p-button-outlined"></p-button>
         </div>
     </form>

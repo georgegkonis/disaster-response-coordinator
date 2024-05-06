@@ -12,6 +12,11 @@ export class NavigationService {
         private activatedRoute: ActivatedRoute
     ) {}
 
+    navigateBack(): void {
+        this.router.navigate(['..'], { skipLocationChange: true, relativeTo: this.activatedRoute })
+            .then(() => console.debug('Navigated back'));
+    }
+
     navigateToHome(): void {
         this.router.navigate([routesPaths.HOME])
             .then(() => console.debug('Navigated to home'));
@@ -32,8 +37,8 @@ export class NavigationService {
             .then(() => console.debug('Navigated to dashboard'));
     }
 
-    navigateBack(): void {
-        this.router.navigate(['..'], { skipLocationChange: true, relativeTo: this.activatedRoute })
-            .then(() => console.debug('Navigated back'));
+    navigateToMap(): void {
+        this.router.navigate([routesPaths.MAP])
+            .then(() => console.debug('Navigated to map'));
     }
 }

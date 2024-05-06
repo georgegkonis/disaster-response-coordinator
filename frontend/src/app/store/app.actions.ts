@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { User } from '../models/user.model';
 import { LoginRequest } from '../dto/requests/login-request.dto';
 import { RegisterRequest } from '../dto/requests/register-request.dto';
+import { UpdateUserRequest } from '../dto/requests/update-user-request.dto';
 
 const SUCCESS: string = '[Success]';
 const FAILURE: string = '[Failure]';
@@ -14,7 +15,7 @@ export namespace AuthActions {
 
     export const login = createAction(
         `${NAMESPACE} Login`,
-        props<LoginRequest>()
+        props<{ request: LoginRequest }>()
     );
 
     export const loginSuccess = createAction(
@@ -31,7 +32,7 @@ export namespace AuthActions {
 
     export const register = createAction(
         `${NAMESPACE} Register`,
-        props<RegisterRequest>()
+        props<{ request: RegisterRequest }>()
     );
 
     export const registerSuccess = createAction(
@@ -65,54 +66,54 @@ export namespace UserActions {
 
     const NAMESPACE: string = '[Users]';
 
-    //#region Get All Users
+    //#region Get All
 
     export const getAll = createAction(
-        `${NAMESPACE} Get All Users`
+        `${NAMESPACE} Get All`
     );
 
     export const getAllSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Get All Users`,
+        `${NAMESPACE}/${SUCCESS} Get All`,
         props<{ users: User[] }>()
     );
 
     export const getAllFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Get All Users`
+        `${NAMESPACE}/${FAILURE} Get All`
     );
 
     //#endregion
 
-    //#region Get Current User
+    //#region Get Me
 
-    export const getCurrent = createAction(
-        `${NAMESPACE} Get Current User`
+    export const getMe = createAction(
+        `${NAMESPACE} Get Me`
     );
 
-    export const getCurrentSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Get Current User`,
-        props<User>()
+    export const getMeSuccess = createAction(
+        `${NAMESPACE}/${SUCCESS} Get Me`,
+        props<{ user: User }>()
     );
 
-    export const getCurrentFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Get Current User`
+    export const getMeFailure = createAction(
+        `${NAMESPACE}/${FAILURE} Get Me`
     );
 
     //#endregion
 
-    //#region Update Current User
+    //#region Update Me
 
-    export const updateCurrent = createAction(
-        `${NAMESPACE} Update Current User`,
-        props<{ username?: string, password?: string }>()
+    export const updateMe = createAction(
+        `${NAMESPACE} Update Me`,
+        props<{ request: UpdateUserRequest }>()
     );
 
-    export const updateCurrentSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Update Current User`,
-        props<User>()
+    export const updateMeSuccess = createAction(
+        `${NAMESPACE}/${SUCCESS} Update Me`,
+        props<{ user: User }>()
     );
 
-    export const updateCurrentFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Update Current User`
+    export const updateMeFailure = createAction(
+        `${NAMESPACE}/${FAILURE} Update Me`
     );
 
     //#endregion

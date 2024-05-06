@@ -3,8 +3,10 @@
 .profile {
   height: 100%;
   padding-inline: 35%;
-  padding-top: 10%;
+  padding-top: 5%;
+  padding-bottom: 5%;
   background-color: $color-background;
+  overflow: scroll;
 
   &__title {
     text-align: center;

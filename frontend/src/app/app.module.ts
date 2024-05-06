@@ -25,13 +25,14 @@ import { HttpCredentialsInterceptor } from './interceptors/http-credentials.inte
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenubarModule } from 'primeng/menubar';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ManagementComponent } from './components/management/management.component';
+import { WarehouseComponent } from './components/management/warehouse.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
 import { DialogModule } from 'primeng/dialog';
 import { CookieService } from 'ngx-cookie-service';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,7 @@ import { CookieService } from 'ngx-cookie-service';
         ProfileComponent,
         DashboardComponent,
         NotFoundComponent,
-        ManagementComponent,
+        WarehouseComponent,
         OffersMapComponent
     ],
     imports: [
@@ -63,7 +64,8 @@ import { CookieService } from 'ngx-cookie-service';
         DialogModule,
         StoreDevtoolsModule.instrument(),
         StoreModule.forRoot({ app: appReducer }),
-        EffectsModule.forRoot(AppEffects)
+        EffectsModule.forRoot(AppEffects),
+        MenuModule
     ],
     providers: [
         MessageService,

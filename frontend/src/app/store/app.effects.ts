@@ -3,11 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { AuthActions } from './app.actions';
+import { AuthActions, UserActions } from './app.actions';
 import { MessageService } from 'primeng/api';
-import { LoginRequest } from '../dto/requests/login-request.dto';
-import { RegisterRequest } from '../dto/requests/register-request.dto';
 import { NavigationService } from '../services/navigation.service';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class AppEffects {
@@ -15,14 +14,17 @@ export class AppEffects {
     constructor(
         private actions$: Actions,
         private authService: AuthService,
+        private userService: UserService,
         private messageService: MessageService,
         private navigationService: NavigationService
     ) {}
 
+    //#region Auth Effects
+
     login$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.login),
-        mergeMap((payload: LoginRequest) =>
-            this.authService.login(payload).pipe(
+        mergeMap(({ request }) =>
+            this.authService.login(request).pipe(
                 map(() => {
                     this.showSuccessMessage('Login successful');
                     this.navigationService.navigateToDashboard();
@@ -35,8 +37,8 @@ export class AppEffects {
 
     register$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.register),
-        mergeMap((payload: RegisterRequest) =>
-            this.authService.register(payload).pipe(
+        mergeMap(({ request }) =>
+            this.authService.register(request).pipe(
                 map(() => {
                     this.showSuccessMessage('Registration successful');
                     this.navigationService.navigateToLogin();
@@ -60,6 +62,35 @@ export class AppEffects {
             )
         )
     ));
+
+    //#endregion
+
+    //#region User Effects
+
+    getMe$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.getMe),
+        mergeMap(() =>
+            this.userService.getMe().pipe(
+                map(user => UserActions.getMeSuccess({ user })),
+                catchError(() => of(UserActions.getMeFailure()))
+            )
+        )
+    ));
+
+    updateMe$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.updateMe),
+        mergeMap(({ request }) =>
+            this.userService.updateMe(request).pipe(
+                map((user) => {
+                    this.showSuccessMessage('Account updated successfully');
+                    return UserActions.updateMeSuccess({ user });
+                }),
+                catchError(() => of(UserActions.updateMeFailure()))
+            )
+        )
+    ));
+
+    //#endregion
 
     private showSuccessMessage(message: string): void {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: message });

@@ -8,8 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { adminRoleGuard } from './guards/role.guard';
-import { UserRole } from './enums/user-role.enum';
-import { ManagementComponent } from './components/management/management.component';
+import { WarehouseComponent } from './components/management/warehouse.component';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
 
 const ROUTES: Routes = [
@@ -39,8 +38,8 @@ const ROUTES: Routes = [
                 component: ProfileComponent
             },
             {
-                path: 'management',
-                component: ManagementComponent,
+                path: 'warehouse',
+                component: WarehouseComponent,
                 canActivate: [adminRoleGuard]
             }
         ]

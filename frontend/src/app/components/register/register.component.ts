@@ -35,7 +35,7 @@ export class RegisterComponent {
     onSubmit(): void {
         if (this.registerForm.valid) {
             const request: RegisterRequest = this.registerForm.getRawValue();
-            this.store.dispatch(AuthActions.register(request));
+            this.store.dispatch(AuthActions.register({ request }));
         }
     }
 

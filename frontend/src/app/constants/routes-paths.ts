@@ -4,9 +4,9 @@ export const routesPaths = {
     REGISTER: '/register',
     DASHBOARD: '/dashboard',
     MAP: '/dashboard/map',
-    MANAGEMENT: '/dashboard/management',
-    STATISTICS: '/dashboard/statistics',
-    LEADERBOARD: '/dashboard/leaderboard',
-    PROFILE: '/dashboard/profile',
-    PROFILE_STATISTICS: '/dashboard/profile/statistics'
+    WAREHOUSE: '/dashboard/warehouse',
+    ANNOUNCEMENTS: '/dashboard/announcements',
+    ANALYTICS: '/dashboard/analytics',
+    USERS: '/dashboard/users',
+    PROFILE: '/dashboard/profile'
 };
