@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
-import { AuthActions } from '../../store/app.actions';
 import { UserRole } from '../../enums/user-role.enum';
 import { CookieService } from 'ngx-cookie-service';
 import { routesPaths } from '../../constants/routes-paths';
-import { NavigationService } from '../../services/navigation.service';
+import { AuthActions } from '../../store/app.actions';
 
 @Component({
     selector: 'app-dashboard',
@@ -14,37 +13,19 @@ import { NavigationService } from '../../services/navigation.service';
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-    private isAdmin: boolean = false;
+
+    private readonly isAdmin: boolean;
 
     protected menuItems!: MenuItem[];
 
-    protected profileMenuItem: MenuItem = {
-        label: 'Profile',
-        icon: 'pi pi-fw pi-user',
-        items: [
-            {
-                label: 'Details',
-                icon: 'pi pi-fw pi-lock',
-                routerLink: routesPaths.PROFILE
-            },
-            {
-                label: 'Logout',
-                icon: 'pi pi-fw pi-sign-out',
-                command: () => this.store.dispatch(AuthActions.logout())
-            }
-        ],
-        styleClass: 'menu-right'
-    };
-
     constructor(
         private store: Store<AppState>,
-        private cookieService: CookieService,
-        private navigationService: NavigationService
-    ) {}
+        cookieService: CookieService
+    ) {
+        this.isAdmin = cookieService.get('userRole') === UserRole.ADMIN;
+    }
 
     ngOnInit(): void {
-        this.isAdmin = this.cookieService.get('userRole') === UserRole.ADMIN;
-
         this.menuItems = [
             {
                 label: 'Map',
@@ -59,24 +40,37 @@ export class DashboardComponent implements OnInit {
             {
                 label: 'Warehouse',
                 icon: 'pi pi-fw pi-home',
+                routerLink: routesPaths.WAREHOUSE,
                 visible: this.isAdmin,
-                routerLink: routesPaths.WAREHOUSE
             },
             {
                 label: 'Analytics',
                 icon: 'pi pi-fw pi-chart-bar',
+                routerLink: routesPaths.ANALYTICS,
                 visible: this.isAdmin,
-                routerLink: routesPaths.ANALYTICS
             },
             {
                 label: 'Users',
                 icon: 'pi pi-fw pi-users',
-                visible: this.isAdmin,
-                routerLink: routesPaths.USERS
+                routerLink: routesPaths.USERS,
+                visible: this.isAdmin
             },
-            this.profileMenuItem
+            {
+                label: 'Account',
+                icon: 'pi pi-fw pi-user',
+                items: [
+                    {
+                        label: 'Details',
+                        icon: 'pi pi-fw pi-user-edit',
+                        routerLink: routesPaths.PROFILE
+                    },
+                    {
+                        label: 'Logout',
+                        icon: 'pi pi-fw pi-sign-out',
+                        command: () => this.store.dispatch(AuthActions.logout())
+                    }
+                ]
+            }
         ];
-
-        this.navigationService.navigateToMap();
     }
 }
