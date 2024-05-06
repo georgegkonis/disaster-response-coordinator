@@ -9,7 +9,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="data.json"
 Content-Type: application/json
 
-< C:\Users\georg\Programming\Webstorm\disaster-response-coordinator\data\data.json
+< D:\Projects\WebStorm\disaster-response-coordinator\data\data.json
 --WebAppBoundary--
 
 ### Add Category
