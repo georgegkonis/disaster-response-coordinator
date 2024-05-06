@@ -3,7 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Message, MessageService } from 'primeng/api';
-import { ServerError } from '../errors/server-error.model';
+import { ServerError } from '../errors/server.error';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
