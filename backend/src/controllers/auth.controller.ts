@@ -10,6 +10,7 @@ import { Status } from '../enums/status.enum';
 import UnauthorizedError from '../errors/unauthorized-error';
 import ConflictError from '../errors/conflict.error';
 import { Environments } from '../constants/environments';
+import { cookies } from '../constants/cookies';
 
 // Cookie options
 const accessTokenCookieOptions: CookieOptions = {
@@ -60,13 +61,13 @@ export const loginHandler = async (
         const { accessToken } = await signToken(user);
 
         // Send Access Token in Cookie
-        res.cookie('accessToken', accessToken, accessTokenCookieOptions);
-        res.cookie('loggedIn', true, { ...accessTokenCookieOptions, httpOnly: false });
+        res.cookie(cookies.ACCESS_TOKEN, accessToken, accessTokenCookieOptions);
+        res.cookie(cookies.LOGGED_IN, true, { ...accessTokenCookieOptions, httpOnly: false });
+        res.cookie(cookies.USER_ROLE, user.role, { ...accessTokenCookieOptions, httpOnly: false });
 
         res.status(StatusCode.OK).json({
             status: Status.SUCCESS,
-            message: 'Logged in successfully',
-            data: { userRole: user.role }
+            message: 'Logged in successfully'
         });
     } catch (err: any) {
         next(err);
@@ -81,8 +82,9 @@ export const logoutHandler = async (
     try {
         const userId = res.locals.user._id.toString();
 
-        res.clearCookie('accessToken');
-        res.clearCookie('loggedIn');
+        res.clearCookie(cookies.ACCESS_TOKEN);
+        res.clearCookie(cookies.LOGGED_IN);
+        res.clearCookie(cookies.USER_ROLE);
 
         deleteUserCache(userId);
 
