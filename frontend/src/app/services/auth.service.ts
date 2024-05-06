@@ -7,16 +7,18 @@ import { LoginRequest } from '../dto/requests/login-request.dto';
 import { RegisterRequest } from '../dto/requests/register-request.dto';
 import { ServerResponse } from '../dto/responses/server-response.dto';
 
+const API_PATH: string = 'auth';
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    private readonly baseUrl: string = '';
+    private readonly baseUrl: string;
 
     constructor(
         @Inject(APP_SETTINGS) settings: AppSettings,
         private httpClient: HttpClient
     ) {
-        this.baseUrl = `${settings.apiUrl}/auth`;
+        this.baseUrl = `${settings.apiUrl}/${API_PATH}`;
     }
 
     login(request: LoginRequest): Observable<ServerResponse<LoginResponse>> {

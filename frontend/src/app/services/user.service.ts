@@ -5,8 +5,10 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { UpdateUserLocationRequest } from '../dto/requests/update-user-location-request.dto';
 import { CreateUserRequest } from '../dto/requests/create-user-request.dto';
-import { GetUsersRequest } from '../dto/requests/get-users-request.dto';
 import { UpdateUserRequest } from '../dto/requests/update-user-request.dto';
+import { UserRole } from '../enums/user-role.enum';
+
+const API_PATH: string = 'users';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +21,7 @@ export class UserService {
         @Inject(APP_SETTINGS) settings: AppSettings,
         private httpClient: HttpClient
     ) {
-        this.baseUrl = `${settings.apiUrl}/users`;
+        this.baseUrl = `${settings.apiUrl}/${API_PATH}`;
     }
 
     create(request: CreateUserRequest): Observable<User> {
@@ -29,9 +31,11 @@ export class UserService {
     }
 
     // TODO: find a better way to convert object to query params
-    getAll(request: GetUsersRequest): Observable<User[]> {
+    getAll(role?: UserRole): Observable<User[]> {
         const url: string = `${this.baseUrl}`;
-        const params: HttpParams = new HttpParams({ fromObject: request as any });
+        let params: HttpParams = new HttpParams();
+
+        if (role) params = params.set('role', role);
 
         return this.httpClient.get<User[]>(url, { params });
     }
