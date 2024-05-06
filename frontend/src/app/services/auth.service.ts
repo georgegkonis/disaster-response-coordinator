@@ -2,7 +2,6 @@ import { APP_SETTINGS, AppSettings } from '../settings/settings';
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../dto/responses/login-response.dto';
 import { LoginRequest } from '../dto/requests/login-request.dto';
 import { RegisterRequest } from '../dto/requests/register-request.dto';
 import { ServerResponse } from '../dto/responses/server-response.dto';
@@ -21,10 +20,10 @@ export class AuthService {
         this.baseUrl = `${settings.apiUrl}/${API_PATH}`;
     }
 
-    login(request: LoginRequest): Observable<ServerResponse<LoginResponse>> {
+    login(request: LoginRequest): Observable<ServerResponse<void>> {
         const url: string = `${this.baseUrl}/login`;
 
-        return this.httpClient.post<ServerResponse<LoginResponse>>(url, request);
+        return this.httpClient.post<ServerResponse<void>>(url, request);
     };
 
     register(request: RegisterRequest): Observable<ServerResponse<void>> {

@@ -1,21 +1,18 @@
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
 import { inject } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { AppState } from '../store/app.reducer';
-import { isAuthenticatedSelector } from '../store/app.selector';
+import { CookieService } from 'ngx-cookie-service';
+import { NavigationService } from '../services/navigation.service';
+import { MessageService } from 'primeng/api';
 
 export const authGuard: CanActivateFn = (_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) => {
-    const store = inject(Store) as Store<AppState>;
-    const router = inject(Router);
+    const cookieService = inject(CookieService);
+    const messageService = inject(MessageService);
+    const navigationService = inject(NavigationService);
 
-    return store.select(isAuthenticatedSelector).pipe(
-        map((isAuthenticated: boolean) => {
-            if (!isAuthenticated) {
-                router.navigate(['/login']).then();
-                return false;
-            }
-            return true;
-        })
-    );
+    if (cookieService.check('loggedIn')) return true;
+
+    messageService.add({ severity: 'error', summary: 'Unauthorized Action', detail: 'You must be logged in to access this page' });
+    navigationService.navigateToLogin();
+
+    return false;
 };

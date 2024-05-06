@@ -1,23 +1,22 @@
-import { createReducer } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { User } from '../models/user.model';
 import { UserRole } from '../enums/user-role.enum';
+import { AuthActions } from './app.actions';
 
 export interface AppState {
-    isAuthenticated: boolean;
-    currentUser: User | null;
-    currentRole: UserRole | null;
+    user: User | null;
 }
 
 export const initialState: AppState = {
-    isAuthenticated: false,
-    currentUser: null,
-    currentRole: null
+    user: null
 };
 
 export const appReducer = createReducer(
-    initialState
+    initialState,
+
+    on(AuthActions.logoutSuccess, (state) => update(state, initialState))
 );
 
-function updateState(state: AppState, changes: Partial<AppState>) {
+function update(state: AppState, changes: Partial<AppState>) {
     return { ...state, ...changes };
 }

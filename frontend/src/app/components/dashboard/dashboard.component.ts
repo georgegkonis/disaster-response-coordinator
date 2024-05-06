@@ -3,9 +3,9 @@ import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
 import { AuthActions } from '../../store/app.actions';
-import { roleSelector } from '../../store/app.selector';
 import { UserRole } from '../../enums/user-role.enum';
 import { Subscription } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-dashboard',
@@ -20,15 +20,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private subscription: Subscription = new Subscription();
 
-    private currentRoleSubscription = () => this.store.select(roleSelector)
-        .subscribe((role: UserRole | null) => this.isAdmin = role === UserRole.ADMIN);
-
     constructor(
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private cookieService: CookieService
     ) {}
 
     ngOnInit(): void {
-        this.subscription.add(this.currentRoleSubscription());
+        this.isAdmin = this.cookieService.get('userRole') === UserRole.ADMIN;
 
         this.menuItems = [
             {

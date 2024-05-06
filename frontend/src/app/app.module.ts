@@ -31,6 +31,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
 import { DialogModule } from 'primeng/dialog';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
     declarations: [
@@ -67,6 +68,7 @@ import { DialogModule } from 'primeng/dialog';
     providers: [
         MessageService,
         ConfirmationService,
+        CookieService,
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, deps: [MessageService] },
         { provide: HTTP_INTERCEPTORS, useClass: HttpCredentialsInterceptor, multi: true }
     ],

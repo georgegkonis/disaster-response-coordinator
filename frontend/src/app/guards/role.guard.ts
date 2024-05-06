@@ -1,16 +1,22 @@
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
-import { AppState } from '../store/app.reducer';
-import { Store } from '@ngrx/store';
 import { inject } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { MessageService } from 'primeng/api';
 import { UserRole } from '../enums/user-role.enum';
-import { roleSelector } from '../store/app.selector';
-import { map } from 'rxjs/operators';
 
-export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) => {
-    const role = route.data['role'] as UserRole;
-    const store = inject(Store) as Store<AppState>;
+const createRoleGuard = (role: UserRole): CanActivateFn => (_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) => {
+    const cookieService = inject(CookieService);
+    const messageService = inject(MessageService);
 
-    return store.select(roleSelector).pipe(
-        map((currentRole: UserRole | null) => currentRole === role)
-    )
+    if (cookieService.get('userRole') === role) return true;
+
+    messageService.add({ severity: 'error', summary: 'Forbidden Action', detail: `You do not have permission to access this page` });
+
+    return false;
 };
+
+export const adminRoleGuard = createRoleGuard(UserRole.ADMIN);
+
+export const rescuerRoleGuard = createRoleGuard(UserRole.RESCUER);
+
+export const citizenRoleGuard = createRoleGuard(UserRole.CITIZEN);
