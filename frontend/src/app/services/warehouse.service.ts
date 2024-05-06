@@ -11,6 +11,8 @@ import { GetCategoriesRequest } from '../dto/requests/get-categories-request.dto
 import { GetItemsRequest } from '../dto/requests/get-items-request.dto';
 import { UpdateItemQuantityRequest } from '../dto/requests/update-item-quantity-request.dto';
 
+const API_PATH: string = 'warehouse';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -22,7 +24,7 @@ export class WarehouseService {
         @Inject(APP_SETTINGS) settings: AppSettings,
         private httpClient: HttpClient
     ) {
-        this.baseUrl = `${settings.apiUrl}/warehouse`;
+        this.baseUrl = `${settings.apiUrl}/${API_PATH}`;
     }
 
     upload(file: File): Observable<ServerResponse<void>> {
@@ -65,7 +67,7 @@ export class WarehouseService {
         return this.httpClient.patch<Item>(url, request);
     }
 
-    deleteAllCategoriesAndItems(): Observable<void> {
+    deleteAll(): Observable<void> {
         const url: string = `${this.baseUrl}`;
 
         return this.httpClient.delete<void>(url);

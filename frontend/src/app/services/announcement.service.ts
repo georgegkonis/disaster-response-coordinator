@@ -5,18 +5,20 @@ import { Announcement } from '../models/announcement.model';
 import { Observable } from 'rxjs';
 import { CreateAnnouncementRequest } from '../dto/requests/create-announcement-request.dto';
 
+const API_PATH: string = 'announcements';
+
 @Injectable({
     providedIn: 'root'
 })
 export class AnnouncementService {
 
-    private readonly baseUrl: string = '';
+    private readonly baseUrl: string;
 
     constructor(
         @Inject(APP_SETTINGS) settings: AppSettings,
         private httpClient: HttpClient
     ) {
-        this.baseUrl = `${settings.apiUrl}/announcements`;
+        this.baseUrl = `${settings.apiUrl}/${API_PATH}`;
     }
 
     create(request: CreateAnnouncementRequest): Observable<Announcement> {

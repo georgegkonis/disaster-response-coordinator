@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { TaskStatus } from '../enums/task-status.enum';
 import { CreateItemRequestRequest } from '../dto/requests/create-item-request-request.dto';
 
-const PATH: string = '/item-requests';
+const API_PATH: string = 'item-requests';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +19,7 @@ export class ItemRequestService {
         @Inject(APP_SETTINGS) settings: AppSettings,
         private httpClient: HttpClient
     ) {
-        this.baseUrl = `${settings.apiUrl}/${PATH}`;
+        this.baseUrl = `${settings.apiUrl}/${API_PATH}`;
     }
 
     create(request: CreateItemRequestRequest): Observable<ItemRequest> {
@@ -30,29 +30,30 @@ export class ItemRequestService {
 
     get(status?: TaskStatus, item?: string, citizen?: string): Observable<ItemRequest[]> {
         const url: string = `${this.baseUrl}`;
-        const params: HttpParams = new HttpParams();
+        let params: HttpParams = new HttpParams();
 
-        if (status) params.set('status', status);
-        if (item) params.set('item', item);
-        if (citizen) params.set('citizen', citizen);
+        if (status) params = params.set('status', status);
+        if (item) params = params.set('item', item);
+        if (citizen) params = params.set('citizen', citizen);
 
-        return this.httpClient.get<ItemRequest[]>(url);
+        return this.httpClient.get<ItemRequest[]>(url, { params });
     }
 
     getMine(status?: TaskStatus, item?: string): Observable<ItemRequest[]> {
         const url: string = `${this.baseUrl}/me`;
-        const params: HttpParams = new HttpParams();
+        let params: HttpParams = new HttpParams();
 
-        if (status) params.set('status', status);
-        if (item) params.set('item', item);
+        if (status) params = params.set('status', status);
+        if (item) params = params.set('item', item);
 
-        return this.httpClient.get<ItemRequest[]>(url);
+        return this.httpClient.get<ItemRequest[]>(url, { params });
     }
 
     updateStatus(id: string, status: TaskStatus): Observable<ItemRequest> {
         const url: string = `${this.baseUrl}/${id}/status`;
+        const body: Partial<ItemRequest> = { status };
 
-        return this.httpClient.patch<ItemRequest>(url, { status });
+        return this.httpClient.patch<ItemRequest>(url, body);
     }
 
     delete(id: string): Observable<void> {
