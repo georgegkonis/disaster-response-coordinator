@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RoutesPaths } from '../../constants/routes-paths';
 
 @Component({
     selector: 'app-home',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+
+    protected readonly RoutesPaths = RoutesPaths;
 
     constructor() {}
 }

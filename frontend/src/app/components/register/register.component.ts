@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { AuthActions } from '../../store/app.actions';
 import { Router } from '@angular/router';
 import { RegisterRequest } from '../../dto/requests/register-request.dto';
+import { NavigationService } from '../../services/navigation.service';
 
 interface RegisterForm {
     username: FormControl<string>;
@@ -29,7 +30,7 @@ export class RegisterComponent {
 
     constructor(
         private store: Store<AppState>,
-        private router: Router
+        private navigationService: NavigationService
     ) {}
 
     onSubmit(): void {
@@ -40,6 +41,6 @@ export class RegisterComponent {
     }
 
     onCancelClick(): void {
-        this.router.navigate(['/']).then();
+        this.navigationService.navigateToHome();
     }
 }

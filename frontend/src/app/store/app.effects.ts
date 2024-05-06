@@ -5,10 +5,9 @@ import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { AuthActions } from './app.actions';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import { LoginRequest } from '../dto/requests/login-request.dto';
-import { LoginResponse } from '../dto/responses/login-response.dto';
 import { RegisterRequest } from '../dto/requests/register-request.dto';
+import { NavigationService } from '../services/navigation.service';
 
 @Injectable()
 export class AppEffects {
@@ -17,7 +16,7 @@ export class AppEffects {
         private actions$: Actions,
         private authService: AuthService,
         private messageService: MessageService,
-        private router: Router
+        private navigationService: NavigationService
     ) {}
 
     login$ = createEffect(() => this.actions$.pipe(
@@ -26,7 +25,7 @@ export class AppEffects {
             this.authService.login(payload).pipe(
                 map((response) => {
                     this.showSuccessMessage('Login successful');
-                    this.router.navigate(['/dashboard']).then();
+                    this.navigationService.navigateToDashboard();
                     return AuthActions.loginSuccess(response.data!);
                 }),
                 catchError(() => of(AuthActions.loginFailure()))
@@ -40,7 +39,7 @@ export class AppEffects {
             this.authService.register(payload).pipe(
                 map(() => {
                     this.showSuccessMessage('Registration successful');
-                    this.router.navigate(['/login']).then();
+                    this.navigationService.navigateToLogin();
                     return AuthActions.registerSuccess();
                 }),
                 catchError(() => of(AuthActions.registerFailure()))
@@ -54,7 +53,7 @@ export class AppEffects {
             this.authService.logout().pipe(
                 map(() => {
                     this.showSuccessMessage('Logout successful');
-                    this.router.navigate(['/']).then();
+                    this.navigationService.navigateToHome();
                     return AuthActions.logoutSuccess();
                 }),
                 catchError(() => of(AuthActions.logoutFailure()))

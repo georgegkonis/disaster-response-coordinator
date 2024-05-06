@@ -14,7 +14,7 @@ import { OffersMapComponent } from './components/offers-map/offers-map.component
 
 const ROUTES: Routes = [
     {
-        path: '',
+        path: 'home',
         component: HomeComponent
     },
     {
@@ -45,6 +45,11 @@ const ROUTES: Routes = [
                 data: { role: UserRole.ADMIN }
             }
         ]
+    },
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
     },
     {
         path: '404',

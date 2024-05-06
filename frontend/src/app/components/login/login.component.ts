@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
 import { AuthActions } from '../../store/app.actions';
-import { Router } from '@angular/router';
 import { LoginRequest } from '../../dto/requests/login-request.dto';
+import { NavigationService } from '../../services/navigation.service';
 
 interface LoginForm {
     username: FormControl<string>;
@@ -25,7 +25,7 @@ export class LoginComponent {
 
     constructor(
         private store: Store<AppState>,
-        private router: Router
+        private navigationService: NavigationService
     ) {}
 
     onSubmit(): void {
@@ -37,9 +37,7 @@ export class LoginComponent {
 
     onCancelClick(): void {
         this.loginForm.reset();
-        this.router.navigate(['/']).then();
+        this.navigationService.navigateToHome();
     }
-
-    protected readonly Object = Object;
 }
 

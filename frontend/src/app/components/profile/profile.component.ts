@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppState } from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { UserActions } from '../../store/app.actions';
-import { Router } from '@angular/router';
 import { userSelector } from '../../store/app.selector';
 import { Subscription } from 'rxjs';
 import { User } from '../../models/user.model';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
     selector: 'app-profile',
@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     constructor(
         private formBuilder: FormBuilder,
         private store: Store<AppState>,
-        private router: Router
+        private navigationService: NavigationService
     ) { }
 
     ngOnInit(): void {
@@ -50,17 +50,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     onSubmit(): void {
         if (this.profileForm.dirty) {
             const request: Partial<User> = {
-                username: this.profileForm.value.username ?? undefined,
+                username: this.profileForm.value.username ?? undefined
                 // password: this.profileForm.value.password ?? undefined
             };
             this.store.dispatch(UserActions.updateCurrent(request));
         }
-        this.router.navigate(['/dashboard']).then();
+        this.navigationService.navigateToDashboard();
     }
 
     onCancelClick(): void {
-        this.router.navigate(['/dashboard']).then();
+        this.navigationService.navigateToDashboard();
     }
-
-
 }
