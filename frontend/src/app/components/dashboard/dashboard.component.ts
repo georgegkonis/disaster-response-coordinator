@@ -1,24 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
 import { AuthActions } from '../../store/app.actions';
 import { UserRole } from '../../enums/user-role.enum';
-import { Subscription } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { routesPaths } from '../../constants/routes-paths';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit {
 
-    menuItems: MenuItem[] = [];
-
+    protected menuItems!: MenuItem[];
     private isAdmin: boolean = false;
-
-    private subscription: Subscription = new Subscription();
 
     constructor(
         private store: Store<AppState>,
@@ -32,24 +29,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
             {
                 label: 'Product Offers',
                 icon: 'pi pi-fw pi-map-marker',
-                routerLink: '/dashboard/map'
+                routerLink: routesPaths.MAP
             },
             {
                 label: 'Management',
                 icon: 'pi pi-fw pi-wrench',
                 visible: this.isAdmin,
-                routerLink: '/dashboard/management'
+                routerLink: routesPaths.MANAGEMENT
             },
             {
                 label: 'Statistics',
                 icon: 'pi pi-fw pi-chart-bar',
                 visible: this.isAdmin,
-                routerLink: '/dashboard/statistics'
+                routerLink: routesPaths.STATISTICS
             },
             {
                 label: 'Leaderboard',
                 icon: 'pi pi-fw pi-users',
-                routerLink: '/dashboard/leaderboard'
+                routerLink: routesPaths.LEADERBOARD
             },
             {
                 label: 'Profile',
@@ -58,12 +55,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     {
                         label: 'Security',
                         icon: 'pi pi-fw pi-lock',
-                        routerLink: '/dashboard/profile'
+                        routerLink: routesPaths.PROFILE
                     },
                     {
                         label: 'Statistics',
                         icon: 'pi pi-fw pi-chart-bar',
-                        routerLink: '/dashboard/profile/statistics'
+                        routerLink: routesPaths.PROFILE_STATISTICS
                     },
                     {
                         label: 'Logout',
@@ -73,9 +70,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 ]
             }
         ];
-    }
-
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
     }
 }
