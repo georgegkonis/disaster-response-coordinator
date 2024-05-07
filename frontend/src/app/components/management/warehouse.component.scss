@@ -1,17 +1,25 @@
-.management {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.warehouse {
+  display: inline-flex;
+  position: relative;
   height: 100%;
   width: 100%;
-  gap: 1rem;
+  background-color: red;
+  padding: 1rem;
 
-  &__dropdown {
+  &__data-view {
+    width: 60%;
+    height: 100%;
+    padding: 1rem;
+    background-color: blue;
+    overflow-y: auto;
+    margin-left: auto;
+  }
+
+  &__filters-container {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap: 3rem;
+    padding: 0 1rem;
+    background-color: yellow;
   }
 }

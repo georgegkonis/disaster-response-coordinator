@@ -1,3 +1,15 @@
-$color-primary: rgb(63, 83, 103);
-$color-background: rgb(190, 217, 239);
-$color-text: rgb(15, 32, 51);
+$color-background: rgb(180, 190, 220);
+
+$color-background-light-1: lighten($color-background, 5%);
+$color-background-light-2: lighten($color-background, 10%);
+$color-background-light-3: lighten($color-background, 15%);
+
+$color-background-dark-1: darken($color-background, 5%);
+$color-background-dark-2: darken($color-background, 10%);
+$color-background-dark-3: darken($color-background, 15%);
+
+$color-text-dark: rgba(43, 53, 112, 0.80);
+$color-text-light: rgb(147, 179, 228);
+
+$color-primary: rgb(0, 0, 255);
+$color-secondary: rgb(255, 0, 0);

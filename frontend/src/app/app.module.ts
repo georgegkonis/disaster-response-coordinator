@@ -33,6 +33,11 @@ import { OffersMapComponent } from './components/offers-map/offers-map.component
 import { DialogModule } from 'primeng/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { MenuModule } from 'primeng/menu';
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+import { PanelModule } from 'primeng/panel';
+import { MessageModule } from 'primeng/message';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
     declarations: [
@@ -65,7 +70,12 @@ import { MenuModule } from 'primeng/menu';
         StoreDevtoolsModule.instrument(),
         StoreModule.forRoot({ app: appReducer }),
         EffectsModule.forRoot(AppEffects),
-        MenuModule
+        MenuModule,
+        DataViewModule,
+        TagModule,
+        PanelModule,
+        MessageModule,
+        RippleModule
     ],
     providers: [
         MessageService,

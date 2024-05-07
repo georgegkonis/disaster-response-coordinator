@@ -1,9 +1,20 @@
 <div class="home">
-    <h1 class="home__title">Disaster Response Coordinator</h1>
+    <h1 class="home__heading">Disaster Response Coordinator</h1>
 
     <div class="home__buttons">
-        <p-button [routerLink]="RoutesPaths.REGISTER" label="Register"></p-button>
-        <p-button [routerLink]="RoutesPaths.LOGIN" label="Login"></p-button>
+        <p-button [raised]="true"
+                  [routerLink]="RoutesPaths.REGISTER"
+                  [style]="{width: '10rem'}"
+                  icon="pi pi-user-plus"
+                  iconPos="right"
+                  label="Register"
+                  size="large"></p-button>
+        <p-button [raised]="true"
+                  [routerLink]="RoutesPaths.LOGIN"
+                  [style]="{width: '10rem'}"
+                  icon="pi pi-sign-in"
+                  iconPos="right"
+                  label="Login"
+                  size="large"></p-button>
     </div>
 </div>
-

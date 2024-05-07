@@ -1,17 +1,19 @@
 <div class="register">
-    <h2 class="register__title">Register</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <!-- Register Form -->
+    <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="register__form">
+        <h1 class="register__heading">Register</h1>
 
         <!-- Username Field -->
         <div class="register__field">
-            <label for="username" class="register__field-label">Username</label>
-            <input id="username" type="text" pInputText formControlName="username" class="register__field-input">
+            <label class="register__field-label" for="username">Username</label>
+            <input class="register__field-input" formControlName="username" id="username" pInputText type="text">
         </div>
 
         <!-- Email Field -->
         <div class="register__field">
-            <label for="email" class="register__field-label">Email</label>
-            <input id="email" type="email" pInputText formControlName="email" class="register__field-input">
+            <label class="register__field-label" for="email">Email</label>
+            <input class="register__field-input" formControlName="email" id="email" pInputText type="email">
         </div>
 
         <!-- Password Field -->
@@ -37,8 +39,18 @@
 
         <!-- Buttons -->
         <div class="register__buttons">
-            <p-button [disabled]="!registerForm.valid" type="submit" label="Register"></p-button>
-            <p-button (onClick)="onCancelClick()" type="button" label="Cancel" styleClass="p-button-outlined"></p-button>
+            <p-button [disabled]="!registerForm.valid"
+                      [raised]="true"
+                      icon="pi pi-check"
+                      iconPos="right"
+                      label="Submit"
+                      type="submit"></p-button>
+            <p-button (onClick)="onCancelClick()"
+                      [outlined]="true"
+                      [raised]="true"
+                      icon="pi pi-times"
+                      iconPos="right"
+                      label="Cancel"></p-button>
         </div>
     </form>
 </div>

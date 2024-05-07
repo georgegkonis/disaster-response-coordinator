@@ -1,16 +1,16 @@
 <div class="login">
-    <h2 class="login__title">Login</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login__form">
+        <h1 class="login__heading">Login</h1>
 
         <!-- Username Field -->
         <div class="login__field">
-            <label for="username" class="login__field-label">Username</label>
-            <input id="username" type="text" pInputText formControlName="username" class="login__field-input">
+            <label for="username" class="login__field__label">Username</label>
+            <input id="username" type="text" pInputText formControlName="username" class="login__field__input">
         </div>
 
         <!-- Password Field -->
         <div class="login__field">
-            <label for="password" class="login__field-label">Password</label>
+            <label for="password" class="login__field__label">Password</label>
             <p-password [feedback]="false"
                         [toggleMask]="true"
                         id="password"

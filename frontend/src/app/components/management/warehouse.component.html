@@ -1,19 +1,56 @@
-<div class="management">
-    <div class="management__dropdown">
-        <div>
-            <label for="typeSelect">Select Type:</label>
-            <p-dropdown id="typeSelect"
-                        (onChange)="onChange()"
-                        [options]="options"
-                        [(ngModel)]="selectedOption"
-                        optionValue="value"
-                        optionLabel="label"></p-dropdown>
-        </div>
+<div class="warehouse">
+    <div class="warehouse__data-view">
 
-        <p-button label="Delete" (onClick)="onDelete()"></p-button>
-    </div>
+        <p-dataView [value]="items">
+            <ng-template pTemplate="list" let-items>
+                <div class="grid">
+                    <div *ngFor="let item of items; let first = first" class="col-12">
+                        <div class="flex flex-column sm:flex-row sm:align-items-center p-2 gap-2"
+                             [ngClass]="{ 'border-top-1 surface-border': !first }">
 
-    <div class="management__file-upload w-6 gap-1">
-        <p-fileUpload [url]="url" name="data" accept=".json" (onUpload)="onUpload()"></p-fileUpload>
+                            <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                                <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+
+                                    <p-tag [value]="getQuantityStatus(item)"
+                                           [severity]="getQuantitySeverity(item)"
+                                           class="relative"
+                                           [style.left.px]="0"
+                                           [style.top.px]="4"/>
+                                    <div>
+                                        <span class="font-medium text-secondary text-sm">CATEGORY_PLACEHOLDER</span>
+                                        <div class="text-lg font-medium text-900 mt-2">{{ item.name }}</div>
+                                    </div>
+
+                                </div>
+                                <div class="flex flex-column md:align-items-end gap-5">
+
+                                    <div class="flex flex-row-reverse md:flex-row gap-5">
+
+                                        <!--Quantity Input-->
+                                        <input pInputText type="number" [min]="0" [style.width.px]="100" [(ngModel)]="item.quantity"/>
+
+                                        <!--Update Quantity Button-->
+                                        <p-button label="Update"
+                                                  icon="pi pi-pencil"
+                                                  class="white-space-nowrap"
+                                                  styleClass="p-button-success"/>
+
+                                        <!--Delete Button-->
+                                        <p-button label="Delete"
+                                                  icon=" pi pi-trash"
+                                                  class="white-space-nowrap"
+                                                  styleClass="p-button-danger"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataView>
     </div>
 </div>
+
+<p-dialog [visible]="showUploadDialog">
+    <p-fileUpload name="data" accept=".json" (onUpload)="onUpload()"></p-fileUpload>
+</p-dialog>
