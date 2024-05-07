@@ -1,20 +1,27 @@
 @import "colors";
 
-div {
+.not-found {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   flex-direction: column;
   background-color: $color-background;
-}
+  gap: 2rem;
 
-h1 {
-  font-size: 8rem;
-  color: $color-primary;
-}
+  &__heading {
+    color: $color-text-dark;
+    font: {
+      size: 8rem;
+      weight: bold;
+    }
+  }
 
-h2 {
-  font-size: 3rem;
-  color: $color-primary;
+  &__subheading {
+    color: $color-text-dark;
+    font: {
+      size: 3rem;
+      weight: bold;
+    }
+  }
 }
