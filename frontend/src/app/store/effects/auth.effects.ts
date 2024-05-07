@@ -2,24 +2,20 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { AuthService } from '../services/auth.service';
-import { AuthActions, UserActions } from './app.actions';
 import { MessageService } from 'primeng/api';
-import { NavigationService } from '../services/navigation.service';
-import { UserService } from '../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { NavigationService } from '../../services/navigation.service';
+import { AuthActions } from '../actions/auth.actions';
 
 @Injectable()
-export class AppEffects {
+export class AuthEffects {
 
     constructor(
         private actions$: Actions,
         private authService: AuthService,
-        private userService: UserService,
         private messageService: MessageService,
         private navigationService: NavigationService
     ) {}
-
-    //#region Auth Effects
 
     login$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.login),
@@ -62,35 +58,6 @@ export class AppEffects {
             )
         )
     ));
-
-    //#endregion
-
-    //#region User Effects
-
-    getMe$ = createEffect(() => this.actions$.pipe(
-        ofType(UserActions.getMe),
-        mergeMap(() =>
-            this.userService.getMe().pipe(
-                map(user => UserActions.getMeSuccess({ user })),
-                catchError(() => of(UserActions.getMeFailure()))
-            )
-        )
-    ));
-
-    updateMe$ = createEffect(() => this.actions$.pipe(
-        ofType(UserActions.updateMe),
-        mergeMap(({ request }) =>
-            this.userService.updateMe(request).pipe(
-                map((user) => {
-                    this.showSuccessMessage('Account updated successfully');
-                    return UserActions.updateMeSuccess({ user });
-                }),
-                catchError(() => of(UserActions.updateMeFailure()))
-            )
-        )
-    ));
-
-    //#endregion
 
     private showSuccessMessage(message: string): void {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: message });

@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AppState } from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
-import { UserActions } from '../../store/app.actions';
-import { userSelector } from '../../store/app.selector';
 import { Subscription } from 'rxjs';
 import { NavigationService } from '../../services/navigation.service';
 import { UpdateUserRequest } from '../../dto/requests/update-user-request.dto';
+import { AppState } from '../../store/reducers/app.reducer';
+import { userSelector } from '../../store/selectors/app.selector';
+import { UserActions } from '../../store/actions/user.actions';
 
 interface UserForm {
     username: FormControl<string>,

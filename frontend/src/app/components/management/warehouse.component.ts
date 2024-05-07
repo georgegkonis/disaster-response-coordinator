@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.reducer';
-import { WarehouseActions } from '../../store/app.actions';
 import { GetCategoriesRequest } from '../../dto/requests/get-categories-request.dto';
 import { GetItemsRequest } from '../../dto/requests/get-items-request.dto';
 import { Subscription } from 'rxjs';
-import { categoriesSelector, itemsSelector } from '../../store/app.selector';
 import { Category } from '../../models/category.model';
 import { Item } from '../../models/item.model';
 import { CreateCategoryRequest } from '../../dto/requests/create-category-request.dto';
 import { CreateItemRequest } from '../../dto/requests/create-item-request.dto';
 import { UpdateItemQuantityRequest } from '../../dto/requests/update-item-quantity-request.dto';
+import { categoriesSelector, itemsSelector } from '../../store/selectors/app.selector';
+import { AppState } from '../../store/reducers/app.reducer';
+import { WarehouseActions } from '../../store/actions/warehouse.actions';
 
 @Component({
     selector: 'app-warehouse',

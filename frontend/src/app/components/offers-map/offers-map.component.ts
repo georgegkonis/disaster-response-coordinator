@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.reducer';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AppState } from '../../store/reducers/app.reducer';
 
 type MapNode = {
     lon: number;

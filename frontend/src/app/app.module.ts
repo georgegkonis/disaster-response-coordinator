@@ -11,10 +11,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { appReducer } from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './store/app.effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
@@ -38,6 +36,10 @@ import { TagModule } from 'primeng/tag';
 import { PanelModule } from 'primeng/panel';
 import { MessageModule } from 'primeng/message';
 import { RippleModule } from 'primeng/ripple';
+import { appReducer } from './store/reducers/app.reducer';
+import { AuthEffects } from './store/effects/auth.effects';
+import { UserEffects } from './store/effects/user.effects';
+import { WarehouseEffects } from './store/effects/warehouse.effects';
 
 @NgModule({
     declarations: [
@@ -69,7 +71,7 @@ import { RippleModule } from 'primeng/ripple';
         DialogModule,
         StoreDevtoolsModule.instrument(),
         StoreModule.forRoot({ app: appReducer }),
-        EffectsModule.forRoot(AppEffects),
+        EffectsModule.forRoot([AuthEffects, UserEffects, WarehouseEffects]),
         MenuModule,
         DataViewModule,
         TagModule,

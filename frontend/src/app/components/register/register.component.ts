@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AppState } from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
-import { AuthActions } from '../../store/app.actions';
 import { RegisterRequest } from '../../dto/requests/register-request.dto';
 import { NavigationService } from '../../services/navigation.service';
+import { AppState } from '../../store/reducers/app.reducer';
+import { AuthActions } from '../../store/actions/auth.actions';
 
 interface RegisterForm {
     username: FormControl<string>;

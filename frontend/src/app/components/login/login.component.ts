@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.reducer';
-import { AuthActions } from '../../store/app.actions';
 import { LoginRequest } from '../../dto/requests/login-request.dto';
 import { NavigationService } from '../../services/navigation.service';
 import { CookieService } from 'ngx-cookie-service';
+import { AppState } from '../../store/reducers/app.reducer';
+import { AuthActions } from '../../store/actions/auth.actions';
 
 interface LoginForm {
     username: FormControl<string>;

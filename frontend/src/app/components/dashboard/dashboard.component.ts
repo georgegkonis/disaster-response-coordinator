@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.reducer';
 import { UserRole } from '../../enums/user-role.enum';
 import { CookieService } from 'ngx-cookie-service';
 import { routesPaths } from '../../constants/routes-paths';
-import { AuthActions } from '../../store/app.actions';
+import { AppState } from '../../store/reducers/app.reducer';
+import { AuthActions } from '../../store/actions/auth.actions';
 
 @Component({
     selector: 'app-dashboard',
