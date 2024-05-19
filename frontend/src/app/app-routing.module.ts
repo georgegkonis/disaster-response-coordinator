@@ -11,7 +11,7 @@ import { adminRoleGuard } from './guards/role.guard';
 import { WarehouseComponent } from './components/management/warehouse.component';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
 
-const ROUTES: Routes = [
+const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent
@@ -60,7 +60,7 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(ROUTES)],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
