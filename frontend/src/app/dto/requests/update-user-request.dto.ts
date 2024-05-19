@@ -1,9 +1,7 @@
+import { UserDetails } from '../../models/user-details.model';
+
 export interface UpdateUserRequest {
     username?: string;
     password?: string;
-    details?: {
-        firstName?: string;
-        lastName?: string;
-        phoneNumber?: string;
-    };
+    details?: UserDetails;
 }
