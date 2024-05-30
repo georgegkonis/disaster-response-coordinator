@@ -40,6 +40,11 @@ import { appReducer } from './store/reducers/app.reducer';
 import { AuthEffects } from './store/effects/auth.effects';
 import { UserEffects } from './store/effects/user.effects';
 import { WarehouseEffects } from './store/effects/warehouse.effects';
+import { CreateAnnouncementComponent } from './components/create-announcement/create-announcement.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import { TableModule } from 'primeng/table';
+import { AnnouncementsEffects } from './store/effects/announcements.effects';
 
 @NgModule({
     declarations: [
@@ -51,7 +56,9 @@ import { WarehouseEffects } from './store/effects/warehouse.effects';
         DashboardComponent,
         NotFoundComponent,
         WarehouseComponent,
-        OffersMapComponent
+        OffersMapComponent,
+        AnnouncementsComponent,
+        CreateAnnouncementComponent
     ],
     imports: [
         BrowserModule,
@@ -71,13 +78,15 @@ import { WarehouseEffects } from './store/effects/warehouse.effects';
         DialogModule,
         StoreDevtoolsModule.instrument(),
         StoreModule.forRoot({ app: appReducer }),
-        EffectsModule.forRoot([AuthEffects, UserEffects, WarehouseEffects]),
+        EffectsModule.forRoot([AuthEffects, UserEffects, WarehouseEffects, AnnouncementsEffects]),
         MenuModule,
         DataViewModule,
         TagModule,
         PanelModule,
         MessageModule,
-        RippleModule
+        RippleModule,
+        MultiSelectModule,
+        TableModule
     ],
     providers: [
         MessageService,

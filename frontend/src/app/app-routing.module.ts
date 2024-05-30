@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { adminRoleGuard } from './guards/role.guard';
 import { WarehouseComponent } from './components/management/warehouse.component';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
+import { AnnouncementsComponent } from './components/announcements/announcements.component';
 
 const routes: Routes = [
     {
@@ -32,6 +33,10 @@ const routes: Routes = [
             {
                 path: 'map',
                 component: OffersMapComponent
+            },
+            {
+                path: 'announcements',
+                component: AnnouncementsComponent
             },
             {
                 path: 'profile',

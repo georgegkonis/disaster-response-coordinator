@@ -1,0 +1,28 @@
+<button pButton type="button" label="Add Announcement" (click)="onCreateClick()"></button>
+
+<p-table [value]="(announcements$ | async) ?? []">
+    <ng-template pTemplate="header">
+        <tr>
+            <th id="description">Description</th>
+            <th id="items">Items</th>
+            <th id="actions">Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-announcement>
+        <tr>
+            <td>{{ announcement.description }}</td>
+            <td>{{ announcement.items.join(', ') }}</td>
+            <td>
+                <button pButton type="button" label="Delete" (click)="onRemoveClick(announcement.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Add Announcement"
+          [closeOnEscape]="true"
+          [(visible)]="displayDialog"
+          [modal]="true"
+          [style]="{width: '30vw', height: '70vh'}">
+    <app-create-announcement (created)="onCreated($event)" (canceled)="onCanceled()"></app-create-announcement>
+</p-dialog>

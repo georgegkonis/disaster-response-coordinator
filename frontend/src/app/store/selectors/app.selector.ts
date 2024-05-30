@@ -17,3 +17,8 @@ export const itemsSelector = createSelector(
     appStateSelector,
     (state: AppState) => state.items
 );
+
+export const announcementsSelector = createSelector(
+    appStateSelector,
+    (state: AppState) => state.announcements
+);

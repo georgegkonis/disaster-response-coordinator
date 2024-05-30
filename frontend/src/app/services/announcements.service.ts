@@ -10,7 +10,7 @@ const API_PATH: string = 'announcements';
 @Injectable({
     providedIn: 'root'
 })
-export class AnnouncementService {
+export class AnnouncementsService {
 
     private readonly baseUrl: string;
 

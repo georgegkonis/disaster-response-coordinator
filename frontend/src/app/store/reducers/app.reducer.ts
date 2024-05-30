@@ -5,19 +5,23 @@ import { Category } from '../../models/category.model';
 import { WarehouseActions } from '../actions/warehouse.actions';
 import { UserActions } from '../actions/user.actions';
 import { AuthActions } from '../actions/auth.actions';
+import { Announcement } from '../../models/announcement.model';
+import { AnnouncementsActions } from '../actions/announcements.actions';
 
 export interface AppState {
     user: User | null;
     users: User[];
     items: Item[];
     categories: Category[];
+    announcements: Announcement[];
 }
 
 export const initialState: AppState = {
     user: null,
     users: [],
     items: [],
-    categories: []
+    categories: [],
+    announcements: []
 };
 
 export const appReducer = createReducer(
@@ -44,7 +48,15 @@ export const appReducer = createReducer(
     on(WarehouseActions.createCategorySuccess, (state, { category }) => update(state, { categories: [...state.categories, category] })),
     on(WarehouseActions.createItemSuccess, (state, { item }) => update(state, { items: [...state.items, item] })),
     on(WarehouseActions.updateItemQuantitySuccess, (state, { item }) => update(state, { items: state.items.map(i => i.id === item.id ? item : i) })),
-    on(WarehouseActions.deleteAllSuccess, (state) => update(state, { items: [], categories: [] }))
+    on(WarehouseActions.deleteAllSuccess, (state) => update(state, { items: [], categories: [] })),
+
+    //#endregion
+
+    //#region Announcements
+
+    on(AnnouncementsActions.loadSuccess, (state, { announcements }) => update(state, { announcements })),
+    on(AnnouncementsActions.createSuccess, (state, { announcement }) => update(state, { announcements: [...state.announcements, announcement] })),
+    on(AnnouncementsActions.removeSuccess, (state, { id }) => update(state, { announcements: state.announcements.filter(a => a.id !== id) }))
 
     //#endregion
 );

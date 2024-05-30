@@ -1,0 +1,41 @@
+<div class="create-announcement app-form">
+    <form [formGroup]="form" class="create-announcement__form">
+
+        <!-- Description input -->
+        <div class="app-form__field">
+            <label for="description">Description</label>
+            <input pInputText type="text" id="description" formControlName="description" class="app-form__field__input">
+        </div>
+
+        <!-- Items / Categories multiselect -->
+        <div class="app-form__field">
+            <label for="items">Items</label>
+            <p-multiSelect [filter]="true"
+                           [options]="(items$ | async) ?? []"
+                           [showClear]="true"
+                           display="chip"
+                           formControlName="items"
+                           id="items"
+                           panelStyleClass="w-full"
+                           styleClass="w-full"></p-multiSelect>
+        </div>
+
+        <!-- Buttons -->
+        <div class="app-form__buttons">
+            <p-button (onClick)="onCreateClick()"
+                      [disabled]="!form.valid"
+                      icon="pi pi-check"
+                      iconPos="right"
+                      label="Create"
+                      severity="success"
+                      type="submit"></p-button>
+            <p-button (onClick)="onCancelClick()"
+                      [outlined]="true"
+                      icon="pi pi-times"
+                      iconPos="right"
+                      label="Cancel"
+                      severity="danger"
+                      type="button"></p-button>
+        </div>
+    </form>
+</div>
