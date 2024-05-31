@@ -1,16 +1,16 @@
 <div class="login">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login__form">
-        <h1 class="login__heading">Login</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="app-form">
+        <h1 class="app-form__heading">Login</h1>
 
         <!-- Username Field -->
-        <div class="login__field">
-            <label for="username" class="login__field__label">Username</label>
-            <input id="username" type="text" pInputText formControlName="username" class="login__field__input">
+        <div class="app-form__field">
+            <label for="username" class="app-form__field__label">Username</label>
+            <input id="username" type="text" pInputText formControlName="username" class="app-form__field__input">
         </div>
 
         <!-- Password Field -->
-        <div class="login__field">
-            <label for="password" class="login__field__label">Password</label>
+        <div class="app-form__field">
+            <label for="password" class="app-form__field__label">Password</label>
             <p-password [feedback]="false"
                         [toggleMask]="true"
                         id="password"
@@ -20,7 +20,7 @@
         </div>
 
         <!-- Buttons -->
-        <div class="login__buttons">
+        <div class="app-form__buttons">
             <p-button [disabled]="!loginForm.valid" type="submit" label="Login" icon="pi pi-check" iconPos="right"></p-button>
             <p-button (onClick)="onCancelClick()"
                       type="button"

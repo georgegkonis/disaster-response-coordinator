@@ -1,24 +1,24 @@
 <div class="register">
 
     <!-- Register Form -->
-    <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="register__form">
-        <h1 class="register__heading">Register</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="app-form">
+        <h1 class="app-form__heading">Register</h1>
 
         <!-- Username Field -->
-        <div class="register__field">
-            <label class="register__field-label" for="username">Username</label>
-            <input class="register__field-input" formControlName="username" id="username" pInputText type="text">
+        <div class="app-form__field">
+            <label class="app-form__field__label" for="username">Username</label>
+            <input class="app-form__field__input" formControlName="username" id="username" pInputText type="text">
         </div>
 
         <!-- Email Field -->
-        <div class="register__field">
-            <label class="register__field-label" for="email">Email</label>
-            <input class="register__field-input" formControlName="email" id="email" pInputText type="email">
+        <div class="app-form__field">
+            <label class="app-form__field__label" for="email">Email</label>
+            <input class="app-form__field__input" formControlName="email" id="email" pInputText type="email">
         </div>
 
         <!-- Password Field -->
-        <div class="register__field">
-            <label for="password" class="register__field-label">Password</label>
+        <div class="app-form__field">
+            <label for="password" class="app-form__field__label">Password</label>
             <p-password [toggleMask]="true"
                         id="password"
                         formControlName="password"
@@ -27,8 +27,8 @@
         </div>
 
         <!-- Password Confirmation Field -->
-        <div class="register__field">
-            <label for="passwordConfirm" class="register__field-label">Password Confirmation</label>
+        <div class="app-form__field">
+            <label for="passwordConfirm" class="app-form__field__label">Password Confirmation</label>
             <p-password [toggleMask]="true"
                         [feedback]="false"
                         id="passwordConfirm"
@@ -38,7 +38,7 @@
         </div>
 
         <!-- Buttons -->
-        <div class="register__buttons">
+        <div class="app-form__buttons">
             <p-button [disabled]="!registerForm.valid"
                       [raised]="true"
                       icon="pi pi-check"
