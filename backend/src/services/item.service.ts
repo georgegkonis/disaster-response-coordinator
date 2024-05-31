@@ -20,16 +20,18 @@ export const getItem = async (
     return item;
 };
 
-export const insertAndUpdateItems = async (jsonData: any[]) => {
-    const bulkOps = jsonData.map((item: Item) => ({
+export const insertAndUpdateItems = async (
+    items: Item[]
+) => {
+    const updateOps = items.map((item) => ({
         updateOne: {
-            filter: { id: item.id },
+            filter: { code: item.code },
             update: { $set: item },
             upsert: true
         }
     }));
 
-    await itemModel.bulkWrite(bulkOps);
+    await itemModel.bulkWrite(updateOps);
 };
 
 export const findItems = async (
@@ -56,9 +58,9 @@ export const updateItemQuantity = async (
     return item;
 };
 
-export const getIncrementedItemId = async () => {
-    const item = await itemModel.findOne().sort('-id').select('id').exec();
-    const maxId = item ? item.id : 0;
+export const getIncrementedItemCode = async () => {
+    const item = await itemModel.findOne().sort('-code').select('code').exec();
+    const maxCode = item ? item.code : 0;
 
-    return maxId + 1;
+    return maxCode + 1;
 };

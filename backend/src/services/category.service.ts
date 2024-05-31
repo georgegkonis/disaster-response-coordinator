@@ -21,17 +21,17 @@ export const getCategory = async (
 };
 
 export const insertAndUpdateCategories = async (
-    categories: any[]
+    categories: Category[]
 ) => {
-    const bulkOps = categories.map((category: any) => ({
+    const updateOps = categories.map((category) => ({
         updateOne: {
-            filter: { id: category.id },
-            update: { $set: { ...category, name: category.category_name } },
+            filter: { code: category.code },
+            update: { $set: category },
             upsert: true
         }
     }));
 
-    await categoryModel.bulkWrite(bulkOps);
+    await categoryModel.bulkWrite(updateOps);
 };
 
 export const findCategories = async (
@@ -49,7 +49,7 @@ export const deleteAllCategories = async () => {
 
 export const getIncrementedCategoryId = async () => {
     const category = await categoryModel.findOne().sort('-id').select('id').exec();
-    const maxId = category ? category.id : 0;
+    const maxId = category ? category.code : 0;
 
     return maxId + 1;
 };

@@ -10,7 +10,7 @@ class ItemDetail {
     public value!: string;
 }
 
-@index({ id: 'asc', name: 'text', category: 'asc' })
+@index({ code: 'asc', name: 'text', category: 'asc' })
 @modelOptions({
     schemaOptions: {
         collection: 'items',
@@ -22,7 +22,7 @@ export class Item {
     public _id?: Types.ObjectId;
 
     @prop({ unique: true, required: true })
-    public id!: number;
+    public code!: number;
 
     @prop({ required: true })
     public name!: string;

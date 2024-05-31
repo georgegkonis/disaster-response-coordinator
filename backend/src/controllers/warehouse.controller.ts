@@ -12,13 +12,14 @@ import {
     createItem,
     deleteAllItems,
     findItems,
-    getIncrementedItemId,
+    getIncrementedItemCode,
     insertAndUpdateItems,
     updateItemQuantity
 } from '../services/item.service';
 import { Status } from '../enums/status.enum';
 import { Category } from '../models/category.model';
 import { CreateCategoryInput, CreateItemInput, UpdateItemQuantityInput, WarehouseJsonInput } from '../schemas/warehouse.schema';
+import { Item } from '../models/item.model';
 
 export const uploadCategoriesAndItemsHandler = async (
     req: Request<{}, {}, WarehouseJsonInput>,
@@ -26,11 +27,13 @@ export const uploadCategoriesAndItemsHandler = async (
     next: NextFunction
 ) => {
     try {
-        await insertAndUpdateCategories(req.body.categories);
+        const categories: Category[] = transformCategories(req.body.categories);
 
-        const validItems = await mapItemCategoryIdsToObjectIds(req.body.items);
+        await insertAndUpdateCategories(categories);
 
-        await insertAndUpdateItems(validItems);
+        const items = await transformItems(req.body.items);
+
+        await insertAndUpdateItems(items);
 
         res.status(StatusCode.OK).json({
             status: Status.SUCCESS,
@@ -47,7 +50,7 @@ export const createCategoryHandler = async (
     next: NextFunction
 ) => {
     try {
-        req.body.id = await getIncrementedCategoryId();
+        req.body.code = await getIncrementedCategoryId();
 
         const category = await createCategory(req.body);
 
@@ -65,7 +68,7 @@ export const createItemHandler = async (
     try {
         await getCategory(req.body.category);
 
-        req.body.id = await getIncrementedItemId();
+        req.body.code = await getIncrementedItemCode();
 
         const item = await createItem(req.body);
 
@@ -132,13 +135,17 @@ export const deleteAllCategoriesAndItemsHandler = async (
     }
 };
 
-async function mapItemCategoryIdsToObjectIds(items: any[]) {
-    const ids = items.map((item: any) => Number(item.category));
-    const categories = await findCategories({ id: { $in: ids } });
+function transformCategories(jsonData: any[]): Category[] {
+    return jsonData.map((category) => ({ code: category.id, name: category.category_name }));
+}
 
-    return items.map((item: any) => {
-        const category = categories.find((category: Category) => category.id.toString() === item.category);
+async function transformItems(jsonData: any[]): Promise<Item[]> {
+    const ids = jsonData.map((x: any) => Number(x.category));
+    const categories = await findCategories({ code: { $in: ids } });
 
-        if (category) return { ...item, category: category._id!.toHexString() };
+    return jsonData.map((item) => {
+        const category = categories.find((category: Category) => category.code.toString() === item.category);
+
+        if (category) return { ...item, category: category._id!.toHexString(), code: item.id };
     });
 }

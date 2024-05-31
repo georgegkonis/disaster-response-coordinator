@@ -63,6 +63,6 @@ export const updateItemQuantitySchema = object({
 });
 
 export type WarehouseJsonInput = TypeOf<typeof warehouseJsonSchema>['body'];
-export type CreateItemInput = TypeOf<typeof createItemSchema>['body'] & { id: number, category: Ref<Category> };
-export type CreateCategoryInput = TypeOf<typeof createCategorySchema>['body'] & { id: number };
+export type CreateItemInput = TypeOf<typeof createItemSchema>['body'] & { code: number, category: Ref<Category> };
+export type CreateCategoryInput = TypeOf<typeof createCategorySchema>['body'] & { code: number };
 export type UpdateItemQuantityInput = TypeOf<typeof updateItemQuantitySchema>['body'];
