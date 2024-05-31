@@ -6,7 +6,8 @@ POST {{host}}/{{baseUrl}}/announcements
 Content-Type: application/json
 
 {
-  "items": ["65c675a8fa63db786131a787", "65c675a8fa63db786131a78a", "65c675a8fa63db786131a799"]
+  "description": "This is a test announcement",
+  "items": ["6659ddf226f1bb4053c31c57", "6659ddf226f1bb4053c31c56", "6659ddf226f1bb4053c31c55"]
 }
 
 ### Get All

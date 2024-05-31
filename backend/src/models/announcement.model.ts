@@ -12,6 +12,9 @@ export class Announcement {
     @Prop({ auto: true })
     public _id?: Types.ObjectId;
 
+    @Prop({ required: true })
+    public description!: string;
+
     @Prop({ required: true, ref: () => Item })
     public items!: Ref<Item>[];
 }
