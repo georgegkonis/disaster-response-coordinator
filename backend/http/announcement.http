@@ -17,3 +17,12 @@ GET {{host}}/{{baseUrl}}/announcements
 ### Delete
 
 DELETE {{host}}/{{baseUrl}}/announcements/{{announcementId}}
+
+### Delete Many
+
+DELETE {{host}}/{{baseUrl}}/announcements
+Content-Type: application/json
+
+{
+  "ids": ["65c678ec90e44ea4b2b9f566", "65c678ec90e44ea4b2b9f565"]
+}

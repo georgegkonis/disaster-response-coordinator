@@ -23,3 +23,9 @@ export const deleteAnnouncement = async (
 ) => {
     await announcementModel.findByIdAndDelete(id);
 };
+
+export const deleteAnnouncements = async (
+    ids: string[]
+) => {
+    await announcementModel.deleteMany({ _id: { $in: ids } });
+};

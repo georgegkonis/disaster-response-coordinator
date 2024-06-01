@@ -14,4 +14,13 @@ export const createAnnouncementSchema = object({
     }).strip()
 });
 
+export const deleteAnnouncementsSchema = object({
+    body: object({
+        ids: array(
+            string().refine(isValidObjectId, 'Invalid ID format')
+        ).min(1)
+    })
+});
+
 export type CreateAnnouncementInput = TypeOf<typeof createAnnouncementSchema>['body'] & { items: Ref<Item>[] }
+export type DeleteAnnouncementsInput = TypeOf<typeof deleteAnnouncementsSchema>['body']
