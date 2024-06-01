@@ -46,6 +46,7 @@ import { TableModule } from 'primeng/table';
 import { AnnouncementsEffects } from './store/effects/announcements.effects';
 import { ToolbarModule } from 'primeng/toolbar';
 import { StyleClassModule } from 'primeng/styleclass';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
     declarations: [
@@ -88,7 +89,8 @@ import { StyleClassModule } from 'primeng/styleclass';
         MultiSelectModule,
         TableModule,
         ToolbarModule,
-        StyleClassModule
+        StyleClassModule,
+        NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
     ],
     providers: [
         MessageService,
