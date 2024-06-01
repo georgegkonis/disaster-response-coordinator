@@ -24,7 +24,7 @@ export const initialState: AppState = {
     announcements: []
 };
 
-export const appReducer = createReducer(
+const reducer = createReducer(
     initialState,
 
     //#region Auth
@@ -58,6 +58,10 @@ export const appReducer = createReducer(
 
     //#endregion
 );
+
+export function appReducer(state: AppState | undefined, action: any) {
+    return reducer(state, action);
+}
 
 function update(state: AppState, changes: Partial<AppState>) {
     return { ...state, ...changes };
