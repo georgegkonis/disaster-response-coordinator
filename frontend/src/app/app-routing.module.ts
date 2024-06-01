@@ -8,7 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { adminRoleGuard } from './guards/role.guard';
-import { WarehouseComponent } from './components/management/warehouse.component';
+import { WarehouseComponent } from './components/warehouse/warehouse.component';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
 

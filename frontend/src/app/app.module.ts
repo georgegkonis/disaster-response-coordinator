@@ -23,7 +23,7 @@ import { HttpCredentialsInterceptor } from './interceptors/http-credentials.inte
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenubarModule } from 'primeng/menubar';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { WarehouseComponent } from './components/management/warehouse.component';
+import { WarehouseComponent } from './components/warehouse/warehouse.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
