@@ -36,4 +36,21 @@ export class AnnouncementsEffects {
             catchError(() => of(AnnouncementsActions.removeFailure()))
         ))
     ));
+
+    removeManyEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(AnnouncementsActions.removeMany),
+        switchMap(({ request }) => this.announcementsService.deleteMany(request).pipe(
+            map(() => AnnouncementsActions.removeManySuccess({ ids: request.ids })),
+            catchError(() => of(AnnouncementsActions.removeManyFailure()))
+        ))
+    ));
+
+    reloadEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            AnnouncementsActions.createSuccess,
+            AnnouncementsActions.removeSuccess,
+            AnnouncementsActions.removeManySuccess
+        ),
+        map(() => AnnouncementsActions.load())
+    ));
 }

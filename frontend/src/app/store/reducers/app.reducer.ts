@@ -47,16 +47,14 @@ export const appReducer = createReducer(
     on(WarehouseActions.getItemsSuccess, (state, { items }) => update(state, { items })),
     on(WarehouseActions.createCategorySuccess, (state, { category }) => update(state, { categories: [...state.categories, category] })),
     on(WarehouseActions.createItemSuccess, (state, { item }) => update(state, { items: [...state.items, item] })),
-    on(WarehouseActions.updateItemQuantitySuccess, (state, { item }) => update(state, { items: state.items.map(i => i.id === item.id ? item : i) })),
+    on(WarehouseActions.updateItemQuantitySuccess, (state, { item }) => update(state, { items: state.items.map(i => i._id === item._id ? item : i) })),
     on(WarehouseActions.deleteAllSuccess, (state) => update(state, { items: [], categories: [] })),
 
     //#endregion
 
     //#region Announcements
 
-    on(AnnouncementsActions.loadSuccess, (state, { announcements }) => update(state, { announcements })),
-    on(AnnouncementsActions.createSuccess, (state, { announcement }) => update(state, { announcements: [...state.announcements, announcement] })),
-    on(AnnouncementsActions.removeSuccess, (state, { id }) => update(state, { announcements: state.announcements.filter(a => a.id !== id) }))
+    on(AnnouncementsActions.loadSuccess, (state, { announcements }) => update(state, { announcements }))
 
     //#endregion
 );

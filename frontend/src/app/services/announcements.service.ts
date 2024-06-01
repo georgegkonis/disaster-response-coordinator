@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Announcement } from '../models/announcement.model';
 import { Observable } from 'rxjs';
 import { CreateAnnouncementRequest } from '../dto/requests/create-announcement-request.dto';
+import { DeleteManyRequest } from '../dto/requests/delete-many-request.dto';
 
 const API_PATH: string = 'announcements';
 
@@ -37,5 +38,11 @@ export class AnnouncementsService {
         const url: string = `${this.baseUrl}/${id}`;
 
         return this.httpClient.delete<void>(url);
+    }
+
+    deleteMany(request: DeleteManyRequest): Observable<void> {
+        const url: string = `${this.baseUrl}`;
+
+        return this.httpClient.delete<void>(url, { body: request });
     }
 }

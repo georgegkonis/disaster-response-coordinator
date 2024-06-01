@@ -1,3 +1,11 @@
 <router-outlet></router-outlet>
-<p-toast [style]="{width: '30rem'}" position="bottom-center"></p-toast>
-<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-toast position="bottom-center"></p-toast>
+
+<p-confirmDialog [closable]="false"
+                 acceptLabel="Confirm"
+                 rejectLabel="Cancel"
+                 acceptIcon="pi pi-check"
+                 rejectIcon="pi pi-times"
+                 acceptButtonStyleClass="p-icon-right p-button-success"
+                 rejectButtonStyleClass="p-icon-right p-button-danger p-button-outlined"
+                 icon="pi pi-exclamation-triangle"></p-confirmDialog>

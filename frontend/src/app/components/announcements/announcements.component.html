@@ -1,28 +1,99 @@
-<button pButton type="button" label="Add Announcement" (click)="onCreateClick()"></button>
+<div class="announcements">
 
-<p-table [value]="(announcements$ | async) ?? []">
-    <ng-template pTemplate="header">
-        <tr>
-            <th id="description">Description</th>
-            <th id="items">Items</th>
-            <th id="actions">Actions</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-announcement>
-        <tr>
-            <td>{{ announcement.description }}</td>
-            <td>{{ announcement.items.join(', ') }}</td>
-            <td>
-                <button pButton type="button" label="Delete" (click)="onRemoveClick(announcement.id)"></button>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+    <p-toolbar styleClass="p-2">
+        <div class="p-toolbar-group-start gap-2">
+            <p-button (onClick)="onAddClick()" icon="pi pi-plus" label="Create"></p-button>
+            <p-button (onClick)="onRemoveSelectedClick()"
+                      [disabled]="noSelectedAnnouncements"
+                      icon="pi pi-trash"
+                      label="Remove"
+                      severity="danger"></p-button>
+        </div>
+        <div class="p-toolbar-group-end gap-2">
+            <p-button (onClick)="onRefreshClick()" icon="pi pi-refresh"></p-button>
+        </div>
+    </p-toolbar>
 
-<p-dialog header="Add Announcement"
-          [closeOnEscape]="true"
-          [(visible)]="displayDialog"
-          [modal]="true"
-          [style]="{width: '30vw', height: '70vh'}">
-    <app-create-announcement (created)="onCreated($event)" (canceled)="onCanceled()"></app-create-announcement>
+    <p-table [(selection)]="selectedAnnouncements"
+             [scrollable]="true"
+             [tableStyle]="{'min-width': '80rem'}"
+             [value]="(announcements$ | async) ?? []"
+             scrollHeight="85vh">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 5rem">
+                    <p-tableHeaderCheckbox/>
+                </th>
+                <th style="width: 35%">Description</th>
+                <th style="width: 35%">Items</th>
+                <th style="width: 15%">Created At</th>
+                <th style="width: 15%">Updated At</th>
+                <th style="width: 5rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-announcement>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="announcement"/>
+                </td>
+                <td>{{ announcement.description }}</td>
+                <td>{{ announcement.items.join(', ') }}</td>
+                <td>{{ announcement.createdAt | date: 'short' }}</td>
+                <td>{{ announcement.updatedAt | date: 'short' }}</td>
+                <td>
+                    <p-button (onClick)="onRemoveClick(announcement._id)"
+                              [outlined]="true"
+                              [rounded]="true"
+                              icon="pi pi-trash"
+                              severity="danger"
+                              size="small"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [closeOnEscape]="true" [(visible)]="displayDialog" [modal]="true" [closable]="false" [style]="{width: '30rem'}">
+    <ng-template pTemplate="headless">
+        <form [formGroup]="announcementForm" class="app-form">
+
+            <!-- Heading -->
+            <h1 class="app-form__heading">Add Announcement</h1>
+
+            <!-- Description input -->
+            <div class="app-form__field">
+                <label for="description" class="app-form__field__label">Description</label>
+                <input pInputText type="text" id="description" formControlName="description" class="app-form__field__input">
+            </div>
+
+            <!-- Items / Categories multiselect -->
+            <div class="app-form__field">
+                <label for="items" class="app-form__field__label">Items</label>
+                <p-multiSelect [filter]="true"
+                               [options]="(itemsSelection$ | async) ?? []"
+                               [showClear]="true"
+                               display="chip"
+                               formControlName="items"
+                               id="items"
+                               panelStyleClass="w-full"
+                               styleClass="w-full"></p-multiSelect>
+            </div>
+
+            <!-- Buttons -->
+            <div class="app-form__buttons">
+                <p-button (onClick)="onSubmitClick()"
+                          [disabled]="!announcementForm.valid"
+                          icon="pi pi-check"
+                          iconPos="right"
+                          label="Submit"
+                          severity="success"></p-button>
+                <p-button (onClick)="onCancelClick()"
+                          [outlined]="true"
+                          icon="pi pi-times"
+                          iconPos="right"
+                          label="Cancel"
+                          severity="danger"></p-button>
+            </div>
+        </form>
+    </ng-template>
 </p-dialog>

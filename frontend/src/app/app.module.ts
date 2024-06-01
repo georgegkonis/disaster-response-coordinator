@@ -40,11 +40,12 @@ import { appReducer } from './store/reducers/app.reducer';
 import { AuthEffects } from './store/effects/auth.effects';
 import { UserEffects } from './store/effects/user.effects';
 import { WarehouseEffects } from './store/effects/warehouse.effects';
-import { CreateAnnouncementComponent } from './components/create-announcement/create-announcement.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
 import { TableModule } from 'primeng/table';
 import { AnnouncementsEffects } from './store/effects/announcements.effects';
+import { ToolbarModule } from 'primeng/toolbar';
+import { StyleClassModule } from 'primeng/styleclass';
 
 @NgModule({
     declarations: [
@@ -57,8 +58,7 @@ import { AnnouncementsEffects } from './store/effects/announcements.effects';
         NotFoundComponent,
         WarehouseComponent,
         OffersMapComponent,
-        AnnouncementsComponent,
-        CreateAnnouncementComponent
+        AnnouncementsComponent
     ],
     imports: [
         BrowserModule,
@@ -86,7 +86,9 @@ import { AnnouncementsEffects } from './store/effects/announcements.effects';
         MessageModule,
         RippleModule,
         MultiSelectModule,
-        TableModule
+        TableModule,
+        ToolbarModule,
+        StyleClassModule
     ],
     providers: [
         MessageService,
