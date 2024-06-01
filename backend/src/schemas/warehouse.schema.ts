@@ -52,17 +52,29 @@ export const createCategorySchema = object({
     }).strip()
 });
 
-export const updateItemQuantitySchema = object({
+export const updateItemSchema = object({
     params: object({
         id: string().refine(isValidObjectId, 'Invalid ID format')
     }).strip(),
 
     body: object({
+        name: string().min(1),
         quantity: number().min(0)
+    }).strip()
+});
+
+export const updateCategorySchema = object({
+    params: object({
+        id: string().refine(isValidObjectId, 'Invalid ID format')
+    }).strip(),
+
+    body: object({
+        name: string().min(1)
     }).strip()
 });
 
 export type WarehouseJsonInput = TypeOf<typeof warehouseJsonSchema>['body'];
 export type CreateItemInput = TypeOf<typeof createItemSchema>['body'] & { code: number, category: Ref<Category> };
 export type CreateCategoryInput = TypeOf<typeof createCategorySchema>['body'] & { code: number };
-export type UpdateItemQuantityInput = TypeOf<typeof updateItemQuantitySchema>['body'];
+export type UpdateItemInput = TypeOf<typeof updateItemSchema>['body'];
+export type UpdateCategoryInput = TypeOf<typeof updateCategorySchema>['body'];

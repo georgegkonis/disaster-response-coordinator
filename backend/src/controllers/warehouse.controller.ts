@@ -2,24 +2,34 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
 import {
     createCategory,
-    deleteAllCategories,
+    deleteCategories,
+    deleteCategory,
     findCategories,
     getCategory,
-    getIncrementedCategoryId,
-    insertAndUpdateCategories
+    getIncrementedCategoryCode,
+    insertAndUpdateCategories,
+    updateCategory
 } from '../services/category.service';
 import {
     createItem,
-    deleteAllItems,
+    deleteItem,
+    deleteItems,
     findItems,
     getIncrementedItemCode,
     insertAndUpdateItems,
-    updateItemQuantity
+    updateItem
 } from '../services/item.service';
 import { Status } from '../enums/status.enum';
 import { Category } from '../models/category.model';
-import { CreateCategoryInput, CreateItemInput, UpdateItemQuantityInput, WarehouseJsonInput } from '../schemas/warehouse.schema';
+import {
+    CreateCategoryInput,
+    CreateItemInput,
+    UpdateCategoryInput,
+    UpdateItemInput,
+    WarehouseJsonInput
+} from '../schemas/warehouse.schema';
 import { Item } from '../models/item.model';
+import { QueryOptions } from 'mongoose';
 
 export const uploadCategoriesAndItemsHandler = async (
     req: Request<{}, {}, WarehouseJsonInput>,
@@ -50,7 +60,7 @@ export const createCategoryHandler = async (
     next: NextFunction
 ) => {
     try {
-        req.body.code = await getIncrementedCategoryId();
+        req.body.code = await getIncrementedCategoryCode();
 
         const category = await createCategory(req.body);
 
@@ -98,7 +108,8 @@ export const getItemsHandler = async (
     next: NextFunction
 ) => {
     try {
-        const items = await findItems(req.query);
+        const options: QueryOptions = { populate: 'category' };
+        const items = await findItems(req.query, options);
 
         res.status(StatusCode.OK).json(items);
     } catch (err: any) {
@@ -106,15 +117,87 @@ export const getItemsHandler = async (
     }
 };
 
-export const updateItemQuantityHandler = async (
-    req: Request<{ id: string }, {}, UpdateItemQuantityInput>,
+export const updateCategoryHandler = async (
+    req: Request<{ id: string }, {}, UpdateCategoryInput>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const item = await updateItemQuantity(req.params.id, req.body.quantity);
+        const category = await updateCategory(req.params.id, req.body);
+
+        res.status(StatusCode.OK).json(category);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const updateItemHandler = async (
+    req: Request<{ id: string }, {}, UpdateItemInput>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const item = await updateItem(req.params.id, req.body);
 
         res.status(StatusCode.OK).json(item);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const deleteCategoryHandler = async (
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await deleteCategory(req.params.id);
+        await deleteItems({ category: req.params.id });
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const deleteItemHandler = async (
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await deleteItem(req.params.id);
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const deleteCategoriesHandler = async (
+    req: Request<{}, {}, { ids: string[] }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await deleteCategories({ _id: { $in: req.body.ids } });
+        await deleteItems({ category: { $in: req.body.ids } });
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const deleteItemsHandler = async (
+    req: Request<{}, {}, { ids: string[] }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await deleteItems({ _id: { $in: req.body.ids } });
+
+        res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {
         next(err);
     }
@@ -126,8 +209,8 @@ export const deleteAllCategoriesAndItemsHandler = async (
     next: NextFunction
 ) => {
     try {
-        await deleteAllCategories();
-        await deleteAllItems();
+        await deleteCategories();
+        await deleteItems();
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {

@@ -43,19 +43,27 @@ export const findItems = async (
     return items;
 };
 
-export const deleteAllItems = async () => {
-    await itemModel.deleteMany();
-};
-
-export const updateItemQuantity = async (
+export const updateItem = async (
     id: string,
-    quantity: number
+    input: Partial<Item>
 ) => {
-    const item: Item | null = await itemModel.findByIdAndUpdate<Item>(id, { $set: { quantity } }, { new: true });
+    const item: Item | null = await itemModel.findByIdAndUpdate<Item>(id, { $set: input }, { new: true });
 
     if (!item) throw new NotFoundError('item', id);
 
     return item;
+};
+
+export const deleteItem = async (
+    id: string
+) => {
+    await itemModel.findByIdAndDelete<Item>(id);
+};
+
+export const deleteItems = async (
+    query: FilterQuery<Item> = {}
+) => {
+    await itemModel.deleteMany(query);
 };
 
 export const getIncrementedItemCode = async () => {

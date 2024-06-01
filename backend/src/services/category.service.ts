@@ -43,13 +43,32 @@ export const findCategories = async (
     return categories;
 };
 
-export const deleteAllCategories = async () => {
-    await categoryModel.deleteMany();
+export const updateCategory = async (
+    id: string,
+    input: Partial<Category>
+) => {
+    const category: Category | null = await categoryModel.findByIdAndUpdate<Category>(id, input, { new: true });
+
+    if (!category) throw new NotFoundError('category', id);
+
+    return category;
 };
 
-export const getIncrementedCategoryId = async () => {
-    const category = await categoryModel.findOne().sort('-id').select('id').exec();
-    const maxId = category ? category.code : 0;
+export const deleteCategory = async (
+    id: string
+) => {
+    await categoryModel.findByIdAndDelete<Category>(id);
+};
 
-    return maxId + 1;
+export const deleteCategories = async (
+    query: FilterQuery<Category> = {}
+) => {
+    await categoryModel.deleteMany(query);
+};
+
+export const getIncrementedCategoryCode = async () => {
+    const category = await categoryModel.findOne().sort('-code').select('code').exec();
+    const maxCode = category ? category.code : 0;
+
+    return maxCode + 1;
 };

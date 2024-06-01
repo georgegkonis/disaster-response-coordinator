@@ -1,8 +1,9 @@
 @itemId = 65c675a8fa63db786131a811
+@categoryId = 65c675c7177263200fc1ea9c
 
 ### Upload categories and items
 
-POST {{host}}/{{baseUrl}}/warehouse/upload
+PUT {{host}}/{{baseUrl}}/warehouse/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -47,13 +48,49 @@ GET {{host}}/{{baseUrl}}/warehouse/items
 #    ?name=Tampons
 #    &category=65c674f2177263200fc1ea61
 
-### Update item quantity
+### Update category
 
-PATCH {{host}}/{{baseUrl}}/warehouse/items/{{itemId}}/quantity
+PATCH {{host}}/{{baseUrl}}/warehouse/categories/{{categoryId}}
 Content-Type: application/json
 
 {
+  "name": "Food"
+}
+
+### Update item
+
+PATCH {{host}}/{{baseUrl}}/warehouse/items/{{itemId}}
+Content-Type: application/json
+
+{
+  "name": "Oreo",
   "quantity": 1
+}
+
+### Delete category
+
+DELETE {{host}}/{{baseUrl}}/warehouse/categories/{{categoryId}}
+
+### Delete item
+
+DELETE {{host}}/{{baseUrl}}/warehouse/items/{{itemId}}
+
+### Delete categories
+
+DELETE {{host}}/{{baseUrl}}/warehouse/categories
+Content-Type: application/json
+
+{
+  "ids": ["65c675c7177263200fc1ea9c"]
+}
+
+### Delete items
+
+DELETE {{host}}/{{baseUrl}}/warehouse/items
+Content-Type: application/json
+
+{
+  "ids": ["65c675a8fa63db786131a811"]
 }
 
 ### Delete all categories and items
