@@ -7,18 +7,16 @@ export const createUser = async (
     input: User
 ) => {
     input.password = await encryptPassword(input.password);
+
     const user: User = await userModel.create<User>(input);
 
     return user;
 };
 
 export const getUser = async (
-    id: string,
-    includePassword: boolean = false
+    id: string
 ) => {
-    const user: User | null = includePassword
-        ? await userModel.findById<User>(id).select('+password').exec()
-        : await userModel.findById<User>(id);
+    const user: User | null = await userModel.findById<User>(id);
 
     if (!user) throw new NotFoundError('user', id);
 
@@ -30,7 +28,7 @@ export const findUser = async (
     projection: ProjectionFields<User> = {},
     options: QueryOptions = {}
 ) => {
-    const user = await userModel.findOne<User>(query, projection, options).lean();
+    const user: User | null = await userModel.findOne<User>(query, projection, options);
 
     return user;
 };
