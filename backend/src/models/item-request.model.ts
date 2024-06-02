@@ -8,7 +8,9 @@ import { Types } from 'mongoose';
 @modelOptions({
     schemaOptions: {
         collection: 'item_requests',
-        timestamps: true
+        timestamps: true,
+        toJSON: { virtuals: true, versionKey: false },
+        toObject: { virtuals: true, versionKey: false }
     },
     options: {
         allowMixed: Severity.ALLOW
@@ -38,6 +40,16 @@ export class ItemRequest {
 
     @Prop()
     public acceptedAt?: Date;
+
+    //#region Virtuals
+
+    public id?: Types.ObjectId;
+
+    public createdAt?: Date;
+
+    public updatedAt?: Date;
+
+    //#endregion
 }
 
 const itemRequestModel = getModelForClass(ItemRequest);

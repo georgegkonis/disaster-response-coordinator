@@ -5,7 +5,9 @@ import { Types } from 'mongoose';
 @modelOptions({
     schemaOptions: {
         collection: 'announcements',
-        timestamps: true
+        timestamps: true,
+        toJSON: { virtuals: true, versionKey: false },
+        toObject: { virtuals: true, versionKey: false }
     }
 })
 export class Announcement {
@@ -17,6 +19,16 @@ export class Announcement {
 
     @Prop({ required: true, ref: () => Item })
     public items!: Ref<Item>[];
+
+    //#region Virtuals
+
+    public id?: Types.ObjectId;
+
+    public createdAt?: Date;
+
+    public updatedAt?: Date;
+
+    //#endregion
 }
 
 const announcementModel = getModelForClass(Announcement);

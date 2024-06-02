@@ -8,7 +8,9 @@ import { TaskStatus } from '../enums/task-status.enum';
 @modelOptions({
     schemaOptions: {
         collection: 'item_offers',
-        timestamps: true
+        timestamps: true,
+        toJSON: { virtuals: true, versionKey: false },
+        toObject: { virtuals: true, versionKey: false }
     },
     options: {
         allowMixed: Severity.ALLOW
@@ -35,6 +37,16 @@ export class ItemOffer {
 
     @Prop()
     public acceptedAt?: Date;
+
+    //#region Virtuals
+
+    public id?: Types.ObjectId;
+
+    public createdAt?: Date;
+
+    public updatedAt?: Date;
+
+    //#endregion
 }
 
 const itemOfferModel = getModelForClass(ItemOffer);

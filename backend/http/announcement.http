@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
   "description": "This is a test announcement",
-  "items": ["6659ddf226f1bb4053c31c57", "6659ddf226f1bb4053c31c56", "6659ddf226f1bb4053c31c55"]
+  "items": ["6659ef6226f1bb4053c32969"]
 }
 
 ### Get All
@@ -24,5 +24,5 @@ DELETE {{host}}/{{baseUrl}}/announcements
 Content-Type: application/json
 
 {
-  "ids": ["65c678ec90e44ea4b2b9f566", "65c678ec90e44ea4b2b9f565"]
+  "ids": ["665ad326b79da256d734d593", "665ae302635ebb4264588b9d"]
 }

@@ -5,7 +5,9 @@ import { Types } from 'mongoose';
 @modelOptions({
     schemaOptions: {
         collection: 'categories',
-        timestamps: true
+        timestamps: true,
+        toJSON: { virtuals: true, versionKey: false },
+        toObject: { virtuals: true, versionKey: false }
     }
 })
 export class Category {
@@ -17,6 +19,16 @@ export class Category {
 
     @prop({ required: true, alias: 'category_name' })
     public name!: string;
+
+    //#region Virtuals
+
+    public id?: Types.ObjectId;
+
+    public createdAt?: Date;
+
+    public updatedAt?: Date;
+
+    //#endregion
 }
 
 const categoryModel = getModelForClass(Category);

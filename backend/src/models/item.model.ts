@@ -14,7 +14,9 @@ class ItemDetail {
 @modelOptions({
     schemaOptions: {
         collection: 'items',
-        timestamps: true
+        timestamps: true,
+        toJSON: { virtuals: true, versionKey: false },
+        toObject: { virtuals: true, versionKey: false }
     }
 })
 export class Item {
@@ -35,6 +37,16 @@ export class Item {
 
     @prop({ default: 0 })
     public quantity?: number;
+
+    //#region Virtuals
+
+    public id?: Types.ObjectId;
+
+    public createdAt?: Date;
+
+    public updatedAt?: Date;
+
+    //#endregion
 }
 
 const itemModel = getModelForClass(Item);
