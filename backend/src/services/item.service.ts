@@ -13,7 +13,7 @@ export const createItem = async (
 export const getItem = async (
     id: string
 ) => {
-    const item: Item | null = await itemModel.findById(id).lean();
+    const item: Item | null = await itemModel.findById(id);
 
     if (!item) throw new NotFoundError('item', id);
 
@@ -38,7 +38,7 @@ export const findItems = async (
     query: FilterQuery<Item> = {},
     options: QueryOptions = {}
 ) => {
-    const items: Item[] = await itemModel.find<Item>(query, {}, options).lean();
+    const items: Item[] = await itemModel.find<Item>(query, {}, options);
 
     return items;
 };

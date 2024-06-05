@@ -13,7 +13,7 @@ export const createCategory = async (
 export const getCategory = async (
     id: string
 ) => {
-    const category: Category | null = await categoryModel.findById(id).lean();
+    const category: Category | null = await categoryModel.findById(id);
 
     if (!category) throw new NotFoundError('category', id);
 
@@ -38,11 +38,11 @@ export const findCategories = async (
     query: FilterQuery<Category> = {},
     options: QueryOptions = {}
 ) => {
-    const categories: Category[] = await categoryModel.find<Category>(query, {}, options).lean();
+    const categories: Category[] = await categoryModel.find<Category>(query, {}, options);
 
     return categories;
 };
-
+``
 export const updateCategory = async (
     id: string,
     input: Partial<Category>

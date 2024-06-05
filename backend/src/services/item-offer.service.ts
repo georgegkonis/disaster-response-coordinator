@@ -13,7 +13,7 @@ export const createItemOffer = async (
 export const getItemOffer = async (
     id: string
 ) => {
-    const itemOffer: ItemOffer | null = await itemOfferModel.findById(id).lean();
+    const itemOffer: ItemOffer | null = await itemOfferModel.findById(id);
 
     if (!itemOffer) throw new NotFoundError('item offer', id);
 

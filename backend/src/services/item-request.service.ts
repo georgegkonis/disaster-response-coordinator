@@ -13,7 +13,7 @@ export const createItemRequest = async (
 export const getItemRequest = async (
     id: string
 ) => {
-    const request: ItemRequest | null = await itemRequestModel.findById(id).lean();
+    const request: ItemRequest | null = await itemRequestModel.findById(id);
 
     if (!request) throw new NotFoundError('item request', id);
 
