@@ -27,7 +27,7 @@ class Details {
     }
 })
 export class User {
-    @prop({ auto: true, select: true })
+    @prop({ auto: true })
     public _id?: Types.ObjectId;
 
     @prop({ unique: true, required: true })
