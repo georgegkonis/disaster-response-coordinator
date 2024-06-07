@@ -2,22 +2,22 @@
 
     <!-- Register Form -->
     <form (ngSubmit)="onSubmit()" [style]="{width: '25rem'}" [formGroup]="registerForm" class="app-form">
-        <h1 class="app-form__heading">Register</h1>
+        <h1 class="app-form__heading col-12">Register</h1>
 
         <!-- Username Field -->
-        <div class="app-form__field">
+        <div class="app-form__field col-12">
             <label class="app-form__field__label" for="username">Username</label>
             <input class="app-form__field__input" formControlName="username" id="username" pInputText type="text">
         </div>
 
         <!-- Email Field -->
-        <div class="app-form__field">
+        <div class="app-form__field col-12">
             <label class="app-form__field__label" for="email">Email</label>
             <input class="app-form__field__input" formControlName="email" id="email" pInputText type="email">
         </div>
 
         <!-- Password Field -->
-        <div class="app-form__field">
+        <div class="app-form__field col-12">
             <label for="password" class="app-form__field__label">Password</label>
             <p-password [toggleMask]="true"
                         id="password"
@@ -27,7 +27,7 @@
         </div>
 
         <!-- Password Confirmation Field -->
-        <div class="app-form__field">
+        <div class="app-form__field col-12">
             <label for="passwordConfirm" class="app-form__field__label">Password Confirmation</label>
             <p-password [toggleMask]="true"
                         [feedback]="false"
@@ -38,7 +38,7 @@
         </div>
 
         <!-- Buttons -->
-        <div class="app-form__buttons">
+        <div class="app-form__buttons col-12">
             <p-button [disabled]="!registerForm.valid"
                       [raised]="true"
                       icon="pi pi-check"

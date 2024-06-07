@@ -14,7 +14,7 @@ html, body {
 
 .app-form {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   padding: 2rem;
   background-color: $color-background-light-2;
   border-radius: 0.5rem;
