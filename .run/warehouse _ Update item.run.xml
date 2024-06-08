@@ -1,5 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="warehouse | Update item" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Warehouse" path="$PROJECT_DIR$/backend/http/warehouse.http" index="7" requestIdentifier="Update item" runType="Run single request">
-    <method v="2" />
-  </configuration>
-</component>

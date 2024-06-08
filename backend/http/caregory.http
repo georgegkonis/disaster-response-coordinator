@@ -1,0 +1,37 @@
+@categoryId = 65c675c7177263200fc1ea9c
+
+### Find
+
+GET {{host}}/{{baseUrl}}/categories
+#    ?name=Food
+
+### Create
+
+POST {{host}}/{{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "Food"
+}
+
+### Update
+
+PATCH {{host}}/{{baseUrl}}/categories/{{categoryId}}
+Content-Type: application/json
+
+{
+  "name": "Food"
+}
+
+### Delete
+
+DELETE {{host}}/{{baseUrl}}/categories/{{categoryId}}
+
+### Delete multiple
+
+DELETE {{host}}/{{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "ids": ["65c675c7177263200fc1ea9c"]
+}

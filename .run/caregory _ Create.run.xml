@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="caregory | Create" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Category" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/caregory.http" index="2" requestIdentifier="Create" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>

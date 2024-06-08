@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="caregory | Update" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Category" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/caregory.http" index="3" requestIdentifier="Update" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>

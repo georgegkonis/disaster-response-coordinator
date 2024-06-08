@@ -1,37 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
-import {
-    createCategory,
-    deleteCategories,
-    deleteCategory,
-    findCategories,
-    getCategory,
-    getIncrementedCategoryCode,
-    insertAndUpdateCategories,
-    updateCategory
-} from '../services/category.service';
-import {
-    createItem,
-    deleteItem,
-    deleteItems,
-    findItems,
-    getIncrementedItemCode,
-    insertAndUpdateItems,
-    updateItem
-} from '../services/item.service';
+import { deleteCategories, findCategories, insertAndUpdateCategories } from '../services/category.service';
+import { deleteItems, findItems, insertAndUpdateItems } from '../services/item.service';
 import { Status } from '../enums/status.enum';
 import { Category } from '../models/category.model';
-import {
-    CreateCategoryInput,
-    CreateItemInput,
-    UpdateCategoryInput,
-    UpdateItemInput,
-    WarehouseJsonInput
-} from '../schemas/warehouse.schema';
+import { WarehouseJsonInput } from '../schemas/warehouse.schema';
 import { Item } from '../models/item.model';
-import { QueryOptions } from 'mongoose';
 
-export const uploadCategoriesAndItemsHandler = async (
+export const importDataHandler = async (
     req: Request<{}, {}, WarehouseJsonInput>,
     res: Response,
     next: NextFunction
@@ -54,156 +30,35 @@ export const uploadCategoriesAndItemsHandler = async (
     }
 };
 
-export const createCategoryHandler = async (
-    req: Request<{}, {}, CreateCategoryInput>,
+export const exportDataHandler = async (
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        req.body.code = await getIncrementedCategoryCode();
+        const categories = await findCategories();
+        const items = await findItems({}, { populate: 'category' });
 
-        const category = await createCategory(req.body);
+        const jsonData = {
+            categories: categories.map((category) => ({
+                id: category.code,
+                category_name: category.name
+            })),
+            items: items.map((item) => ({
+                id: item.code,
+                name: item.name,
+                category: (item.category as Category).code,
+                details: [item.details.map((detail) => ({ detail_name: detail.name, detail_value: detail.value }))]
+            }))
+        };
 
-        res.status(StatusCode.CREATED).json(category);
+        res.status(StatusCode.OK).json(jsonData);
     } catch (err: any) {
         next(err);
     }
 };
 
-export const createItemHandler = async (
-    req: Request<{}, {}, CreateItemInput>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        await getCategory(req.body.category);
-
-        req.body.code = await getIncrementedItemCode();
-
-        const item = await createItem(req.body);
-
-        res.status(StatusCode.CREATED).json(item);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const getCategoriesHandler = async (
-    req: Request<{}, {}, {}, { name?: string }>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const categories = await findCategories(req.query);
-
-        res.status(StatusCode.OK).json(categories);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const getItemsHandler = async (
-    req: Request<{}, {}, {}, { name?: string, category?: string }>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const options: QueryOptions = { populate: 'category' };
-        const items = await findItems(req.query, options);
-
-        res.status(StatusCode.OK).json(items);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const updateCategoryHandler = async (
-    req: Request<{ id: string }, {}, UpdateCategoryInput>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const category = await updateCategory(req.params.id, req.body);
-
-        res.status(StatusCode.OK).json(category);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const updateItemHandler = async (
-    req: Request<{ id: string }, {}, UpdateItemInput>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const item = await updateItem(req.params.id, req.body);
-
-        res.status(StatusCode.OK).json(item);
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const deleteCategoryHandler = async (
-    req: Request<{ id: string }>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        await deleteCategory(req.params.id);
-        await deleteItems({ category: req.params.id });
-
-        res.status(StatusCode.NO_CONTENT).json();
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const deleteItemHandler = async (
-    req: Request<{ id: string }>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        await deleteItem(req.params.id);
-
-        res.status(StatusCode.NO_CONTENT).json();
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const deleteCategoriesHandler = async (
-    req: Request<{}, {}, { ids: string[] }>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        await deleteCategories({ _id: { $in: req.body.ids } });
-        await deleteItems({ category: { $in: req.body.ids } });
-
-        res.status(StatusCode.NO_CONTENT).json();
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const deleteItemsHandler = async (
-    req: Request<{}, {}, { ids: string[] }>,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        await deleteItems({ _id: { $in: req.body.ids } });
-
-        res.status(StatusCode.NO_CONTENT).json();
-    } catch (err: any) {
-        next(err);
-    }
-};
-
-export const deleteAllCategoriesAndItemsHandler = async (
+export const clearDataHandler = async (
     _req: Request,
     res: Response,
     next: NextFunction

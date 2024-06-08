@@ -1,5 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="warehouse | Delete all categories and items" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Warehouse" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/warehouse.http" index="12" requestIdentifier="Delete all categories and items" runType="Run single request">
-    <method v="2" />
-  </configuration>
-</component>

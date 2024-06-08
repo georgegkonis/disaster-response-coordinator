@@ -42,7 +42,7 @@ export const findCategories = async (
 
     return categories;
 };
-``
+
 export const updateCategory = async (
     id: string,
     input: Partial<Category>

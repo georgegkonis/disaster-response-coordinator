@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="item | Find" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" folderName="Item" nameIsGenerated="true" path="$PROJECT_DIR$/backend/http/item.http" requestIdentifier="Find" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>
