@@ -1,25 +1,8 @@
 .warehouse {
-  display: inline-flex;
-  position: relative;
-  height: 100%;
   width: 100%;
-  background-color: red;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
-
-  &__data-view {
-    width: 60%;
-    height: 100%;
-    padding: 1rem;
-    background-color: blue;
-    overflow-y: auto;
-    margin-left: auto;
-  }
-
-  &__filters-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1rem;
-    background-color: yellow;
-  }
+  gap: 1rem;
 }

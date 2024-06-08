@@ -2,12 +2,11 @@ import { createAction, props } from '@ngrx/store';
 import { CreateAnnouncementRequest } from '../../dto/requests/create-announcement-request.dto';
 import { Announcement } from '../../models/announcement.model';
 import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
+import { FAILURE, SUCCESS } from '../../constants/action-types';
 
 export namespace AnnouncementsActions {
 
     const NAMESPACE: string = '[ANNOUNCEMENTS]';
-    const SUCCESS: string = '(SUCCESS)';
-    const FAILURE: string = '(FAILURE)';
 
     export const load = createAction(
         `${NAMESPACE} Load Announcements`

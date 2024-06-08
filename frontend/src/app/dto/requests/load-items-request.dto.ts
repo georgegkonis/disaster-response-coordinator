@@ -1,4 +1,4 @@
-export interface GetItemsRequest {
+export interface LoadItemsRequest {
     name?: string;
     category?: string;
 }

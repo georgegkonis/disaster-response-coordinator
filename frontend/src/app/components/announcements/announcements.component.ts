@@ -7,7 +7,7 @@ import { announcementsSelector, itemsSelector } from '../../store/selectors/app.
 import { AnnouncementsActions } from '../../store/actions/announcements.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/api';
-import { WarehouseActions } from '../../store/actions/warehouse.actions';
+import { ItemActions } from '../../store/actions/warehouse.actions';
 import { map } from 'rxjs/operators';
 import { CreateAnnouncementRequest } from '../../dto/requests/create-announcement-request.dto';
 import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
@@ -27,19 +27,13 @@ export class AnnouncementsComponent implements OnInit {
     //#region Properties
 
     protected displayDialog: boolean = false;
-    protected selectedAnnouncements: Announcement[] = [];
+    protected selectedAnnouncementIds: Announcement[] = [];
 
     protected readonly announcementForm: FormGroup<AnnouncementForm>;
     protected readonly announcements$: Observable<Announcement[]>;
-    protected readonly itemsSelection$: Observable<SelectItem[]>;
+    protected readonly itemsSelection$: Observable<SelectItem<string>[]>;
 
     //#endregion
-
-    //#region Getters
-
-    get noSelectedAnnouncements(): boolean {
-        return this.selectedAnnouncements.length === 0;
-    }
 
     //#region Constructor
 
@@ -54,7 +48,7 @@ export class AnnouncementsComponent implements OnInit {
 
         this.announcements$ = store.select(announcementsSelector);
         this.itemsSelection$ = store.select(itemsSelector).pipe(
-            map(items => items.map(item => ({ label: item.name, value: item._id })))
+            map(items => items.map(item => ({ label: item.name, value: item.id })))
         );
     }
 
@@ -64,7 +58,7 @@ export class AnnouncementsComponent implements OnInit {
 
     ngOnInit(): void {
         this.store.dispatch(AnnouncementsActions.load());
-        this.store.dispatch(WarehouseActions.getItems({ request: {} }));
+        this.store.dispatch(ItemActions.load({ request: {} }));
     }
 
     //#endregion
@@ -77,12 +71,15 @@ export class AnnouncementsComponent implements OnInit {
 
     onRemoveSelectedClick(): void {
         const request: DeleteManyRequest = {
-            ids: this.selectedAnnouncements.map(announcement => announcement._id)
+            ids: this.selectedAnnouncementIds.map(announcement => announcement.id)
         };
 
         this.confirmationService.confirm({
             message: 'Please confirm that you want to remove the selected announcements.',
-            accept: () => this.store.dispatch(AnnouncementsActions.removeMany({ request }))
+            accept: () => {
+                this.store.dispatch(AnnouncementsActions.removeMany({ request }));
+                this.selectedAnnouncementIds = [];
+            }
         });
     }
 
@@ -99,6 +96,7 @@ export class AnnouncementsComponent implements OnInit {
 
     onSubmitClick(): void {
         const request: CreateAnnouncementRequest = this.announcementForm.getRawValue();
+        console.log(request);
         this.store.dispatch(AnnouncementsActions.create({ request }));
         this.displayDialog = false;
         this.announcementForm.reset();

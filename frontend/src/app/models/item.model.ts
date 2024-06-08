@@ -1,10 +1,13 @@
 import { Category } from './category.model';
+import { ItemDetail } from './item-detail.model';
 
 export interface Item {
-    _id: string;
+    id: string;
     code: number;
     name: string;
-    category: string | Category;
-    details: { name: string; value: string; }[];
+    category: Category;
+    details: ItemDetail[];
     quantity: number;
+    createdAt: Date;
+    updatedAt: Date;
 }

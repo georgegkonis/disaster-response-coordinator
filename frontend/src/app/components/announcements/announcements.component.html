@@ -4,7 +4,7 @@
         <div class="p-toolbar-group-start gap-2">
             <p-button (onClick)="onAddClick()" icon="pi pi-plus" label="Create"></p-button>
             <p-button (onClick)="onRemoveSelectedClick()"
-                      [disabled]="noSelectedAnnouncements"
+                      [disabled]="selectedAnnouncementIds.length === 0"
                       icon="pi pi-trash"
                       label="Remove"
                       severity="danger"></p-button>
@@ -14,60 +14,70 @@
         </div>
     </p-toolbar>
 
-    <p-table [(selection)]="selectedAnnouncements"
+    <p-table [(selection)]="selectedAnnouncementIds"
              [scrollable]="true"
-             [tableStyle]="{'min-width': '80rem'}"
+             [tableStyle]="{'min-width': '80rem', 'max-height': '80vh'}"
              [value]="(announcements$ | async) ?? []"
-             scrollHeight="85vh">
+             dataKey="id"
+             scrollHeight="80vh"
+             sortMode="single"
+             styleClass="p-datatable-sm">
+
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 5rem">
+                <th style="width: 5%">
                     <p-tableHeaderCheckbox/>
                 </th>
-                <th style="width: 35%">Description</th>
-                <th style="width: 35%">Items</th>
+                <th style="width: 30%">Description</th>
+                <th style="width: 30%">Items</th>
                 <th style="width: 15%">Created At</th>
                 <th style="width: 15%">Updated At</th>
-                <th style="width: 5rem"></th>
+                <th style="width: 5%"></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-announcement>
+
+        <ng-template let-announcement pTemplate="body">
             <tr>
                 <td>
                     <p-tableCheckbox [value]="announcement"/>
                 </td>
+
                 <td>{{ announcement.description }}</td>
-                <td>{{ announcement.items.join(', ') }}</td>
+
+                <td>{{ announcement.items | itemNames }}</td>
+
                 <td>{{ announcement.createdAt | date: 'short' }}</td>
+
                 <td>{{ announcement.updatedAt | date: 'short' }}</td>
+
                 <td>
-                    <p-button (onClick)="onRemoveClick(announcement._id)"
-                              [outlined]="true"
-                              [rounded]="true"
-                              icon="pi pi-trash"
-                              severity="danger"
-                              size="small"></p-button>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <p-button (onClick)="onRemoveClick(announcement.id)"
+                                  [outlined]="true"
+                                  [rounded]="true"
+                                  icon="pi pi-trash"
+                                  severity="danger"
+                                  size="small"></p-button>
+                    </div>
                 </td>
             </tr>
         </ng-template>
+
     </p-table>
 </div>
 
-<p-dialog [closeOnEscape]="true" [(visible)]="displayDialog" [modal]="true" [closable]="false" [style]="{width: '30rem'}">
+<p-dialog [(visible)]="displayDialog" [modal]="true" [closable]="false" [style]="{width: '30rem'}">
     <ng-template pTemplate="headless">
         <form [formGroup]="announcementForm" class="app-form">
 
-            <!-- Heading -->
-            <h1 class="app-form__heading">Add Announcement</h1>
+            <h1 class="app-form__heading col-12">Add Announcement</h1>
 
-            <!-- Description input -->
-            <div class="app-form__field">
+            <div class="app-form__field col-12">
                 <label for="description" class="app-form__field__label">Description</label>
                 <input pInputText type="text" id="description" formControlName="description" class="app-form__field__input">
             </div>
 
-            <!-- Items / Categories multiselect -->
-            <div class="app-form__field">
+            <div class="app-form__field col-12">
                 <label for="items" class="app-form__field__label">Items</label>
                 <p-multiSelect [filter]="true"
                                [options]="(itemsSelection$ | async) ?? []"
@@ -79,20 +89,9 @@
                                styleClass="w-full"></p-multiSelect>
             </div>
 
-            <!-- Buttons -->
-            <div class="app-form__buttons">
-                <p-button (onClick)="onSubmitClick()"
-                          [disabled]="!announcementForm.valid"
-                          icon="pi pi-check"
-                          iconPos="right"
-                          label="Submit"
-                          severity="success"></p-button>
-                <p-button (onClick)="onCancelClick()"
-                          [outlined]="true"
-                          icon="pi pi-times"
-                          iconPos="right"
-                          label="Cancel"
-                          severity="danger"></p-button>
+            <div class="app-form__buttons col-12">
+                <p-button (onClick)="onCancelClick()" [outlined]="true" icon="pi pi-times" label="Cancel"></p-button>
+                <p-button (onClick)="onSubmitClick()" [disabled]="!announcementForm.valid" icon="pi pi-check" label="Submit"></p-button>
             </div>
         </form>
     </ng-template>

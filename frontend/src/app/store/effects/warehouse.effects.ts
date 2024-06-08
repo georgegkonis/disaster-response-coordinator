@@ -1,9 +1,8 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { WarehouseActions } from '../actions/warehouse.actions';
+import { CategoryActions, ItemActions, WarehouseActions } from '../actions/warehouse.actions';
 import { WarehouseService } from '../../services/warehouse.service';
-import { MessageService } from 'primeng/api';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -11,96 +10,133 @@ export class WarehouseEffects {
 
     constructor(
         private actions$: Actions,
-        private warehouseService: WarehouseService,
-        private messageService: MessageService
+        private warehouseService: WarehouseService
     ) {}
 
-    upload$ = createEffect(() => this.actions$.pipe(
+    uploadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(WarehouseActions.upload),
-        mergeMap(({ file }) =>
-            this.warehouseService.upload(file).pipe(
-                map(() => {
-                    this.showSuccessMessage('File uploaded successfully');
-                    return WarehouseActions.uploadSuccess();
-                }),
-                catchError(() => of(WarehouseActions.uploadFailure()))
-            )
-        )
+        mergeMap(({ file }) => this.warehouseService.upload(file).pipe(
+            map(() => WarehouseActions.uploadSuccess()),
+            catchError(() => of(WarehouseActions.uploadFailure()))
+        ))
     ));
 
-    createCategory$ = createEffect(() => this.actions$.pipe(
-        ofType(WarehouseActions.createCategory),
-        mergeMap(({ request }) =>
-            this.warehouseService.createCategory(request).pipe(
-                map((category) => {
-                    this.showSuccessMessage('Category created successfully');
-                    return WarehouseActions.createCategorySuccess({ category });
-                }),
-                catchError(() => of(WarehouseActions.createCategoryFailure()))
-            )
-        )
+    clearEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(WarehouseActions.clear),
+        mergeMap(() => this.warehouseService.deleteAll().pipe(
+            map(() => WarehouseActions.clearSuccess()),
+            catchError(() => of(WarehouseActions.clearFailure()))
+        ))
     ));
 
-    createItem$ = createEffect(() => this.actions$.pipe(
-        ofType(WarehouseActions.createItem),
-        mergeMap(({ request }) =>
-            this.warehouseService.createItem(request).pipe(
-                map((item) => {
-                    this.showSuccessMessage('Item created successfully');
-                    return WarehouseActions.createItemSuccess({ item });
-                }),
-                catchError(() => of(WarehouseActions.createItemFailure()))
-            )
-        )
+    //#region Category Effects
+
+    loadCategoriesEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(CategoryActions.load),
+        mergeMap(({ request }) => this.warehouseService.getCategories(request).pipe(
+            map((categories) => CategoryActions.loadSuccess({ categories })),
+            catchError(() => of(CategoryActions.loadFailure()))
+        ))
     ));
 
-    getCategories$ = createEffect(() => this.actions$.pipe(
-        ofType(WarehouseActions.getCategories),
-        mergeMap(({ request }) =>
-            this.warehouseService.getCategories(request).pipe(
-                map((categories) => WarehouseActions.getCategoriesSuccess({ categories })),
-                catchError(() => of(WarehouseActions.getCategoriesFailure()))
-            )
-        )
+    createCategoryEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(CategoryActions.create),
+        mergeMap(({ request }) => this.warehouseService.createCategory(request).pipe(
+            map((category) => CategoryActions.createSuccess({ category })),
+            catchError(() => of(CategoryActions.createFailure()))
+        ))
     ));
 
-    getItems$ = createEffect(() => this.actions$.pipe(
-        ofType(WarehouseActions.getItems),
-        mergeMap(({ request }) =>
-            this.warehouseService.getItems(request).pipe(
-                map((items) => WarehouseActions.getItemsSuccess({ items })),
-                catchError(() => of(WarehouseActions.getItemsFailure()))
-            )
-        )
+    updateCategoryEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(CategoryActions.update),
+        mergeMap(({ id, request }) => this.warehouseService.updateCategory(id, request).pipe(
+            map((category) => CategoryActions.updateSuccess({ category })),
+            catchError(() => of(CategoryActions.updateFailure()))
+        ))
     ));
 
-    updateItemQuantity$ = createEffect(() => this.actions$.pipe(
-        ofType(WarehouseActions.updateItemQuantity),
-        mergeMap(({ itemId, request }) =>
-            this.warehouseService.updateItemQuantity(itemId, request).pipe(
-                map((item) => {
-                    this.showSuccessMessage('Item quantity updated successfully');
-                    return WarehouseActions.updateItemQuantitySuccess({ item });
-                }),
-                catchError(() => of(WarehouseActions.updateItemQuantityFailure()))
-            )
-        )
+    removeCategoryEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(CategoryActions.remove),
+        mergeMap(({ id }) => this.warehouseService.removeCategory(id).pipe(
+            map(() => CategoryActions.removeSuccess({ id })),
+            catchError(() => of(CategoryActions.removeFailure()))
+        ))
     ));
 
-    deleteAll$ = createEffect(() => this.actions$.pipe(
-        ofType(WarehouseActions.deleteAll),
-        mergeMap(() =>
-            this.warehouseService.deleteAll().pipe(
-                map(() => {
-                    this.showSuccessMessage('All categories and items deleted successfully');
-                    return WarehouseActions.deleteAllSuccess();
-                }),
-                catchError(() => of(WarehouseActions.deleteAllFailure()))
-            )
-        )
+    removeCategoriesEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(CategoryActions.removeMany),
+        mergeMap(({ request }) => this.warehouseService.removeCategories(request).pipe(
+            map(() => CategoryActions.removeManySuccess({ ids: request.ids })),
+            catchError(() => of(CategoryActions.removeManyFailure()))
+        ))
     ));
 
-    private showSuccessMessage(message: string): void {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
-    }
+    reloadCategoriesEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            CategoryActions.createSuccess,
+            CategoryActions.removeSuccess,
+            CategoryActions.removeManySuccess,
+            WarehouseActions.clearSuccess,
+            WarehouseActions.uploadSuccess
+        ),
+        map(() => CategoryActions.load({ request: {} }))
+    ));
+
+    //#endregion
+
+    //#region Item Effects
+
+    loadItemsEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(ItemActions.load),
+        mergeMap(({ request }) => this.warehouseService.getItems(request).pipe(
+            map((items) => ItemActions.loadSuccess({ items })),
+            catchError(() => of(ItemActions.loadFailure()))
+        ))
+    ));
+
+    createItemEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(ItemActions.create),
+        mergeMap(({ request }) => this.warehouseService.createItem(request).pipe(
+            map((item) => ItemActions.createSuccess({ item })),
+            catchError(() => of(ItemActions.createFailure()))
+        ))
+    ));
+
+    updateItemEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(ItemActions.update),
+        mergeMap(({ id, request }) => this.warehouseService.updateItem(id, request).pipe(
+            map((item) => ItemActions.updateSuccess({ item })),
+            catchError(() => of(ItemActions.updateFailure()))
+        ))
+    ));
+
+    removeItemEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(ItemActions.remove),
+        mergeMap(({ id }) => this.warehouseService.removeItem(id).pipe(
+            map(() => ItemActions.removeSuccess({ id })),
+            catchError(() => of(ItemActions.removeFailure()))
+        ))
+    ));
+
+    removeItemsEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(ItemActions.removeMany),
+        mergeMap(({ request }) => this.warehouseService.removeItems(request).pipe(
+            map(() => ItemActions.removeManySuccess({ ids: request.ids })),
+            catchError(() => of(ItemActions.removeManyFailure()))
+        ))
+    ));
+
+    reloadItemsEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            ItemActions.createSuccess,
+            ItemActions.updateSuccess,
+            ItemActions.removeSuccess,
+            ItemActions.removeManySuccess,
+            WarehouseActions.clearSuccess,
+            WarehouseActions.uploadSuccess
+        ),
+        map(() => ItemActions.load({ request: {} }))
+    ));
+
+    //#endregion
 }

@@ -47,6 +47,12 @@ import { AnnouncementsEffects } from './store/effects/announcements.effects';
 import { ToolbarModule } from 'primeng/toolbar';
 import { StyleClassModule } from 'primeng/styleclass';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ItemNamesPipe } from './pipes/item-names.pipe';
+import { BadgeModule } from 'primeng/badge';
+import { QuantityStatusPipe } from './pipes/quantity-status.pipe';
+import { TabViewModule } from 'primeng/tabview';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
     declarations: [
@@ -90,7 +96,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         TableModule,
         ToolbarModule,
         StyleClassModule,
-        NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
+        NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+        InputNumberModule,
+        ItemNamesPipe,
+        BadgeModule,
+        QuantityStatusPipe,
+        TabViewModule,
+        FieldsetModule
     ],
     providers: [
         MessageService,

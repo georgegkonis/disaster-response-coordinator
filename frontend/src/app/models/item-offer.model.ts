@@ -3,7 +3,7 @@ import { Item } from './item.model';
 import { TaskStatus } from '../enums/task-status.enum';
 
 export interface ItemOffer {
-    _id: string;
+    id: string;
     citizen: string | User;
     item: string | Item;
     quantity: number;
