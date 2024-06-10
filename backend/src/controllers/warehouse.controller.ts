@@ -41,14 +41,14 @@ export const exportDataHandler = async (
 
         const jsonData = {
             categories: categories.map((category) => ({
-                id: category.code,
+                id: category.code.toString(),
                 category_name: category.name
             })),
             items: items.map((item) => ({
-                id: item.code,
+                id: item.code.toString(),
                 name: item.name,
-                category: (item.category as Category).code,
-                details: [item.details.map((detail) => ({ detail_name: detail.name, detail_value: detail.value }))]
+                category: (item.category as Category).code.toString(),
+                details: item.details.map((detail) => ({ detail_name: detail.name, detail_value: detail.value }))
             }))
         };
 
