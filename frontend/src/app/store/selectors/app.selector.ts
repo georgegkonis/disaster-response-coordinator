@@ -10,15 +10,15 @@ export const userSelector = createSelector(
 
 export const categoriesSelector = createSelector(
     appStateSelector,
-    (state: AppState) => state.categories
+    (state: AppState) => [...state.categories]
 );
 
 export const itemsSelector = createSelector(
     appStateSelector,
-    (state: AppState) => state.items
+    (state: AppState) => [...state.items]
 );
 
 export const announcementsSelector = createSelector(
     appStateSelector,
-    (state: AppState) => state.announcements
+    (state: AppState) => [...state.announcements]
 );

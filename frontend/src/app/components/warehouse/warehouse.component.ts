@@ -61,8 +61,8 @@ export class WarehouseComponent implements OnInit, OnDestroy {
         private confirmationService: ConfirmationService
     ) {
         this.itemForm = initItemForm();
-        this.items$ = store.select(itemsSelector).pipe(map(items => [...items]));
-        this.categories$ = store.select(categoriesSelector).pipe(map(categories => [...categories]));
+        this.items$ = store.select(itemsSelector);
+        this.categories$ = store.select(categoriesSelector);
     }
 
     //#endregion
