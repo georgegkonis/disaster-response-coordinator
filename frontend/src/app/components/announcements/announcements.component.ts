@@ -7,7 +7,7 @@ import { announcementsSelector, itemsSelector } from '../../store/selectors/app.
 import { AnnouncementsActions } from '../../store/actions/announcements.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/api';
-import { ItemActions } from '../../store/actions/warehouse.actions';
+import { ItemActions } from '../../store/actions/item.actions';
 import { map } from 'rxjs/operators';
 import { CreateAnnouncementRequest } from '../../dto/requests/create-announcement-request.dto';
 import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';

@@ -10,8 +10,8 @@
                       severity="danger"></p-button>
         </div>
         <div class="p-toolbar-group-end gap-2">
-            <p-button label="Import" icon="pi pi-upload"></p-button>
-            <p-button label="Export" icon="pi pi-download"></p-button>
+            <p-button (onClick)="onImportClick()" label="Import" icon="pi pi-upload"></p-button>
+            <p-button (onClick)="onExportClick()" label="Export" icon="pi pi-download"></p-button>
         </div>
     </p-toolbar>
 
@@ -173,3 +173,16 @@
         </form>
     </ng-template>
 </p-dialog>
+
+<p-dialog [(visible)]="uploadDialogVisible" [modal]="true">
+    <p-fileUpload #fileUpload
+                  (uploadHandler)="onUpload($event); fileUpload.clear()"
+                  [fileLimit]="1"
+                  [customUpload]="true"
+                  accept=".json"
+                  chooseIcon="pi pi-file"
+                  chooseLabel="Select"
+                  mode="advanced"
+                  name="file"/>
+</p-dialog>
+

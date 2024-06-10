@@ -5,7 +5,8 @@ import { Category } from '../../models/category.model';
 import { AuthActions } from '../actions/auth.actions';
 import { Announcement } from '../../models/announcement.model';
 import { AnnouncementsActions } from '../actions/announcements.actions';
-import { CategoryActions, ItemActions } from '../actions/warehouse.actions';
+import { ItemActions } from '../actions/item.actions';
+import { CategoryActions } from '../actions/category.actions';
 
 export interface AppState {
     user: User | null;

@@ -53,6 +53,8 @@ import { BadgeModule } from 'primeng/badge';
 import { QuantityStatusPipe } from './pipes/quantity-status.pipe';
 import { TabViewModule } from 'primeng/tabview';
 import { FieldsetModule } from 'primeng/fieldset';
+import { ItemEffects } from './store/effects/item.effects';
+import { CategoryEffects } from './store/effects/category.effects';
 
 @NgModule({
     declarations: [
@@ -85,7 +87,7 @@ import { FieldsetModule } from 'primeng/fieldset';
         DialogModule,
         StoreDevtoolsModule.instrument(),
         StoreModule.forRoot({ app: appReducer }),
-        EffectsModule.forRoot([AuthEffects, UserEffects, WarehouseEffects, AnnouncementsEffects]),
+        EffectsModule.forRoot([AuthEffects, UserEffects, WarehouseEffects, AnnouncementsEffects, ItemEffects, CategoryEffects]),
         MenuModule,
         DataViewModule,
         TagModule,

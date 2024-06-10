@@ -5,12 +5,15 @@ import { Category } from '../../models/category.model';
 import { AppState } from '../../store/reducers/app.reducer';
 import { Store } from '@ngrx/store';
 import { categoriesSelector, itemsSelector } from '../../store/selectors/app.selector';
-import { CategoryActions, ItemActions } from '../../store/actions/warehouse.actions';
+import { WarehouseActions } from '../../store/actions/warehouse.actions';
 import { map } from 'rxjs/operators';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
+import { ConfirmationService } from 'primeng/api';
+import { FileUploadEvent, FileUploadHandlerEvent } from 'primeng/fileupload';
+import { ItemActions } from '../../store/actions/item.actions';
+import { CategoryActions } from '../../store/actions/category.actions';
 
-enum Action {
+enum ItemAction {
     Create = 'create',
     Update = 'update'
 }
@@ -42,18 +45,20 @@ export class WarehouseComponent implements OnInit {
     protected readonly itemForm: FormGroup<ItemForm>;
 
     protected itemDialogVisible: boolean = false;
-    protected itemAction: Action = Action.Create;
+    protected uploadDialogVisible: boolean = false;
+    protected itemAction: ItemAction = ItemAction.Create;
     protected selectedItems: Item[] = [];
 
     private maxCode: number = 1;
-    private itemId: string = '';
+    private activeItemId: string = '';
 
     //#endregion
 
     //#region Constructor
 
     constructor(
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private confirmationService: ConfirmationService
     ) {
         this.itemForm = initItemForm();
         this.items$ = store.select(itemsSelector).pipe(map(items => [...items]));
@@ -77,39 +82,52 @@ export class WarehouseComponent implements OnInit {
 
     //#region Event Handlers
 
+    onImportClick(): void {
+        this.uploadDialogVisible = true;
+    }
+
+    onExportClick(): void {
+        this.store.dispatch(WarehouseActions.exportData());
+    }
+
     onCreateItemClick(): void {
-        this.itemForm.controls.details.controls = [initDetailForm()];
+        this.itemForm.controls.details.controls = [initItemDetailForm()];
         this.itemForm.patchValue({ code: this.maxCode + 1 });
 
-        this.itemAction = Action.Create;
+        this.itemAction = ItemAction.Create;
         this.itemDialogVisible = true;
     }
 
     onDeleteItemsClick(): void {
-        const request: DeleteManyRequest = { ids: this.selectedItems.map(item => item.id) };
-        this.store.dispatch(ItemActions.removeMany({ request }));
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete the selected items?',
+            accept: () => this.store.dispatch(ItemActions.removeMany({ request: { ids: this.selectedItems.map(item => item.id) } }))
+        });
     }
 
     onUpdateItemClick(item: Item): void {
-        this.itemForm.controls.details.controls = item.details.map(detail => initDetailForm());
+        this.itemForm.controls.details.controls = item.details.map(detail => initItemDetailForm());
         this.itemForm.patchValue({ ...item, category: item.category.id });
 
-        this.itemId = item.id;
-        this.itemAction = Action.Update;
+        this.activeItemId = item.id;
+        this.itemAction = ItemAction.Update;
         this.itemDialogVisible = true;
     }
 
     onDeleteItemClick(id: string): void {
-        this.store.dispatch(ItemActions.remove({ id }));
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this item?',
+            accept: () => this.store.dispatch(ItemActions.remove({ id }))
+        });
     }
 
     onSubmitClick(): void {
         switch (this.itemAction) {
-            case Action.Create:
+            case ItemAction.Create:
                 this.store.dispatch(ItemActions.create({ request: this.itemForm.getRawValue() }));
                 break;
-            case Action.Update:
-                this.store.dispatch(ItemActions.update({ id: this.itemId, request: this.itemForm.getRawValue() }));
+            case ItemAction.Update:
+                this.store.dispatch(ItemActions.update({ id: this.activeItemId, request: this.itemForm.getRawValue() }));
                 break;
         }
         this.itemDialogVisible = false;
@@ -122,7 +140,7 @@ export class WarehouseComponent implements OnInit {
     }
 
     onAddItemDetailClick(): void {
-        this.itemForm.controls.details.push(initDetailForm());
+        this.itemForm.controls.details.push(initItemDetailForm());
     }
 
     onRemoveItemDetailClick(i: number): void {
@@ -130,6 +148,12 @@ export class WarehouseComponent implements OnInit {
     }
 
     //#endregion
+
+    onUpload($event: FileUploadHandlerEvent): void {
+        this.store.dispatch(WarehouseActions.importData({ file: $event.files[0] }));
+        this.uploadDialogVisible = false;
+        $event.files = [];
+    }
 }
 
 const initItemForm = () => new FormGroup<ItemForm>({
@@ -137,10 +161,10 @@ const initItemForm = () => new FormGroup<ItemForm>({
     name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     category: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     quantity: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required] }),
-    details: new FormArray<FormGroup<ItemDetailForm>>([initDetailForm()], { validators: [Validators.required, Validators.min(1)] })
+    details: new FormArray<FormGroup<ItemDetailForm>>([], { validators: [Validators.required, Validators.min(1)] })
 });
 
-const initDetailForm = () => new FormGroup<ItemDetailForm>({
+const initItemDetailForm = () => new FormGroup<ItemDetailForm>({
     name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     value: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
 });
