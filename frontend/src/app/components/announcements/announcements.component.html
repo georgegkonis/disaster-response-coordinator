@@ -90,8 +90,10 @@
             <div class="app-form__field col-12">
                 <label for="items" class="app-form__field__label">Items</label>
                 <p-multiSelect [filter]="true"
-                               [options]="(itemsSelection$ | async) ?? []"
+                               [options]="(items$ | async) ?? []"
                                [showClear]="true"
+                               optionLabel="name"
+                               optionValue="id"
                                display="chip"
                                formControlName="items"
                                id="items"

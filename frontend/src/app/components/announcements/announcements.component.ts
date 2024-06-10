@@ -11,6 +11,7 @@ import { ItemActions } from '../../store/actions/item.actions';
 import { map } from 'rxjs/operators';
 import { CreateAnnouncementRequest } from '../../dto/requests/create-announcement-request.dto';
 import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
+import { Item } from '../../models/item.model';
 
 interface AnnouncementForm {
     description: FormControl<string>;
@@ -31,7 +32,7 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
 
     protected readonly announcementForm: FormGroup<AnnouncementForm>;
     protected readonly announcements$: Observable<Announcement[]>;
-    protected readonly itemsSelection$: Observable<SelectItem<string>[]>;
+    protected readonly items$: Observable<Item[]>;
 
     //#endregion
 
@@ -41,15 +42,10 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
         private store: Store<AppState>,
         private confirmationService: ConfirmationService
     ) {
-        this.announcementForm = new FormGroup<AnnouncementForm>({
-            description: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
-            items: new FormControl<string[]>([], { nonNullable: true, validators: [Validators.required] })
-        });
+        this.announcementForm = initAnnouncementForm();
 
         this.announcements$ = store.select(announcementsSelector);
-        this.itemsSelection$ = store.select(itemsSelector).pipe(
-            map(items => items.map(item => ({ label: item.name, value: item.id })))
-        );
+        this.items$ = store.select(itemsSelector);
     }
 
     //#endregion
@@ -114,3 +110,8 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
 
     //#endregion
 }
+
+const initAnnouncementForm = (): FormGroup<AnnouncementForm> => new FormGroup<AnnouncementForm>({
+    description: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+    items: new FormControl<string[]>([], { nonNullable: true, validators: [Validators.required] })
+});
