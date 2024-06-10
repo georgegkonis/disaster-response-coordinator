@@ -12,6 +12,13 @@ html, body {
   background: linear-gradient(to bottom right, $color-background-light-3, $color-background-dark-3);
 }
 
+.table-cell {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 0;
+}
+
 .app-form {
   display: flex;
   flex-wrap: wrap;

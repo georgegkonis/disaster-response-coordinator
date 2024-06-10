@@ -6,9 +6,8 @@ import { Store } from '@ngrx/store';
 import { announcementsSelector, itemsSelector } from '../../store/selectors/app.selector';
 import { AnnouncementsActions } from '../../store/actions/announcements.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService, SelectItem } from 'primeng/api';
+import { ConfirmationService, TooltipOptions } from 'primeng/api';
 import { ItemActions } from '../../store/actions/item.actions';
-import { map } from 'rxjs/operators';
 import { CreateAnnouncementRequest } from '../../dto/requests/create-announcement-request.dto';
 import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
 import { Item } from '../../models/item.model';
@@ -28,11 +27,15 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
     //#region Properties
 
     protected displayDialog: boolean = false;
-    protected selectedAnnouncementIds: Announcement[] = [];
+    protected selectedAnnouncements: Announcement[] = [];
 
     protected readonly announcementForm: FormGroup<AnnouncementForm>;
     protected readonly announcements$: Observable<Announcement[]>;
     protected readonly items$: Observable<Item[]>;
+
+    protected readonly tooltipOptions: TooltipOptions = {
+        showDelay: 500
+    };
 
     //#endregion
 
@@ -72,19 +75,19 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
 
     onRemoveSelectedClick(): void {
         const request: DeleteManyRequest = {
-            ids: this.selectedAnnouncementIds.map(announcement => announcement.id)
+            ids: this.selectedAnnouncements.map(announcement => announcement.id)
         };
 
         this.confirmationService.confirm({
             message: 'Please confirm that you want to remove the selected announcements.',
             accept: () => {
                 this.store.dispatch(AnnouncementsActions.removeMany({ request }));
-                this.selectedAnnouncementIds = [];
+                this.selectedAnnouncements = [];
             }
         });
     }
 
-    onRefreshClick(): void {
+    onReloadClick(): void {
         this.store.dispatch(AnnouncementsActions.load());
     }
 

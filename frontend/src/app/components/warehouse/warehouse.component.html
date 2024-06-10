@@ -10,7 +10,16 @@
                       severity="danger"></p-button>
         </div>
         <div class="p-toolbar-group-end gap-2">
-            <p-button (onClick)="onImportClick()" label="Import" icon="pi pi-upload"></p-button>
+            <p-fileUpload #fileUpload
+                          (onSelect)="onImportClick($event); fileUpload.clear()"
+                          [fileLimit]="1"
+                          [customUpload]="true"
+                          accept=".json"
+                          chooseIcon="pi pi-upload"
+                          chooseLabel="Import"
+                          mode="basic"
+                          name="file"/>
+
             <p-button (onClick)="onExportClick()" label="Export" icon="pi pi-download"></p-button>
         </div>
     </p-toolbar>
@@ -24,57 +33,48 @@
              scrollHeight="80vh"
              sortField="updatedAt"
              sortMode="single"
-             styleClass="p-datatable-sm">
+             styleClass="p-datatable-sm p-datatable-gridlines">
 
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 5%">
+                <th>
                     <p-tableHeaderCheckbox/>
                 </th>
-                <th pSortableColumn="code" style="width: 10%">Code
+                <th pSortableColumn="code" style="width: calc(100% / 6)">Code
                     <p-sortIcon field="code"></p-sortIcon>
                 </th>
-                <th pSortableColumn="name" style="width: 15%">Name
+                <th pSortableColumn="name" style="width: calc(100% / 6)">Name
                     <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="category.name" style="width: 15%">Category
+                <th pSortableColumn="category.name" style="width: calc(100% / 6)">Category
                     <p-sortIcon field="category.name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="quantity" style="width: 15%">Quantity
+                <th pSortableColumn="quantity" style="width: calc(100% / 6)">Quantity
                     <p-sortIcon field="quantity"></p-sortIcon>
                 </th>
-                <th pSortableColumn="createdAt" style="width: 15%">Created At
+                <th pSortableColumn="createdAt" style="width: calc(100% / 6)">Created At
                     <p-sortIcon field="createdAt"></p-sortIcon>
                 </th>
-                <th pSortableColumn="updatedAt" style="width: 15%">Updated At
+                <th pSortableColumn="updatedAt" style="width: calc(100% / 6)">Updated At
                     <p-sortIcon field="updatedAt"></p-sortIcon>
                 </th>
-                <th style="width: 10%"></th>
+                <th></th>
             </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-item>
-            <tr [pEditableRow]="item">
+            <tr>
                 <td>
                     <p-tableCheckbox [value]="item"/>
                 </td>
 
-                <td>{{ item.code }}</td>
+                <td [pTooltip]="item.code" [tooltipOptions]="tooltipOptions" class="table-cell">{{ item.code }}</td>
 
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText [(ngModel)]="item.name">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{ item.name }}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
+                <td [pTooltip]="item.name" [tooltipOptions]="tooltipOptions" class="table-cell">{{ item.name }}</td>
 
-                <td>{{ item.category.name }}</td>
+                <td [pTooltip]="item.category.name" [tooltipOptions]="tooltipOptions" class="table-cell">{{ item.category.name }}</td>
 
-                <td>
+                <td [pTooltip]="item.quantity" [tooltipOptions]="tooltipOptions" class="table-cell">
                     <p-tag [severity]="item.quantity | quantityStatus: 'severity'" styleClass="text-white">
                         <div class="flex align-items-center gap-2 p-1">
                             <span class="font-bold"> {{ item.quantity | quantityStatus: 'message' }}</span>
@@ -83,20 +83,36 @@
                     </p-tag>
                 </td>
 
-                <td>{{ item.createdAt | date: 'short' }}</td>
+                <td [pTooltip]="(item.createdAt | date: 'medium')?.toString()"
+                    [tooltipOptions]="tooltipOptions"
+                    class="table-cell">{{ item.createdAt | date: 'short' }}
+                </td>
 
-                <td>{{ item.updatedAt | date: 'short' }}</td>
+                <td [pTooltip]="(item.updatedAt | date: 'medium')?.toString()"
+                    [tooltipOptions]="tooltipOptions"
+                    class="table-cell">{{ item.updatedAt | date: 'short' }}
+                </td>
 
-                <td>
-                    <div class="flex align-items-center justify-content-center gap-2">
-                        <p-button (onClick)="onUpdateItemClick(item)"
-                                  icon="pi pi-pencil"
-                                  styleClass="p-button-outlined p-button-rounded p-button-sm"></p-button>
+                <td class="text-center">
+                    <p-button (onClick)="onUpdateItemClick(item)"
+                              icon="pi pi-pencil"
+                              styleClass="p-button-outlined p-button-rounded p-button-sm mr-1"></p-button>
 
-                        <p-button (onClick)="onDeleteItemClick(item.id)"
-                                  icon="pi pi-trash"
-                                  styleClass="p-button-danger p-button-outlined p-button-rounded p-button-sm"></p-button>
-                    </div>
+                    <p-button (onClick)="onDeleteItemClick(item.id)"
+                              icon="pi pi-trash"
+                              styleClass="p-button-danger p-button-outlined p-button-rounded p-button-sm ml-1"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <tr>
+                <td colspan="7">Total Items: {{ (items$ | async)?.length }}</td>
+                <td class="text-right">
+                    <p-button (onClick)="onReloadClick()"
+                              label="Reload"
+                              styleClass="p-button-outlined p-button-sm"
+                              icon="pi pi-refresh"></p-button>
                 </td>
             </tr>
         </ng-template>
@@ -123,6 +139,7 @@
             <div class="app-form__field col-8">
                 <label for="category" class="app-form__field__label">Category</label>
                 <p-dropdown [options]="(categories$ | async) ?? []"
+                            [filter]="true"
                             class="w-11"
                             formControlName="category"
                             id="category"
@@ -172,17 +189,5 @@
 
         </form>
     </ng-template>
-</p-dialog>
-
-<p-dialog [(visible)]="uploadDialogVisible" [modal]="true">
-    <p-fileUpload #fileUpload
-                  (uploadHandler)="onUpload($event); fileUpload.clear()"
-                  [fileLimit]="1"
-                  [customUpload]="true"
-                  accept=".json"
-                  chooseIcon="pi pi-file"
-                  chooseLabel="Select"
-                  mode="advanced"
-                  name="file"/>
 </p-dialog>
 

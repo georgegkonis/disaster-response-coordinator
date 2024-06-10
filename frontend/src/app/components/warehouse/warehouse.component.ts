@@ -6,10 +6,9 @@ import { AppState } from '../../store/reducers/app.reducer';
 import { Store } from '@ngrx/store';
 import { categoriesSelector, itemsSelector } from '../../store/selectors/app.selector';
 import { WarehouseActions } from '../../store/actions/warehouse.actions';
-import { map } from 'rxjs/operators';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
-import { FileUploadHandlerEvent } from 'primeng/fileupload';
+import { ConfirmationService, TooltipOptions } from 'primeng/api';
+import { FileSelectEvent } from 'primeng/fileupload';
 import { ItemActions } from '../../store/actions/item.actions';
 import { CategoryActions } from '../../store/actions/category.actions';
 
@@ -40,12 +39,15 @@ export class WarehouseComponent implements OnInit, OnDestroy {
 
     //#region Properties
 
+    protected readonly tooltipOptions: TooltipOptions = {
+        showDelay: 500
+    };
+
     protected readonly items$: Observable<Item[]>;
     protected readonly categories$: Observable<Category[]>;
     protected readonly itemForm: FormGroup<ItemForm>;
 
     protected itemDialogVisible: boolean = false;
-    protected uploadDialogVisible: boolean = false;
     protected itemAction: ItemAction = ItemAction.Create;
     protected selectedItems: Item[] = [];
 
@@ -87,8 +89,8 @@ export class WarehouseComponent implements OnInit, OnDestroy {
 
     //#region Event Handlers
 
-    onImportClick(): void {
-        this.uploadDialogVisible = true;
+    onImportClick($event: FileSelectEvent): void {
+        this.store.dispatch(WarehouseActions.importData({ file: $event.files[0] }));
     }
 
     onExportClick(): void {
@@ -96,7 +98,8 @@ export class WarehouseComponent implements OnInit, OnDestroy {
     }
 
     onCreateItemClick(): void {
-        this.itemForm.controls.details.controls = [initItemDetailForm()];
+        this.itemForm.controls.details.clear();
+        this.itemForm.controls.details.push(initItemDetailForm());
         this.itemForm.patchValue({ code: this.maxCode + 1 });
 
         this.itemAction = ItemAction.Create;
@@ -111,7 +114,8 @@ export class WarehouseComponent implements OnInit, OnDestroy {
     }
 
     onUpdateItemClick(item: Item): void {
-        this.itemForm.controls.details.controls = item.details.map(detail => initItemDetailForm());
+        this.itemForm.controls.details.clear();
+        item.details.forEach(() => this.itemForm.controls.details.push(initItemDetailForm()));
         this.itemForm.patchValue({ ...item, category: item.category.id });
 
         this.activeItemId = item.id;
@@ -152,13 +156,11 @@ export class WarehouseComponent implements OnInit, OnDestroy {
         this.itemForm.controls.details.removeAt(i);
     }
 
-    //#endregion
-
-    onUpload($event: FileUploadHandlerEvent): void {
-        this.store.dispatch(WarehouseActions.importData({ file: $event.files[0] }));
-        this.uploadDialogVisible = false;
-        $event.files = [];
+    onReloadClick(): void {
+        this.store.dispatch(ItemActions.load({ request: {} }));
     }
+
+    //#endregion
 }
 
 const initItemForm = () => new FormGroup<ItemForm>({
