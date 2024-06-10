@@ -62,4 +62,8 @@ export namespace AnnouncementsActions {
     export const removeManyFailure = createAction(
         `${NAMESPACE} Remove Many Announcements ${FAILURE}`
     );
+
+    export const reset = createAction(
+        `${NAMESPACE} Reset`
+    );
 }

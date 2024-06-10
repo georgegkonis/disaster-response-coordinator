@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Announcement } from '../../models/announcement.model';
 import { Observable } from 'rxjs';
 import { AppState } from '../../store/reducers/app.reducer';
@@ -22,7 +22,7 @@ interface AnnouncementForm {
     templateUrl: './announcements.component.html',
     styleUrl: './announcements.component.scss'
 })
-export class AnnouncementsComponent implements OnInit {
+export class AnnouncementsComponent implements OnInit, OnDestroy {
 
     //#region Properties
 
@@ -59,6 +59,11 @@ export class AnnouncementsComponent implements OnInit {
     ngOnInit(): void {
         this.store.dispatch(AnnouncementsActions.load());
         this.store.dispatch(ItemActions.load({ request: {} }));
+    }
+
+    ngOnDestroy(): void {
+        this.store.dispatch(AnnouncementsActions.reset());
+        this.store.dispatch(ItemActions.reset());
     }
 
     //#endregion

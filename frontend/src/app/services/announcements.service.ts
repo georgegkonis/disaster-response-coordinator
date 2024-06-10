@@ -22,16 +22,16 @@ export class AnnouncementsService {
         this.baseUrl = `${settings.apiUrl}/${API_PATH}`;
     }
 
+    find(): Observable<Announcement[]> {
+        const url: string = `${this.baseUrl}`;
+
+        return this.httpClient.get<Announcement[]>(url);
+    }
+
     create(request: CreateAnnouncementRequest): Observable<Announcement> {
         const url: string = `${this.baseUrl}`;
 
         return this.httpClient.post<Announcement>(url, request);
-    }
-
-    getAll(): Observable<Announcement[]> {
-        const url: string = `${this.baseUrl}`;
-
-        return this.httpClient.get<Announcement[]>(url);
     }
 
     delete(id: string): Observable<void> {

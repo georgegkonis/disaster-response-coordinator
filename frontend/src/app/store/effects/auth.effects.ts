@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { MessageService } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import { NavigationService } from '../../services/navigation.service';
 import { AuthActions } from '../actions/auth.actions';
+import { AppMessageService } from '../../services/app-message.service';
 
 @Injectable()
 export class AuthEffects {
@@ -13,7 +13,7 @@ export class AuthEffects {
     constructor(
         private actions$: Actions,
         private authService: AuthService,
-        private messageService: MessageService,
+        private messageService: AppMessageService,
         private navigationService: NavigationService
     ) {}
 
@@ -21,11 +21,11 @@ export class AuthEffects {
         ofType(AuthActions.login),
         mergeMap(({ request }) =>
             this.authService.login(request).pipe(
-                map(() => {
-                    this.showSuccessMessage('Login successful');
+                tap(() => {
+                    this.messageService.showSuccess('Logged in successfully');
                     this.navigationService.navigateToDashboard();
-                    return AuthActions.loginSuccess();
                 }),
+                map(() => AuthActions.loginSuccess()),
                 catchError(() => of(AuthActions.loginFailure()))
             )
         )
@@ -35,11 +35,11 @@ export class AuthEffects {
         ofType(AuthActions.register),
         mergeMap(({ request }) =>
             this.authService.register(request).pipe(
-                map(() => {
-                    this.showSuccessMessage('Registration successful');
+                tap(() => {
+                    this.messageService.showSuccess('Registered successfully. Please login to continue');
                     this.navigationService.navigateToLogin();
-                    return AuthActions.registerSuccess();
                 }),
+                map(() => AuthActions.registerSuccess()),
                 catchError(() => of(AuthActions.registerFailure()))
             )
         )
@@ -49,17 +49,13 @@ export class AuthEffects {
         ofType(AuthActions.logout),
         mergeMap(() =>
             this.authService.logout().pipe(
-                map(() => {
-                    this.showSuccessMessage('Logout successful');
+                tap(() => {
+                    this.messageService.showSuccess('Logged out successfully');
                     this.navigationService.navigateToHome();
-                    return AuthActions.logoutSuccess();
                 }),
+                map(() => AuthActions.logoutSuccess()),
                 catchError(() => of(AuthActions.logoutFailure()))
             )
         )
     ));
-
-    private showSuccessMessage(message: string): void {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
-    }
 }

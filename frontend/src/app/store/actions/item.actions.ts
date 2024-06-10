@@ -79,4 +79,8 @@ export namespace ItemActions {
     export const removeManyFailure = createAction(
         `${NAMESPACE} Remove Many Items ${FAILURE}`
     );
+
+    export const reset = createAction(
+        `${NAMESPACE} Reset`
+    );
 }

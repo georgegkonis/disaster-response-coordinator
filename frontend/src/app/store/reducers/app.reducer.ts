@@ -30,10 +30,13 @@ const reducer = createReducer(
     on(AuthActions.logoutSuccess, (state) => update(state, initialState)),
 
     on(AnnouncementsActions.loadSuccess, (state, { announcements }) => update(state, { announcements })),
+    on(AnnouncementsActions.reset, (state) => update(state, { announcements: [] })),
 
     on(CategoryActions.loadSuccess, (state, { categories }) => update(state, { categories })),
+    on(CategoryActions.reset, (state) => update(state, { categories: [] })),
 
-    on(ItemActions.loadSuccess, (state, { items }) => update(state, { items }))
+    on(ItemActions.loadSuccess, (state, { items }) => update(state, { items })),
+    on(ItemActions.reset, (state) => update(state, { items: [] }))
 );
 
 export function appReducer(state: AppState | undefined, action: any) {

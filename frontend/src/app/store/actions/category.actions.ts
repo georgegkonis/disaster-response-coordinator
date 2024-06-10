@@ -79,4 +79,8 @@ export namespace CategoryActions {
     export const removeManyFailure = createAction(
         `${NAMESPACE} Remove Many Categories ${FAILURE}`
     );
+
+    export const reset = createAction(
+        `${NAMESPACE} Reset`
+    );
 }

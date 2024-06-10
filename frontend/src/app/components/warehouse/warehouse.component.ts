@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Item } from '../../models/item.model';
 import { Observable } from 'rxjs';
 import { Category } from '../../models/category.model';
@@ -9,7 +9,7 @@ import { WarehouseActions } from '../../store/actions/warehouse.actions';
 import { map } from 'rxjs/operators';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
-import { FileUploadEvent, FileUploadHandlerEvent } from 'primeng/fileupload';
+import { FileUploadHandlerEvent } from 'primeng/fileupload';
 import { ItemActions } from '../../store/actions/item.actions';
 import { CategoryActions } from '../../store/actions/category.actions';
 
@@ -36,7 +36,7 @@ interface ItemDetailForm {
     styleUrls: ['./warehouse.component.scss'],
     templateUrl: './warehouse.component.html'
 })
-export class WarehouseComponent implements OnInit {
+export class WarehouseComponent implements OnInit, OnDestroy {
 
     //#region Properties
 
@@ -76,6 +76,11 @@ export class WarehouseComponent implements OnInit {
         this.items$.subscribe(items => {
             this.maxCode = items.reduce((max, item) => item.code > max ? item.code : max, 0);
         });
+    }
+
+    ngOnDestroy(): void {
+        this.store.dispatch(ItemActions.reset());
+        this.store.dispatch(CategoryActions.reset());
     }
 
     //#endregion
