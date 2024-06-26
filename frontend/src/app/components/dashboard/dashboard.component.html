@@ -1,2 +1,10 @@
-<p-menubar [model]="menuItems"></p-menubar>
+<p-menubar [model]="menuItems">
+
+    <ng-template pTemplate="end">
+        <div class="flex gap-2">
+            <p-button [label]="(user$ | async)?.username" [outlined]="true" [routerLink]="routesPaths.PROFILE" icon="pi pi-user"></p-button>
+            <p-button (onClick)="onLogoutClick()" [outlined]="true" icon="pi pi-sign-out"></p-button>
+        </div>
+    </ng-template>
+</p-menubar>
 <router-outlet></router-outlet>
