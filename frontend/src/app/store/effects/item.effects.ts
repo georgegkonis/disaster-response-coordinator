@@ -24,9 +24,9 @@ export class ItemEffects {
         tap(() => this.loaderService.show()),
         mergeMap(({ request }) => withMinDelay(this.itemService.find(request)).pipe(
             map((items) => ItemActions.loadSuccess({ items })),
-            tap(() => this.loaderService.hide()),
             catchError(() => of(ItemActions.loadFailure()))
-        ))
+        )),
+        tap(() => this.loaderService.hide())
     ));
 
     createEffect$ = createEffect(() => this.actions$.pipe(

@@ -24,9 +24,9 @@ export class CategoryEffects {
         tap(() => this.loaderService.show()),
         mergeMap(({ request }) => withMinDelay(this.categoryService.find(request)).pipe(
             map((categories) => CategoryActions.loadSuccess({ categories })),
-            tap(() => this.loaderService.hide()),
             catchError(() => of(CategoryActions.loadFailure()))
-        ))
+        )),
+        tap(() => this.loaderService.hide())
     ));
 
     createEffect$ = createEffect(() => this.actions$.pipe(
@@ -51,7 +51,7 @@ export class CategoryEffects {
         ofType(CategoryActions.remove),
         mergeMap(({ id }) => this.categoryService.remove(id).pipe(
             map(() => CategoryActions.removeSuccess({ id })),
-            tap(() => this.messageService.showSuccess('Category removed successfully')),
+            tap(() => this.messageService.showSuccess('Category deleted successfully')),
             catchError(() => of(CategoryActions.removeFailure()))
         ))
     ));
@@ -60,7 +60,7 @@ export class CategoryEffects {
         ofType(CategoryActions.removeMany),
         mergeMap(({ request }) => this.categoryService.removeMany(request).pipe(
             map(() => CategoryActions.removeManySuccess({ ids: request.ids })),
-            tap(() => this.messageService.showSuccess('Categories removed successfully')),
+            tap(() => this.messageService.showSuccess('Categories deleted successfully')),
             catchError(() => of(CategoryActions.removeManyFailure()))
         ))
     ));

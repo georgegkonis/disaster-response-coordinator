@@ -23,9 +23,9 @@ export class UserEffects {
         tap(() => this.loaderService.show()),
         mergeMap(() => withMinDelay(this.userService.find()).pipe(
             map(users => UserActions.loadSuccess({ users })),
-            tap(() => this.loaderService.hide()),
             catchError(() => of(UserActions.loadFailure()))
-        ))
+        )),
+        tap(() => this.loaderService.hide())
     ));
 
     createEffect$ = createEffect(() => this.actions$.pipe(

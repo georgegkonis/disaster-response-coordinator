@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { NavigationService } from '../../services/navigation.service';
 import { AuthActions } from '../actions/auth.actions';
 import { AppMessageService } from '../../services/app-message.service';
+import { AppLoaderService } from '../../services/app-loader.service';
 
 @Injectable()
 export class AuthEffects {
@@ -13,49 +14,50 @@ export class AuthEffects {
     constructor(
         private actions$: Actions,
         private authService: AuthService,
+        private loaderService: AppLoaderService,
         private messageService: AppMessageService,
         private navigationService: NavigationService
     ) {}
 
-    login$ = createEffect(() => this.actions$.pipe(
+    loginEffect$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.login),
-        mergeMap(({ request }) =>
-            this.authService.login(request).pipe(
-                tap(() => {
-                    this.messageService.showSuccess('Logged in successfully');
-                    this.navigationService.navigateToDashboard();
-                }),
-                map(() => AuthActions.loginSuccess()),
-                catchError(() => of(AuthActions.loginFailure()))
-            )
-        )
+        tap(() => this.loaderService.show()),
+        mergeMap(({ request }) => this.authService.login(request).pipe(
+            tap(() => {
+                this.messageService.showSuccess('Logged in successfully');
+                this.navigationService.navigateToDashboard();
+            }),
+            map(() => AuthActions.loginSuccess()),
+            catchError(() => of(AuthActions.loginFailure()))
+        )),
+        tap(() => this.loaderService.hide())
     ));
 
-    register$ = createEffect(() => this.actions$.pipe(
+    registerEffect$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.register),
-        mergeMap(({ request }) =>
-            this.authService.register(request).pipe(
-                tap(() => {
-                    this.messageService.showSuccess('Registered successfully. Please login to continue');
-                    this.navigationService.navigateToLogin();
-                }),
-                map(() => AuthActions.registerSuccess()),
-                catchError(() => of(AuthActions.registerFailure()))
-            )
-        )
+        tap(() => this.loaderService.show()),
+        mergeMap(({ request }) => this.authService.register(request).pipe(
+            tap(() => {
+                this.messageService.showSuccess('Registered successfully. Please login to continue');
+                this.navigationService.navigateToLogin();
+            }),
+            map(() => AuthActions.registerSuccess()),
+            catchError(() => of(AuthActions.registerFailure()))
+        )),
+        tap(() => this.loaderService.hide())
     ));
 
-    logout$ = createEffect(() => this.actions$.pipe(
+    logoutEffect$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.logout),
-        mergeMap(() =>
-            this.authService.logout().pipe(
-                tap(() => {
-                    this.messageService.showSuccess('Logged out successfully');
-                    this.navigationService.navigateToHome();
-                }),
-                map(() => AuthActions.logoutSuccess()),
-                catchError(() => of(AuthActions.logoutFailure()))
-            )
-        )
+        tap(() => this.loaderService.show()),
+        mergeMap(() => this.authService.logout().pipe(
+            tap(() => {
+                this.messageService.showSuccess('Logged out successfully');
+                this.navigationService.navigateToHome();
+            }),
+            map(() => AuthActions.logoutSuccess()),
+            catchError(() => of(AuthActions.logoutFailure()))
+        )),
+        tap(() => this.loaderService.hide())
     ));
 }
