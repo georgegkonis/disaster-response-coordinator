@@ -27,7 +27,7 @@ export const createUserSchema = object({
             .refine(passCharsCheck, 'Password must contain at least 1 number, 1 capital letter and 1 special character'),
         email: string({ required_error: 'Email is required' })
             .email('Invalid email'),
-        role: z.enum([Role.RESCUER], { required_error: 'Role is required', invalid_type_error: 'Invalid role value' })
+        role: z.enum([Role.RESCUER, Role.CITIZEN], { required_error: 'Role is required', invalid_type_error: 'Invalid role value' })
     }).strip()
 });
 
@@ -51,7 +51,7 @@ export const updateUserLocationSchema = object({
         longitude: number()
     }).strip()
 });
-``
+
 export type CreateUserInput = TypeOf<typeof createUserSchema>['body'];
 export type UpdateUserInput = TypeOf<typeof updateUserSchema>['body'];
 export type UpdateUserLocationInput = TypeOf<typeof updateUserLocationSchema>['body'];
