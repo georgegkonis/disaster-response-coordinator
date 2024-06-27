@@ -79,7 +79,7 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
         };
 
         this.confirmationService.confirm({
-            message: 'Please confirm that you want to delete the selected announcements.',
+            message: 'Are you sure you want to delete the selected announcements?',
             accept: () => {
                 this.store.dispatch(AnnouncementsActions.deleteMany({ request }));
                 this.selectedAnnouncements = [];
@@ -93,7 +93,7 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
 
     onDeleteClick(id: string): void {
         this.confirmationService.confirm({
-            message: 'Please confirm that you want to delete this announcement.',
+            message: 'Are you sure you want to delete this announcement?',
             accept: () => this.store.dispatch(AnnouncementsActions.$delete({ id }))
         });
     }
