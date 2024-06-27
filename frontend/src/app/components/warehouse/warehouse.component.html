@@ -27,10 +27,10 @@
     <p-table [(selection)]="selectedItems"
              [scrollable]="true"
              [sortOrder]="-1"
-             [tableStyle]="{'min-width': '80rem', 'max-height': '80vh'}"
+             [tableStyle]="{'min-width': '80rem'}"
              [value]="(items$ | async) ?? []"
              dataKey="id"
-             scrollHeight="80vh"
+             scrollHeight="84vh"
              sortField="updatedAt"
              sortMode="single"
              styleClass="p-datatable-sm p-datatable-gridlines">

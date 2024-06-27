@@ -13,11 +13,11 @@
 
     <p-table [(selection)]="selectedAnnouncements"
              [scrollable]="true"
-             [tableStyle]="{'min-width': '80rem', 'max-height': '80vh'}"
+             [tableStyle]="{'min-width': '80rem'}"
              [value]="(announcements$ | async) ?? []"
              [sortOrder]="-1"
              dataKey="id"
-             scrollHeight="80vh"
+             scrollHeight="84vh"
              sortField="updatedAt"
              sortMode="single"
              styleClass="p-datatable-sm p-datatable-gridlines">
