@@ -37,12 +37,12 @@ export class UserEffects {
         ))
     ));
 
-    removeEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(UserActions.remove),
+    deleteEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.$delete),
         mergeMap(({ id }) => this.userService.delete(id).pipe(
-            map(() => UserActions.removeSuccess({ id })),
+            map(() => UserActions.deleteSuccess({ id })),
             tap(() => this.messageService.showSuccess('User deleted successfully')),
-            catchError(() => of(UserActions.removeFailure()))
+            catchError(() => of(UserActions.deleteFailure()))
         ))
     ));
 
@@ -66,7 +66,7 @@ export class UserEffects {
     reloadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(
             UserActions.createSuccess,
-            UserActions.removeSuccess,
+            UserActions.deleteSuccess,
             UserActions.updateMeSuccess
         ),
         map(() => UserActions.load())

@@ -47,21 +47,21 @@ export class ItemEffects {
         ))
     ));
 
-    removeEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(ItemActions.remove),
-        mergeMap(({ id }) => this.itemService.remove(id).pipe(
-            map(() => ItemActions.removeSuccess({ id })),
+    deleteEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(ItemActions.$delete),
+        mergeMap(({ id }) => this.itemService.delete(id).pipe(
+            map(() => ItemActions.deleteSuccess({ id })),
             tap(() => this.messageService.showSuccess('Item deleted successfully')),
-            catchError(() => of(ItemActions.removeFailure()))
+            catchError(() => of(ItemActions.deleteFailure()))
         ))
     ));
 
-    removeManyEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(ItemActions.removeMany),
-        mergeMap(({ request }) => this.itemService.removeMany(request).pipe(
-            map(() => ItemActions.removeManySuccess({ ids: request.ids })),
-            tap(() => this.messageService.showSuccess('Items removed successfully')),
-            catchError(() => of(ItemActions.removeManyFailure()))
+    deleteManyEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(ItemActions.deleteMany),
+        mergeMap(({ request }) => this.itemService.deleteMany(request).pipe(
+            map(() => ItemActions.deleteManySuccess({ ids: request.ids })),
+            tap(() => this.messageService.showSuccess('Items deleted successfully')),
+            catchError(() => of(ItemActions.deleteManyFailure()))
         ))
     ));
 
@@ -69,8 +69,8 @@ export class ItemEffects {
         ofType(
             ItemActions.createSuccess,
             ItemActions.updateSuccess,
-            ItemActions.removeSuccess,
-            ItemActions.removeManySuccess,
+            ItemActions.deleteSuccess,
+            ItemActions.deleteManySuccess,
             WarehouseActions.clearDataSuccess,
             WarehouseActions.importDataSuccess
         ),

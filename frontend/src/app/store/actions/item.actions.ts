@@ -64,38 +64,38 @@ export namespace ItemActions {
 
     //#endregion
 
-    //#region Remove Item
+    //#region Delete Item
 
-    export const remove = createAction(
-        `${NAMESPACE} Remove Item`,
+    export const $delete = createAction(
+        `${NAMESPACE} Delete Item`,
         props<{ id: string }>()
     );
 
-    export const removeSuccess = createAction(
-        `${NAMESPACE} Remove Item ${SUCCESS}`,
+    export const deleteSuccess = createAction(
+        `${NAMESPACE} Delete Item ${SUCCESS}`,
         props<{ id: string }>()
     );
 
-    export const removeFailure = createAction(
-        `${NAMESPACE} Remove Item ${FAILURE}`
+    export const deleteFailure = createAction(
+        `${NAMESPACE} Delete Item ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Remove Items
+    //#region Delete Items
 
-    export const removeMany = createAction(
-        `${NAMESPACE} Remove Items`,
+    export const deleteMany = createAction(
+        `${NAMESPACE} Delete Items`,
         props<{ request: DeleteManyRequest }>()
     );
 
-    export const removeManySuccess = createAction(
-        `${NAMESPACE} Remove Items ${SUCCESS}`,
+    export const deleteManySuccess = createAction(
+        `${NAMESPACE} Delete Items ${SUCCESS}`,
         props<{ ids: string[] }>()
     );
 
-    export const removeManyFailure = createAction(
-        `${NAMESPACE} Remove Items ${FAILURE}`
+    export const deleteManyFailure = createAction(
+        `${NAMESPACE} Delete Items ${FAILURE}`
     );
 
     //#endregion

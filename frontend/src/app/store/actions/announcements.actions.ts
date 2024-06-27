@@ -43,38 +43,38 @@ export namespace AnnouncementsActions {
 
     //#endregion
 
-    //#region Remove Announcement
+    //#region Delete Announcement
 
-    export const remove = createAction(
-        `${NAMESPACE} Remove Announcement`,
+    export const $delete = createAction(
+        `${NAMESPACE} Delete Announcement`,
         props<{ id: string }>()
     );
 
-    export const removeSuccess = createAction(
-        `${NAMESPACE} Remove Announcement ${SUCCESS}`,
+    export const deleteSuccess = createAction(
+        `${NAMESPACE} Delete Announcement ${SUCCESS}`,
         props<{ id: string }>()
     );
 
-    export const removeFailure = createAction(
-        `${NAMESPACE} Remove Announcement ${FAILURE}`
+    export const deleteFailure = createAction(
+        `${NAMESPACE} Delete Announcement ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Remove Announcements
+    //#region Delete Announcements
 
-    export const removeMany = createAction(
-        `${NAMESPACE} Remove Announcements`,
+    export const deleteMany = createAction(
+        `${NAMESPACE} Delete Announcements`,
         props<{ request: DeleteManyRequest }>()
     );
 
-    export const removeManySuccess = createAction(
-        `${NAMESPACE} Remove Announcements ${SUCCESS}`,
+    export const deleteManySuccess = createAction(
+        `${NAMESPACE} Delete Announcements ${SUCCESS}`,
         props<{ ids: string[] }>()
     );
 
-    export const removeManyFailure = createAction(
-        `${NAMESPACE} Remove Announcements ${FAILURE}`
+    export const deleteManyFailure = createAction(
+        `${NAMESPACE} Delete Announcements ${FAILURE}`
     );
 
     //#endregion

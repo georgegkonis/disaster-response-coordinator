@@ -47,29 +47,29 @@ export class CategoryEffects {
         ))
     ));
 
-    removeEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(CategoryActions.remove),
-        mergeMap(({ id }) => this.categoryService.remove(id).pipe(
-            map(() => CategoryActions.removeSuccess({ id })),
+    deleteEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(CategoryActions.$delete),
+        mergeMap(({ id }) => this.categoryService.delete(id).pipe(
+            map(() => CategoryActions.deleteSuccess({ id })),
             tap(() => this.messageService.showSuccess('Category deleted successfully')),
-            catchError(() => of(CategoryActions.removeFailure()))
+            catchError(() => of(CategoryActions.deleteFailure()))
         ))
     ));
 
-    removeManyEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(CategoryActions.removeMany),
-        mergeMap(({ request }) => this.categoryService.removeMany(request).pipe(
-            map(() => CategoryActions.removeManySuccess({ ids: request.ids })),
+    deleteManyEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(CategoryActions.deleteMany),
+        mergeMap(({ request }) => this.categoryService.deleteMany(request).pipe(
+            map(() => CategoryActions.deleteManySuccess({ ids: request.ids })),
             tap(() => this.messageService.showSuccess('Categories deleted successfully')),
-            catchError(() => of(CategoryActions.removeManyFailure()))
+            catchError(() => of(CategoryActions.deleteManyFailure()))
         ))
     ));
 
     reloadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(
             CategoryActions.createSuccess,
-            CategoryActions.removeSuccess,
-            CategoryActions.removeManySuccess,
+            CategoryActions.deleteSuccess,
+            CategoryActions.deleteManySuccess,
             WarehouseActions.clearDataSuccess,
             WarehouseActions.importDataSuccess
         ),

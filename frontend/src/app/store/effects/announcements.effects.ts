@@ -37,29 +37,29 @@ export class AnnouncementsEffects {
         ))
     ));
 
-    removeEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(AnnouncementsActions.remove),
+    deleteEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(AnnouncementsActions.$delete),
         switchMap(({ id }) => this.announcementsService.delete(id).pipe(
-            map(() => AnnouncementsActions.removeSuccess({ id })),
-            tap(() => this.messageService.showSuccess('Announcement removed successfully')),
-            catchError(() => of(AnnouncementsActions.removeFailure()))
+            map(() => AnnouncementsActions.deleteSuccess({ id })),
+            tap(() => this.messageService.showSuccess('Announcement deleted successfully')),
+            catchError(() => of(AnnouncementsActions.deleteFailure()))
         ))
     ));
 
-    removeManyEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(AnnouncementsActions.removeMany),
+    deleteManyEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(AnnouncementsActions.deleteMany),
         switchMap(({ request }) => this.announcementsService.deleteMany(request).pipe(
-            map(() => AnnouncementsActions.removeManySuccess({ ids: request.ids })),
-            tap(() => this.messageService.showSuccess('Announcements removed successfully')),
-            catchError(() => of(AnnouncementsActions.removeManyFailure()))
+            map(() => AnnouncementsActions.deleteManySuccess({ ids: request.ids })),
+            tap(() => this.messageService.showSuccess('Announcements deleted successfully')),
+            catchError(() => of(AnnouncementsActions.deleteManyFailure()))
         ))
     ));
 
     reloadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(
             AnnouncementsActions.createSuccess,
-            AnnouncementsActions.removeSuccess,
-            AnnouncementsActions.removeManySuccess
+            AnnouncementsActions.deleteSuccess,
+            AnnouncementsActions.deleteManySuccess
         ),
         map(() => AnnouncementsActions.load())
     ));

@@ -73,15 +73,15 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
         this.displayDialog = true;
     }
 
-    onRemoveSelectedClick(): void {
+    onDeleteSelectedClick(): void {
         const request: DeleteManyRequest = {
             ids: this.selectedAnnouncements.map(announcement => announcement.id)
         };
 
         this.confirmationService.confirm({
-            message: 'Please confirm that you want to remove the selected announcements.',
+            message: 'Please confirm that you want to delete the selected announcements.',
             accept: () => {
-                this.store.dispatch(AnnouncementsActions.removeMany({ request }));
+                this.store.dispatch(AnnouncementsActions.deleteMany({ request }));
                 this.selectedAnnouncements = [];
             }
         });
@@ -91,10 +91,10 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
         this.store.dispatch(AnnouncementsActions.load());
     }
 
-    onRemoveClick(id: string): void {
+    onDeleteClick(id: string): void {
         this.confirmationService.confirm({
-            message: 'Please confirm that you want to remove this announcement.',
-            accept: () => this.store.dispatch(AnnouncementsActions.remove({ id }))
+            message: 'Please confirm that you want to delete this announcement.',
+            accept: () => this.store.dispatch(AnnouncementsActions.$delete({ id }))
         });
     }
 

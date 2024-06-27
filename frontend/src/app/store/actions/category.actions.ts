@@ -64,38 +64,38 @@ export namespace CategoryActions {
 
     //#endregion
 
-    //#region Remove Category
+    //#region Delete Category
 
-    export const remove = createAction(
-        `${NAMESPACE} Remove Category`,
+    export const $delete = createAction(
+        `${NAMESPACE} Delete Category`,
         props<{ id: string }>()
     );
 
-    export const removeSuccess = createAction(
-        `${NAMESPACE} Remove Category ${SUCCESS}`,
+    export const deleteSuccess = createAction(
+        `${NAMESPACE} Delete Category ${SUCCESS}`,
         props<{ id: string }>()
     );
 
-    export const removeFailure = createAction(
-        `${NAMESPACE} Remove Category ${FAILURE}`
+    export const deleteFailure = createAction(
+        `${NAMESPACE} Delete Category ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Remove Categories
+    //#region Delete Categories
 
-    export const removeMany = createAction(
-        `${NAMESPACE} Remove Categories`,
+    export const deleteMany = createAction(
+        `${NAMESPACE} Delete Categories`,
         props<{ request: DeleteManyRequest }>()
     );
 
-    export const removeManySuccess = createAction(
-        `${NAMESPACE} Remove Categories ${SUCCESS}`,
+    export const deleteManySuccess = createAction(
+        `${NAMESPACE} Delete Categories ${SUCCESS}`,
         props<{ ids: string[] }>()
     );
 
-    export const removeManyFailure = createAction(
-        `${NAMESPACE} Remove Categories ${FAILURE}`
+    export const deleteManyFailure = createAction(
+        `${NAMESPACE} Delete Categories ${FAILURE}`
     );
 
     //#endregion

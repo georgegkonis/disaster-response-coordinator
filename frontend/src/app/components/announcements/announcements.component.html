@@ -3,10 +3,10 @@
     <p-toolbar styleClass="p-2">
         <div class="p-toolbar-group-start gap-2">
             <p-button (onClick)="onAddClick()" icon="pi pi-plus" label="Create"></p-button>
-            <p-button (onClick)="onRemoveSelectedClick()"
+            <p-button (onClick)="onDeleteSelectedClick()"
                       [disabled]="selectedAnnouncements.length === 0"
                       icon="pi pi-trash"
-                      label="Remove"
+                      label="Delete"
                       severity="danger"></p-button>
         </div>
     </p-toolbar>
@@ -70,7 +70,7 @@
                 </td>
 
                 <td class="text-center">
-                    <p-button (onClick)="onRemoveClick(announcement.id)"
+                    <p-button (onClick)="onDeleteClick(announcement.id)"
                               [outlined]="true"
                               [rounded]="true"
                               icon="pi pi-trash"

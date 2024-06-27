@@ -43,13 +43,13 @@ export class ItemService {
         return this.httpClient.patch<Item>(url, request);
     }
 
-    remove(itemId: string): Observable<void> {
+    delete(itemId: string): Observable<void> {
         const url: string = `${this.baseUrl}/${itemId}`;
 
         return this.httpClient.delete<void>(url);
     }
 
-    removeMany(request: DeleteManyRequest): Observable<void> {
+    deleteMany(request: DeleteManyRequest): Observable<void> {
         const url: string = `${this.baseUrl}`;
 
         return this.httpClient.delete<void>(url, { body: request });

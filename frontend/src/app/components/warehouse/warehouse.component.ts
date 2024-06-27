@@ -107,7 +107,7 @@ export class WarehouseComponent implements OnInit, OnDestroy {
     onDeleteItemsClick(): void {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete the selected items?',
-            accept: () => this.store.dispatch(ItemActions.removeMany({ request: { ids: this.selectedItems.map(item => item.id) } }))
+            accept: () => this.store.dispatch(ItemActions.deleteMany({ request: { ids: this.selectedItems.map(item => item.id) } }))
         });
     }
 
@@ -124,7 +124,7 @@ export class WarehouseComponent implements OnInit, OnDestroy {
     onDeleteItemClick(id: string): void {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this item?',
-            accept: () => this.store.dispatch(ItemActions.remove({ id }))
+            accept: () => this.store.dispatch(ItemActions.$delete({ id }))
         });
     }
 

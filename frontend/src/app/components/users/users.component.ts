@@ -76,7 +76,7 @@ export class UsersComponent implements OnInit {
     onDeleteClick(userId: string): void {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete this user?',
-            accept: () => this.store.dispatch(UserActions.remove({ id: userId }))
+            accept: () => this.store.dispatch(UserActions.$delete({ id: userId }))
         });
     }
 

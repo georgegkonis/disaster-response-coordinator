@@ -63,18 +63,18 @@ export namespace UserActions {
 
     //#region Delete User
 
-    export const remove = createAction(
-        `${NAMESPACE} Remove User`,
+    export const $delete = createAction(
+        `${NAMESPACE} Delete User`,
         props<{ id: string }>()
     );
 
-    export const removeSuccess = createAction(
-        `${NAMESPACE} Remove User ${SUCCESS}`,
+    export const deleteSuccess = createAction(
+        `${NAMESPACE} Delete User ${SUCCESS}`,
         props<{ id: string }>()
     );
 
-    export const removeFailure = createAction(
-        `${NAMESPACE} Remove User ${FAILURE}`
+    export const deleteFailure = createAction(
+        `${NAMESPACE} Delete User ${FAILURE}`
     );
 
     //#endregion
