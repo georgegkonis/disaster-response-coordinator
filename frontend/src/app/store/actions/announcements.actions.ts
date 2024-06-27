@@ -1,7 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { CreateAnnouncementRequest } from '../../dto/requests/create-announcement-request.dto';
 import { Announcement } from '../../models/announcement.model';
-import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
 import { FAILURE, SUCCESS } from '../../constants/action-types';
 
 const NAMESPACE: string = '[ANNOUNCEMENTS]';
@@ -65,7 +64,7 @@ export namespace AnnouncementsActions {
 
     export const deleteMany = createAction(
         `${NAMESPACE} Delete Announcements`,
-        props<{ request: DeleteManyRequest }>()
+        props<{ ids: string[] }>()
     );
 
     export const deleteManySuccess = createAction(

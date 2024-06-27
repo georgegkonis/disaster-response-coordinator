@@ -4,7 +4,6 @@ import { FAILURE, SUCCESS } from '../../constants/action-types';
 import { Item } from '../../models/item.model';
 import { LoadItemsRequest } from '../../dto/requests/load-items-request.dto';
 import { UpdateItemRequest } from '../../dto/requests/update-item-request.dto';
-import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
 
 const NAMESPACE: string = '[ITEMS]';
 
@@ -86,7 +85,7 @@ export namespace ItemActions {
 
     export const deleteMany = createAction(
         `${NAMESPACE} Delete Items`,
-        props<{ request: DeleteManyRequest }>()
+        props<{ ids: string[] }>()
     );
 
     export const deleteManySuccess = createAction(

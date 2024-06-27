@@ -58,8 +58,8 @@ export class CategoryEffects {
 
     deleteManyEffect$ = createEffect(() => this.actions$.pipe(
         ofType(CategoryActions.deleteMany),
-        mergeMap(({ request }) => this.categoryService.deleteMany(request).pipe(
-            map(() => CategoryActions.deleteManySuccess({ ids: request.ids })),
+        mergeMap(({ ids }) => this.categoryService.deleteMany(ids).pipe(
+            map(() => CategoryActions.deleteManySuccess({ ids })),
             tap(() => this.messageService.showSuccess('Categories deleted successfully')),
             catchError(() => of(CategoryActions.deleteManyFailure()))
         ))

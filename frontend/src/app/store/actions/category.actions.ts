@@ -4,7 +4,6 @@ import { FAILURE, SUCCESS } from '../../constants/action-types';
 import { Category } from '../../models/category.model';
 import { LoadCategoriesRequest } from '../../dto/requests/load-categories-request.dto';
 import { UpdateCategoryRequest } from '../../dto/requests/update-category-request.dto';
-import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
 
 const NAMESPACE: string = '[CATEGORIES]';
 
@@ -86,7 +85,7 @@ export namespace CategoryActions {
 
     export const deleteMany = createAction(
         `${NAMESPACE} Delete Categories`,
-        props<{ request: DeleteManyRequest }>()
+        props<{ ids: string[] }>()
     );
 
     export const deleteManySuccess = createAction(

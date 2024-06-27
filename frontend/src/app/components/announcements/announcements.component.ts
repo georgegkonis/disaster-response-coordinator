@@ -9,7 +9,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, TooltipOptions } from 'primeng/api';
 import { ItemActions } from '../../store/actions/item.actions';
 import { CreateAnnouncementRequest } from '../../dto/requests/create-announcement-request.dto';
-import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
 import { Item } from '../../models/item.model';
 
 interface AnnouncementForm {
@@ -74,14 +73,10 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
     }
 
     onDeleteSelectedClick(): void {
-        const request: DeleteManyRequest = {
-            ids: this.selectedAnnouncements.map(announcement => announcement.id)
-        };
-
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete the selected announcements?',
             accept: () => {
-                this.store.dispatch(AnnouncementsActions.deleteMany({ request }));
+                this.store.dispatch(AnnouncementsActions.deleteMany({ ids: this.selectedAnnouncements.map(announcement => announcement.id) }));
                 this.selectedAnnouncements = [];
             }
         });

@@ -5,7 +5,6 @@ import { Category } from '../models/category.model';
 import { LoadCategoriesRequest } from '../dto/requests/load-categories-request.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UpdateCategoryRequest } from '../dto/requests/update-category-request.dto';
-import { DeleteManyRequest } from '../dto/requests/delete-many-request.dto';
 import { APP_SETTINGS, AppSettings } from '../settings/settings';
 
 const API_PATH: string = 'categories';
@@ -49,9 +48,9 @@ export class CategoryService {
         return this.httpClient.delete<void>(url);
     }
 
-    deleteMany(request: DeleteManyRequest): Observable<void> {
+    deleteMany(ids: string[]): Observable<void> {
         const url: string = `${this.baseUrl}`;
 
-        return this.httpClient.delete<void>(url, { body: request });
+        return this.httpClient.delete<void>(url, { body: ids });
     }
 }

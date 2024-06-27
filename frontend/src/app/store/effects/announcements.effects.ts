@@ -48,8 +48,8 @@ export class AnnouncementsEffects {
 
     deleteManyEffect$ = createEffect(() => this.actions$.pipe(
         ofType(AnnouncementsActions.deleteMany),
-        switchMap(({ request }) => this.announcementsService.deleteMany(request).pipe(
-            map(() => AnnouncementsActions.deleteManySuccess({ ids: request.ids })),
+        switchMap(({ ids }) => this.announcementsService.deleteMany(ids).pipe(
+            map(() => AnnouncementsActions.deleteManySuccess({ ids })),
             tap(() => this.messageService.showSuccess('Announcements deleted successfully')),
             catchError(() => of(AnnouncementsActions.deleteManyFailure()))
         ))

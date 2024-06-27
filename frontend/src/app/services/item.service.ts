@@ -5,7 +5,6 @@ import { Item } from '../models/item.model';
 import { LoadItemsRequest } from '../dto/requests/load-items-request.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UpdateItemRequest } from '../dto/requests/update-item-request.dto';
-import { DeleteManyRequest } from '../dto/requests/delete-many-request.dto';
 import { APP_SETTINGS, AppSettings } from '../settings/settings';
 
 const API_PATH: string = 'items';
@@ -49,9 +48,9 @@ export class ItemService {
         return this.httpClient.delete<void>(url);
     }
 
-    deleteMany(request: DeleteManyRequest): Observable<void> {
+    deleteMany(ids: string[]): Observable<void> {
         const url: string = `${this.baseUrl}`;
 
-        return this.httpClient.delete<void>(url, { body: request });
+        return this.httpClient.delete<void>(url, { body: ids });
     }
 }
