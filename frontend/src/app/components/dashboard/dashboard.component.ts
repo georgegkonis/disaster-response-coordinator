@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { UserRole } from '../../enums/user-role.enum';
 import { CookieService } from 'ngx-cookie-service';
@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
 
     constructor(
         private store: Store<AppState>,
+        private confirmationService: ConfirmationService,
         cookieService: CookieService
     ) {
         this.user$ = this.store.select(userSelector);
@@ -45,7 +46,8 @@ export class DashboardComponent implements OnInit {
                 items: [
                     {
                         label: 'Categories',
-                        icon: 'pi pi-fw pi-tags'
+                        icon: 'pi pi-fw pi-tags',
+                        disabled: true // TODO: enable when categories are implemented
                     }
                 ]
             },
@@ -59,7 +61,7 @@ export class DashboardComponent implements OnInit {
                 icon: 'pi pi-fw pi-chart-bar',
                 routerLink: routesPaths.ANALYTICS,
                 visible: isAdmin,
-                disabled: true
+                disabled: true // TODO: enable when analytics are implemented
             },
             {
                 label: 'Users',
@@ -75,6 +77,9 @@ export class DashboardComponent implements OnInit {
     }
 
     onLogoutClick(): void {
-        this.store.dispatch(AuthActions.logout());
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to log out?',
+            accept: () => this.store.dispatch(AuthActions.logout())
+        });
     }
 }
