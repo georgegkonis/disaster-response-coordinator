@@ -6,9 +6,11 @@ import { LoadItemsRequest } from '../../dto/requests/load-items-request.dto';
 import { UpdateItemRequest } from '../../dto/requests/update-item-request.dto';
 import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
 
+const NAMESPACE: string = '[ITEMS]';
+
 export namespace ItemActions {
 
-    const NAMESPACE: string = '[ITEMS]';
+    //#region Load Items
 
     export const load = createAction(
         `${NAMESPACE} Load Items`,
@@ -24,6 +26,10 @@ export namespace ItemActions {
         `${NAMESPACE} Load Items ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Create Item
+
     export const create = createAction(
         `${NAMESPACE} Create Item`,
         props<{ request: CreateItemRequest }>()
@@ -37,6 +43,10 @@ export namespace ItemActions {
     export const createFailure = createAction(
         `${NAMESPACE} Create Item ${FAILURE}`
     );
+
+    //#endregion
+
+    //#region Update Item
 
     export const update = createAction(
         `${NAMESPACE} Update Item`,
@@ -52,6 +62,10 @@ export namespace ItemActions {
         `${NAMESPACE} Update Item ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Remove Item
+
     export const remove = createAction(
         `${NAMESPACE} Remove Item`,
         props<{ id: string }>()
@@ -66,21 +80,31 @@ export namespace ItemActions {
         `${NAMESPACE} Remove Item ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Remove Items
+
     export const removeMany = createAction(
-        `${NAMESPACE} Remove Many Items`,
+        `${NAMESPACE} Remove Items`,
         props<{ request: DeleteManyRequest }>()
     );
 
     export const removeManySuccess = createAction(
-        `${NAMESPACE} Remove Many Items ${SUCCESS}`,
+        `${NAMESPACE} Remove Items ${SUCCESS}`,
         props<{ ids: string[] }>()
     );
 
     export const removeManyFailure = createAction(
-        `${NAMESPACE} Remove Many Items ${FAILURE}`
+        `${NAMESPACE} Remove Items ${FAILURE}`
     );
+
+    //#endregion
+
+    //#region Reset
 
     export const reset = createAction(
         `${NAMESPACE} Reset`
     );
+
+    //#endregion
 }

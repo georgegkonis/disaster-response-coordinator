@@ -4,117 +4,121 @@ import { UpdateUserRequest } from '../../dto/requests/update-user-request.dto';
 import { FAILURE, SUCCESS } from '../../constants/action-types';
 import { CreateUserRequest } from '../../dto/requests/create-user-request.dto';
 
-const NAMESPACE: string = '[Users]';
+const NAMESPACE: string = '[USERS]';
 
 export namespace UserActions {
 
-    //#region Load
+    //#region Load Users
 
     export const load = createAction(
-        `${NAMESPACE} Get All`
+        `${NAMESPACE} Load Users`
     );
 
     export const loadSuccess = createAction(
-        `${NAMESPACE} Get All ${SUCCESS}`,
+        `${NAMESPACE} Load Users ${SUCCESS}`,
         props<{ users: User[] }>()
     );
 
     export const loadFailure = createAction(
-        `${NAMESPACE} Get All ${FAILURE}`
+        `${NAMESPACE} Load Users ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Create
+    //#region Create User
 
     export const create = createAction(
-        `${NAMESPACE} Create`,
+        `${NAMESPACE} Create User`,
         props<{ request: CreateUserRequest }>()
     );
 
     export const createSuccess = createAction(
-        `${NAMESPACE} Create ${SUCCESS}`,
+        `${NAMESPACE} Create User ${SUCCESS}`,
         props<{ user: User }>()
     );
 
     export const createFailure = createAction(
-        `${NAMESPACE} Create ${FAILURE}`
+        `${NAMESPACE} Create User ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Update
+    //#region Update User
 
     export const update = createAction(
-        `${NAMESPACE} Update`,
+        `${NAMESPACE} Update User`,
         props<{ request: UpdateUserRequest }>()
     );
 
     export const updateSuccess = createAction(
-        `${NAMESPACE} Update ${SUCCESS}`,
+        `${NAMESPACE} Update User ${SUCCESS}`,
         props<{ user: User }>()
     );
 
     export const updateFailure = createAction(
-        `${NAMESPACE} Update ${FAILURE}`
+        `${NAMESPACE} Update User ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Delete
+    //#region Delete User
 
     export const remove = createAction(
-        `${NAMESPACE} Remove`,
+        `${NAMESPACE} Remove User`,
         props<{ id: string }>()
     );
 
     export const removeSuccess = createAction(
-        `${NAMESPACE} Remove ${SUCCESS}`,
+        `${NAMESPACE} Remove User ${SUCCESS}`,
         props<{ id: string }>()
     );
 
     export const removeFailure = createAction(
-        `${NAMESPACE} Remove ${FAILURE}`
+        `${NAMESPACE} Remove User ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Load Me
+    //#region Load Current User
 
     export const loadMe = createAction(
-        `${NAMESPACE} Load Me`
+        `${NAMESPACE} Load Current User`
     );
 
     export const loadMeSuccess = createAction(
-        `${NAMESPACE} Load Me ${SUCCESS}`,
+        `${NAMESPACE} Load Current User ${SUCCESS}`,
         props<{ user: User }>()
     );
 
     export const loadMeFailure = createAction(
-        `${NAMESPACE} Load Me ${FAILURE}`
+        `${NAMESPACE} Load Current User ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Update Me
+    //#region Update Current User
 
     export const updateMe = createAction(
-        `${NAMESPACE} Update Me`,
+        `${NAMESPACE} Update Current User`,
         props<{ request: UpdateUserRequest }>()
     );
 
     export const updateMeSuccess = createAction(
-        `${NAMESPACE} Update Me ${SUCCESS}`,
+        `${NAMESPACE} Update Current User ${SUCCESS}`,
         props<{ user: User }>()
     );
 
     export const updateMeFailure = createAction(
-        `${NAMESPACE} Update Me ${FAILURE}`
+        `${NAMESPACE} Update Current User ${FAILURE}`
     );
 
     //#endregion
 
+    //#region Reset
+
     export const reset = createAction(
         `${NAMESPACE} Reset`
     );
+
+    //#endregion
 }

@@ -4,9 +4,11 @@ import { Announcement } from '../../models/announcement.model';
 import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
 import { FAILURE, SUCCESS } from '../../constants/action-types';
 
+const NAMESPACE: string = '[ANNOUNCEMENTS]';
+
 export namespace AnnouncementsActions {
 
-    const NAMESPACE: string = '[ANNOUNCEMENTS]';
+    //#region Load Announcements
 
     export const load = createAction(
         `${NAMESPACE} Load Announcements`
@@ -20,6 +22,10 @@ export namespace AnnouncementsActions {
     export const loadFailure = createAction(
         `${NAMESPACE} Load Announcements ${FAILURE}`
     );
+
+    //#endregion
+
+    //#region Create Announcement
 
     export const create = createAction(
         `${NAMESPACE} Create Announcement`,
@@ -35,6 +41,10 @@ export namespace AnnouncementsActions {
         `${NAMESPACE} Create Announcement ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Remove Announcement
+
     export const remove = createAction(
         `${NAMESPACE} Remove Announcement`,
         props<{ id: string }>()
@@ -49,21 +59,31 @@ export namespace AnnouncementsActions {
         `${NAMESPACE} Remove Announcement ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Remove Announcements
+
     export const removeMany = createAction(
-        `${NAMESPACE} Remove Many Announcements`,
+        `${NAMESPACE} Remove Announcements`,
         props<{ request: DeleteManyRequest }>()
     );
 
     export const removeManySuccess = createAction(
-        `${NAMESPACE} Remove Many Announcements ${SUCCESS}`,
+        `${NAMESPACE} Remove Announcements ${SUCCESS}`,
         props<{ ids: string[] }>()
     );
 
     export const removeManyFailure = createAction(
-        `${NAMESPACE} Remove Many Announcements ${FAILURE}`
+        `${NAMESPACE} Remove Announcements ${FAILURE}`
     );
+
+    //#endregion
+
+    //#region Reset
 
     export const reset = createAction(
         `${NAMESPACE} Reset`
     );
+
+    //#endregion
 }

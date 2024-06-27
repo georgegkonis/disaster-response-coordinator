@@ -1,9 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import { FAILURE, SUCCESS } from '../../constants/action-types';
 
+const NAMESPACE: string = '[WAREHOUSE]';
+
 export namespace WarehouseActions {
 
-    const NAMESPACE: string = '[WAREHOUSE]';
+    //#region Export Warehouse Data
 
     export const exportData = createAction(
         `${NAMESPACE} Export Warehouse Data`
@@ -18,6 +20,10 @@ export namespace WarehouseActions {
         `${NAMESPACE} Export Warehouse Data ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Import Warehouse Data
+
     export const importData = createAction(
         `${NAMESPACE} Import Warehouse Data`,
         props<{ file: File }>()
@@ -31,6 +37,10 @@ export namespace WarehouseActions {
         `${NAMESPACE} Import Warehouse Data ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Clear Warehouse Data
+
     export const clearData = createAction(
         `${NAMESPACE} Clear Warehouse Data`
     );
@@ -42,6 +52,8 @@ export namespace WarehouseActions {
     export const clearDataFailure = createAction(
         `${NAMESPACE} Clear Warehouse Data ${FAILURE}`
     );
+
+    //#endregion
 }
 
 

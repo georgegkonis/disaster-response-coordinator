@@ -6,9 +6,11 @@ import { LoadCategoriesRequest } from '../../dto/requests/load-categories-reques
 import { UpdateCategoryRequest } from '../../dto/requests/update-category-request.dto';
 import { DeleteManyRequest } from '../../dto/requests/delete-many-request.dto';
 
+const NAMESPACE: string = '[CATEGORIES]';
+
 export namespace CategoryActions {
 
-    const NAMESPACE: string = '[CATEGORIES]';
+    //#region Load Categories
 
     export const load = createAction(
         `${NAMESPACE} Load Categories`,
@@ -24,6 +26,10 @@ export namespace CategoryActions {
         `${NAMESPACE} Load Categories ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Create Category
+
     export const create = createAction(
         `${NAMESPACE} Create Category`,
         props<{ request: CreateCategoryRequest }>()
@@ -37,6 +43,10 @@ export namespace CategoryActions {
     export const createFailure = createAction(
         `${NAMESPACE} Create Category ${FAILURE}`
     );
+
+    //#endregion
+
+    //#region Update Category
 
     export const update = createAction(
         `${NAMESPACE} Update Category`,
@@ -52,6 +62,10 @@ export namespace CategoryActions {
         `${NAMESPACE} Update Category ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Remove Category
+
     export const remove = createAction(
         `${NAMESPACE} Remove Category`,
         props<{ id: string }>()
@@ -66,21 +80,31 @@ export namespace CategoryActions {
         `${NAMESPACE} Remove Category ${FAILURE}`
     );
 
+    //#endregion
+
+    //#region Remove Categories
+
     export const removeMany = createAction(
-        `${NAMESPACE} Remove Many Categories`,
+        `${NAMESPACE} Remove Categories`,
         props<{ request: DeleteManyRequest }>()
     );
 
     export const removeManySuccess = createAction(
-        `${NAMESPACE} Remove Many Categories ${SUCCESS}`,
+        `${NAMESPACE} Remove Categories ${SUCCESS}`,
         props<{ ids: string[] }>()
     );
 
     export const removeManyFailure = createAction(
-        `${NAMESPACE} Remove Many Categories ${FAILURE}`
+        `${NAMESPACE} Remove Categories ${FAILURE}`
     );
+
+    //#endregion
+
+    //#region Reset
 
     export const reset = createAction(
         `${NAMESPACE} Reset`
     );
+
+    //#endregion
 }

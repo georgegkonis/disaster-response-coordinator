@@ -1,10 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { LoginRequest } from '../../dto/requests/login-request.dto';
 import { RegisterRequest } from '../../dto/requests/register-request.dto';
+import { FAILURE, SUCCESS } from '../../constants/action-types';
 
-const SUCCESS: string = '[Success]';
-const FAILURE: string = '[Failure]';
-const NAMESPACE: string = '[Authentication]';
+const NAMESPACE: string = '[AUTHENTICATION]';
 
 export namespace AuthActions {
 
@@ -16,11 +15,11 @@ export namespace AuthActions {
     );
 
     export const loginSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Login`
+        `${NAMESPACE} Login ${SUCCESS}`
     );
 
     export const loginFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Login`
+        `${NAMESPACE} Login ${FAILURE}`
     );
 
     //#endregion
@@ -33,11 +32,11 @@ export namespace AuthActions {
     );
 
     export const registerSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Register`
+        `${NAMESPACE} Register ${SUCCESS}`
     );
 
     export const registerFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Register`
+        `${NAMESPACE} Register ${FAILURE}`
     );
 
     //#endregion
@@ -49,11 +48,11 @@ export namespace AuthActions {
     );
 
     export const logoutSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Logout`
+        `${NAMESPACE} Logout ${SUCCESS}`
     );
 
     export const logoutFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Logout`
+        `${NAMESPACE} Logout ${FAILURE}`
     );
 
     //#endregion
