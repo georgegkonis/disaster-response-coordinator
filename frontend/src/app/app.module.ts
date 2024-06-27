@@ -55,6 +55,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ItemEffects } from './store/effects/item.effects';
 import { CategoryEffects } from './store/effects/category.effects';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
     declarations: [
@@ -67,7 +68,8 @@ import { CategoryEffects } from './store/effects/category.effects';
         NotFoundComponent,
         WarehouseComponent,
         OffersMapComponent,
-        AnnouncementsComponent
+        AnnouncementsComponent,
+        UsersComponent
     ],
     imports: [
         BrowserModule,

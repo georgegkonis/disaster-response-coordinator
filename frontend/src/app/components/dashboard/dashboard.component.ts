@@ -33,21 +33,22 @@ export class DashboardComponent implements OnInit {
                 routerLink: routesPaths.MAP
             },
             {
-                label: 'Announcements',
-                icon: 'pi pi-fw pi-bell',
-                routerLink: routesPaths.ANNOUNCEMENTS
-            },
-            {
                 label: 'Warehouse',
                 icon: 'pi pi-fw pi-home',
                 routerLink: routesPaths.WAREHOUSE,
                 visible: this.isAdmin,
             },
             {
+                label: 'Announcements',
+                icon: 'pi pi-fw pi-bell',
+                routerLink: routesPaths.ANNOUNCEMENTS
+            },
+            {
                 label: 'Analytics',
                 icon: 'pi pi-fw pi-chart-bar',
                 routerLink: routesPaths.ANALYTICS,
                 visible: this.isAdmin,
+                disabled: true
             },
             {
                 label: 'Users',

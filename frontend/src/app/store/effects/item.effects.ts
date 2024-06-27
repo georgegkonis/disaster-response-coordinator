@@ -19,7 +19,7 @@ export class ItemEffects {
         private loaderService: AppLoaderService
     ) {}
 
-    loadItemsEffect$ = createEffect(() => this.actions$.pipe(
+    loadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemActions.load),
         tap(() => this.loaderService.show()),
         mergeMap(({ request }) => withMinDelay(this.itemService.find(request)).pipe(
@@ -29,7 +29,7 @@ export class ItemEffects {
         ))
     ));
 
-    createItemEffect$ = createEffect(() => this.actions$.pipe(
+    createEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemActions.create),
         mergeMap(({ request }) => this.itemService.create(request).pipe(
             map((item) => ItemActions.createSuccess({ item })),
@@ -38,7 +38,7 @@ export class ItemEffects {
         ))
     ));
 
-    updateItemEffect$ = createEffect(() => this.actions$.pipe(
+    updateEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemActions.update),
         mergeMap(({ id, request }) => this.itemService.update(id, request).pipe(
             map((item) => ItemActions.updateSuccess({ item })),
@@ -47,16 +47,16 @@ export class ItemEffects {
         ))
     ));
 
-    removeItemEffect$ = createEffect(() => this.actions$.pipe(
+    removeEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemActions.remove),
         mergeMap(({ id }) => this.itemService.remove(id).pipe(
             map(() => ItemActions.removeSuccess({ id })),
-            tap(() => this.messageService.showSuccess('Item removed successfully')),
+            tap(() => this.messageService.showSuccess('Item deleted successfully')),
             catchError(() => of(ItemActions.removeFailure()))
         ))
     ));
 
-    removeItemsEffect$ = createEffect(() => this.actions$.pipe(
+    removeManyEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemActions.removeMany),
         mergeMap(({ request }) => this.itemService.removeMany(request).pipe(
             map(() => ItemActions.removeManySuccess({ ids: request.ids })),

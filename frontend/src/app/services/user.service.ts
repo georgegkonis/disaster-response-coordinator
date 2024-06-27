@@ -31,7 +31,7 @@ export class UserService {
     }
 
     // TODO: find a better way to convert object to query params
-    getAll(role?: UserRole): Observable<User[]> {
+    find(role?: UserRole): Observable<User[]> {
         const url: string = `${this.baseUrl}`;
         let params: HttpParams = new HttpParams();
 

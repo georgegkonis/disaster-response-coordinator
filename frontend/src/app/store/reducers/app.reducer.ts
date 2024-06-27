@@ -7,6 +7,7 @@ import { Announcement } from '../../models/announcement.model';
 import { AnnouncementsActions } from '../actions/announcements.actions';
 import { ItemActions } from '../actions/item.actions';
 import { CategoryActions } from '../actions/category.actions';
+import { UserActions } from '../actions/user.actions';
 
 export interface AppState {
     user: User | null;
@@ -28,6 +29,12 @@ const reducer = createReducer(
     initialState,
 
     on(AuthActions.logoutSuccess, (state) => update(state, initialState)),
+
+    on(UserActions.loadMeSuccess, (state, { user }) => update(state, { user })),
+    on(UserActions.updateMeSuccess, (state, { user }) => update(state, { user })),
+
+    on(UserActions.loadSuccess, (state, { users }) => update(state, { users })),
+    on(UserActions.reset, (state) => update(state, { users: [] })),
 
     on(AnnouncementsActions.loadSuccess, (state, { announcements }) => update(state, { announcements })),
     on(AnnouncementsActions.reset, (state) => update(state, { announcements: [] })),

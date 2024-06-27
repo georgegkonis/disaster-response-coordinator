@@ -1,0 +1,154 @@
+<div class="users">
+
+    <p-toolbar styleClass="p-2">
+        <div class="p-toolbar-group-start gap-2">
+            <p-button (onClick)="onCreateClick()" label="Create" icon="pi pi-plus"></p-button>
+        </div>
+    </p-toolbar>
+
+    <p-table [(selection)]="selectedUsers"
+             [scrollable]="true"
+             [sortOrder]="-1"
+             [tableStyle]="{'min-width': '80rem', 'max-height': '80vh'}"
+             [value]="(users$ | async) ?? []"
+             dataKey="id"
+             scrollHeight="80vh"
+             sortField="updatedAt"
+             sortMode="single"
+             styleClass="p-datatable-sm p-datatable-gridlines">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="username" style="width: calc(100% / 8)">Username
+                    <p-sortIcon field="username"></p-sortIcon>
+                </th>
+                <th pSortableColumn="email" style="width: calc(100% / 8)">Email
+                    <p-sortIcon field="email"></p-sortIcon>
+                </th>
+                <th pSortableColumn="role" style="width: calc(100% / 8)">Role
+                    <p-sortIcon field="role"></p-sortIcon>
+                </th>
+                <th pSortableColumn="details.firstName" style="width: calc(100% / 8)">First Name
+                    <p-sortIcon field="details.firstName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="details.lastName" style="width: calc(100% / 8)">Last Name
+                    <p-sortIcon field="details.lastName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="details.phoneNumber" style="width: calc(100% / 8)">Phone Number
+                    <p-sortIcon field="details.phoneNumber"></p-sortIcon>
+                </th>
+                <th pSortableColumn="createdAt" style="width: calc(100% / 8)">Created At
+                    <p-sortIcon field="createdAt"></p-sortIcon>
+                </th>
+                <th pSortableColumn="updatedAt" style="width: calc(100% / 8)">Updated At
+                    <p-sortIcon field="updatedAt"></p-sortIcon>
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td [pTooltip]="user.username" [tooltipOptions]="tooltipOptions" class="table-cell">{{ user.username }}</td>
+
+                <td [pTooltip]="user.email" [tooltipOptions]="tooltipOptions" class="table-cell">{{ user.email }}</td>
+
+                <td [pTooltip]="user.role.toUpperCase()" [tooltipOptions]="tooltipOptions" class="table-cell">{{ user.role.toUpperCase() }}
+                </td>
+
+                <td [pTooltip]="user.details?.firstName" [tooltipOptions]="tooltipOptions" class="table-cell">{{ user.details?.firstName }}
+                </td>
+
+                <td [pTooltip]="user.details?.lastName" [tooltipOptions]="tooltipOptions" class="table-cell">{{ user.details?.lastName }}
+                </td>
+
+                <td [pTooltip]="user.details?.phoneNumber"
+                    [tooltipOptions]="tooltipOptions"
+                    class="table-cell">{{ user.details?.phoneNumber }}
+                </td>
+
+                <td [pTooltip]="(user.createdAt | date: 'medium')?.toString()"
+                    [tooltipOptions]="tooltipOptions"
+                    class="table-cell">{{ user.createdAt | date: 'short' }}
+                </td>
+
+                <td [pTooltip]="(user.updatedAt | date: 'medium')?.toString()"
+                    [tooltipOptions]="tooltipOptions"
+                    class="table-cell">{{ user.updatedAt | date: 'short' }}
+                </td>
+
+                <td class="text-center">
+                    <p-button (onClick)="onDeleteClick(user.id)"
+                              [disabled]="user.role === 'admin'"
+                              icon="pi pi-trash"
+                              styleClass="p-button-danger p-button-outlined p-button-rounded p-button-sm"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <tr>
+                <td colspan="8">Total Users: {{ (users$ | async)?.length }}</td>
+                <td class="text-right">
+                    <p-button (onClick)="onReloadClick()"
+                              label="Reload"
+                              styleClass="p-button-outlined p-button-sm"
+                              icon="pi pi-refresh"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="createUserDialogVisible" [closable]="false" [modal]="true" [style]="{width: '30rem', 'max-height': '60vh'}">
+    <ng-template pTemplate="headless">
+        <form (ngSubmit)="onSubmit()" [formGroup]="userForm" class="app-form grid">
+
+            <h1 class="app-form__heading col-12">Create User</h1>
+
+            <!-- Role Dropbox -->
+            <div class="app-form__field col-12">
+                <label class="app-form__field__label" for="role">Role</label>
+                <p-dropdown formControlName="role"
+                            id="role"
+                            [options]="rolesSelection"
+                            optionLabel="label"
+                            optionValue="value"
+                            placeholder="Select a Role"
+                            styleClass="w-full"/>
+            </div>
+
+            <!-- Username Field -->
+            <div class="app-form__field col-12">
+                <label class="app-form__field__label" for="username">Username</label>
+                <input class="app-form__field__input" formControlName="username" id="username" pInputText type="text">
+            </div>
+
+            <!-- Email Field -->
+            <div class="app-form__field col-12">
+                <label class="app-form__field__label" for="email">Email</label>
+                <input class="app-form__field__input" formControlName="email" id="email" pInputText type="email">
+            </div>
+
+            <!-- Password Field -->
+            <div class="app-form__field col-12">
+                <label for="password" class="app-form__field__label">Password</label>
+                <p-password [toggleMask]="true"
+                            id="password"
+                            formControlName="password"
+                            styleClass="w-full"
+                            inputStyleClass="w-full"></p-password>
+            </div>
+
+            <div class="app-form__buttons col-12">
+                <p-button (onClick)="onCancelClick()"
+                          icon="pi pi-times"
+                          label="Cancel"
+                          styleClass="p-button-outlined p-button-danger"></p-button>
+                <p-button [disabled]="!userForm.valid || !userForm.dirty" type="submit" icon="pi pi-check" label="Submit"></p-button>
+            </div>
+        </form>
+    </ng-template>
+</p-dialog>
+

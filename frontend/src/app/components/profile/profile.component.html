@@ -1,53 +1,40 @@
 <div class="profile">
-    <h2 class="profile__title">Your Profile</h2>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="userForm" [style]="{width: '30rem'}" (ngSubmit)="onSubmit()" class="app-form">
+        <h1 class="app-form__heading col-12">Profile</h1>
 
         <!-- Username Field -->
-        <div class="profile__field">
-            <label for="username" class="profile__field-label">Username</label>
-            <input id="username" type="text" pInputText formControlName="username" class="profile__field-input">
+        <div class="app-form__field col-12">
+            <label for="username" class="app-form__field__label">Username</label>
+            <input id="username" type="text" pInputText formControlName="username" class="app-form__field__input">
         </div>
 
         <!-- Email Field -->
-        <div class="profile__field">
-            <label for="email" class="profile__field-label">Email</label>
-            <input [readonly]="true" id="email" type="email" pInputText formControlName="email" class="profile__field-input">
-        </div>
-
-        <!-- Password Field -->
-        <div class="profile__field">
-            <label for="password" class="profile__field-label">Password</label>
-            <p-password [toggleMask]="true"
-                        placeholder="Enter a new password"
-                        id="password"
-                        formControlName="password"
-                        styleClass="w-full"
-                        inputStyleClass="w-full"></p-password>
+        <div class="app-form__field col-12">
+            <label for="email" class="app-form__field__label">Email</label>
+            <input id="email" type="text" pInputText formControlName="email" class="app-form__field__input">
         </div>
 
         <!-- First Name Field -->
-        <div class="profile__field">
-            <label for="firstName" class="profile__field-label">First Name</label>
-            <input id="firstName" type="text" pInputText formControlName="firstName" class="profile__field-input">
-
+        <div class="app-form__field col" formGroupName="details">
+            <label for="firstName" class="app-form__field__label">First Name</label>
+            <input id="firstName" type="text" pInputText formControlName="firstName" class="app-form__field__input">
         </div>
 
         <!-- Last Name Field -->
-        <div class="profile__field">
-            <label for="lastName" class="profile__field-label">Last Name</label>
-            <input id="lastName" type="text" pInputText formControlName="lastName" class="profile__field-input">
+        <div class="app-form__field col" formGroupName="details">
+            <label for="lastName" class="app-form__field__label">Last Nane</label>
+            <input id="lastName" type="text" pInputText formControlName="lastName" class="app-form__field__input">
         </div>
 
-        <!-- Phone Field -->
-        <div class="profile__field">
-            <label for="phone" class="profile__field-label">Phone</label>
-            <input id="phone" type="text" pInputText formControlName="phone" class="profile__field-input">
+        <!-- Phone Number Field -->
+        <div class="app-form__field col-12" formGroupName="details">
+            <label for="phoneNumber" class="app-form__field__label">Phone Number</label>
+            <input id="phoneNumber" type="text" pInputText formControlName="phoneNumber" class="app-form__field__input">
         </div>
 
         <!-- Buttons -->
-        <div class="profile__buttons">
-            <p-button [disabled]="!userForm.dirty" type="submit" label="Update"></p-button>
-            <p-button (onClick)="onCancelClick()" type="button" label="Cancel" styleClass="p-button-outlined"></p-button>
+        <div class="app-form__buttons col-12">
+            <p-button [disabled]="!userForm.valid || userForm.pristine" icon="pi pi-user-edit" label="Update" type="submit"></p-button>
         </div>
     </form>
 </div>

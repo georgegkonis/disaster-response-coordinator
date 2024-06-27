@@ -11,6 +11,7 @@ import { adminRoleGuard } from './guards/role.guard';
 import { WarehouseComponent } from './components/warehouse/warehouse.component';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
     {
@@ -37,6 +38,10 @@ const routes: Routes = [
             {
                 path: 'announcements',
                 component: AnnouncementsComponent
+            },
+            {
+                path: 'users',
+                component: UsersComponent
             },
             {
                 path: 'profile',

@@ -1,10 +1,12 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UserActions } from '../actions/user.actions';
 import { UserService } from '../../services/user.service';
-import { MessageService } from 'primeng/api';
 import { Injectable } from '@angular/core';
+import { AppMessageService } from '../../services/app-message.service';
+import { AppLoaderService } from '../../services/app-loader.service';
+import { withMinDelay } from '../../utilities/with-min-delay';
 
 @Injectable()
 export class UserEffects {
@@ -12,33 +14,61 @@ export class UserEffects {
     constructor(
         private actions$: Actions,
         private userService: UserService,
-        private messageService: MessageService
+        private messageService: AppMessageService,
+        private loaderService: AppLoaderService
     ) {}
 
-    getMe$ = createEffect(() => this.actions$.pipe(
-        ofType(UserActions.getMe),
-        mergeMap(() =>
-            this.userService.getMe().pipe(
-                map(user => UserActions.getMeSuccess({ user })),
-                catchError(() => of(UserActions.getMeFailure()))
-            )
-        )
+    loadEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.load),
+        tap(() => this.loaderService.show()),
+        mergeMap(() => withMinDelay(this.userService.find()).pipe(
+            map(users => UserActions.loadSuccess({ users })),
+            tap(() => this.loaderService.hide()),
+            catchError(() => of(UserActions.loadFailure()))
+        ))
     ));
 
-    updateMe$ = createEffect(() => this.actions$.pipe(
+    createEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.create),
+        mergeMap(({ request }) => this.userService.create(request).pipe(
+            map(user => UserActions.createSuccess({ user })),
+            tap(() => this.messageService.showSuccess('User created successfully')),
+            catchError(() => of(UserActions.createFailure()))
+        ))
+    ));
+
+    removeEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.remove),
+        mergeMap(({ id }) => this.userService.delete(id).pipe(
+            map(() => UserActions.removeSuccess({ id })),
+            tap(() => this.messageService.showSuccess('User deleted successfully')),
+            catchError(() => of(UserActions.removeFailure()))
+        ))
+    ));
+
+    loadMeEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.loadMe),
+        mergeMap(() => withMinDelay(this.userService.getMe()).pipe(
+            map(user => UserActions.loadMeSuccess({ user })),
+            catchError(() => of(UserActions.loadMeFailure()))
+        ))
+    ));
+
+    updateMeEffect$ = createEffect(() => this.actions$.pipe(
         ofType(UserActions.updateMe),
-        mergeMap(({ request }) =>
-            this.userService.updateMe(request).pipe(
-                map((user) => {
-                    this.showSuccessMessage('Account updated successfully');
-                    return UserActions.updateMeSuccess({ user });
-                }),
-                catchError(() => of(UserActions.updateMeFailure()))
-            )
-        )
+        mergeMap(({ request }) => this.userService.updateMe(request).pipe(
+            map(user => UserActions.updateMeSuccess({ user })),
+            tap(() => this.messageService.showSuccess('User updated successfully')),
+            catchError(() => of(UserActions.updateMeFailure()))
+        ))
     ));
 
-    private showSuccessMessage(message: string): void {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
-    }
+    reloadEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            UserActions.createSuccess,
+            UserActions.removeSuccess,
+            UserActions.updateMeSuccess
+        ),
+        map(() => UserActions.load())
+    ));
 }

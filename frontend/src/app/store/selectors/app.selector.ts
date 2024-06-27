@@ -8,6 +8,11 @@ export const userSelector = createSelector(
     (state: AppState) => state.user
 );
 
+export const usersSelector = createSelector(
+    appStateSelector,
+    (state: AppState) => [...state.users]
+);
+
 export const categoriesSelector = createSelector(
     appStateSelector,
     (state: AppState) => [...state.categories]

@@ -11,6 +11,7 @@ import { ConfirmationService, TooltipOptions } from 'primeng/api';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { ItemActions } from '../../store/actions/item.actions';
 import { CategoryActions } from '../../store/actions/category.actions';
+import { tooltipOptions } from 'src/app/constants/tooltip-options';
 
 enum ItemAction {
     Create = 'create',
@@ -39,10 +40,7 @@ export class WarehouseComponent implements OnInit, OnDestroy {
 
     //#region Properties
 
-    protected readonly tooltipOptions: TooltipOptions = {
-        showDelay: 500
-    };
-
+    protected readonly tooltipOptions: TooltipOptions = tooltipOptions;
     protected readonly items$: Observable<Item[]>;
     protected readonly categories$: Observable<Category[]>;
     protected readonly itemForm: FormGroup<ItemForm>;

@@ -1,15 +1,17 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Message, MessageService } from 'primeng/api';
 import { ServerError } from '../errors/server.error';
+import { AppLoaderService } from '../services/app-loader.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
     constructor(
-        private messageService: MessageService
+        private messageService: MessageService,
+        private loaderService: AppLoaderService
     ) { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

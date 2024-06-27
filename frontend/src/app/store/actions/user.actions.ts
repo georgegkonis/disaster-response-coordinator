@@ -1,43 +1,97 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from '../../models/user.model';
 import { UpdateUserRequest } from '../../dto/requests/update-user-request.dto';
+import { FAILURE, SUCCESS } from '../../constants/action-types';
+import { CreateUserRequest } from '../../dto/requests/create-user-request.dto';
 
-const SUCCESS: string = '[Success]';
-const FAILURE: string = '[Failure]';
 const NAMESPACE: string = '[Users]';
 
 export namespace UserActions {
 
-    //#region Get All
+    //#region Load
 
-    export const getAll = createAction(
+    export const load = createAction(
         `${NAMESPACE} Get All`
     );
 
-    export const getAllSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Get All`,
+    export const loadSuccess = createAction(
+        `${NAMESPACE} Get All ${SUCCESS}`,
         props<{ users: User[] }>()
     );
 
-    export const getAllFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Get All`
+    export const loadFailure = createAction(
+        `${NAMESPACE} Get All ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Get Me
+    //#region Create
 
-    export const getMe = createAction(
-        `${NAMESPACE} Get Me`
+    export const create = createAction(
+        `${NAMESPACE} Create`,
+        props<{ request: CreateUserRequest }>()
     );
 
-    export const getMeSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Get Me`,
+    export const createSuccess = createAction(
+        `${NAMESPACE} Create ${SUCCESS}`,
         props<{ user: User }>()
     );
 
-    export const getMeFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Get Me`
+    export const createFailure = createAction(
+        `${NAMESPACE} Create ${FAILURE}`
+    );
+
+    //#endregion
+
+    //#region Update
+
+    export const update = createAction(
+        `${NAMESPACE} Update`,
+        props<{ request: UpdateUserRequest }>()
+    );
+
+    export const updateSuccess = createAction(
+        `${NAMESPACE} Update ${SUCCESS}`,
+        props<{ user: User }>()
+    );
+
+    export const updateFailure = createAction(
+        `${NAMESPACE} Update ${FAILURE}`
+    );
+
+    //#endregion
+
+    //#region Delete
+
+    export const remove = createAction(
+        `${NAMESPACE} Remove`,
+        props<{ id: string }>()
+    );
+
+    export const removeSuccess = createAction(
+        `${NAMESPACE} Remove ${SUCCESS}`,
+        props<{ id: string }>()
+    );
+
+    export const removeFailure = createAction(
+        `${NAMESPACE} Remove ${FAILURE}`
+    );
+
+    //#endregion
+
+    //#region Load Me
+
+    export const loadMe = createAction(
+        `${NAMESPACE} Load Me`
+    );
+
+    export const loadMeSuccess = createAction(
+        `${NAMESPACE} Load Me ${SUCCESS}`,
+        props<{ user: User }>()
+    );
+
+    export const loadMeFailure = createAction(
+        `${NAMESPACE} Load Me ${FAILURE}`
     );
 
     //#endregion
@@ -50,13 +104,17 @@ export namespace UserActions {
     );
 
     export const updateMeSuccess = createAction(
-        `${NAMESPACE}/${SUCCESS} Update Me`,
+        `${NAMESPACE} Update Me ${SUCCESS}`,
         props<{ user: User }>()
     );
 
     export const updateMeFailure = createAction(
-        `${NAMESPACE}/${FAILURE} Update Me`
+        `${NAMESPACE} Update Me ${FAILURE}`
     );
 
     //#endregion
+
+    export const reset = createAction(
+        `${NAMESPACE} Reset`
+    );
 }
