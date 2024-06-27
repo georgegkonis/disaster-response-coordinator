@@ -67,12 +67,12 @@ export const deleteItemHandler = async (
 };
 
 export const deleteItemsHandler = async (
-    req: Request<{}, {}, { ids: string[] }>,
+    req: Request<{}, {}, string[]>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        await deleteItems({ _id: { $in: req.body.ids } });
+        await deleteItems({ _id: { $in: req.body } });
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {

@@ -10,7 +10,7 @@ import {
 import { restrictTo } from '../middleware/restrict-to.middleware';
 import { Role } from '../enums/role.enum';
 import { validate } from '../middleware/validate.middleware';
-import { createAnnouncementSchema, deleteAnnouncementsSchema } from '../schemas/announcement.schema';
+import { createAnnouncementSchema } from '../schemas/announcement.schema';
 
 const router = express.Router();
 
@@ -26,6 +26,6 @@ router.get('/', getAnnouncementsHandler);
 router.delete('/:id', restrictTo(Role.ADMIN), deleteAnnouncementHandler);
 
 // Delete announcements
-router.delete('/', restrictTo(Role.ADMIN), validate(deleteAnnouncementsSchema), deleteAnnouncementsHandler);
+router.delete('/', restrictTo(Role.ADMIN), deleteAnnouncementsHandler);
 
 export default router;

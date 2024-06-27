@@ -71,13 +71,13 @@ export const deleteCategoryHandler = async (
 };
 
 export const deleteCategoriesHandler = async (
-    req: Request<{}, {}, { ids: string[] }>,
+    req: Request<{}, {}, string[]>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        await deleteCategories({ _id: { $in: req.body.ids } });
-        await deleteItems({ category: { $in: req.body.ids } });
+        await deleteCategories({ _id: { $in: req.body } });
+        await deleteItems({ category: { $in: req.body } });
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (err: any) {

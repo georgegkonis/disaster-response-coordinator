@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/status-code.enum';
 import { createAnnouncement, deleteAnnouncement, deleteAnnouncements, findAnnouncements } from '../services/announcement.service';
-import { CreateAnnouncementInput, DeleteAnnouncementsInput } from '../schemas/announcement.schema';
+import { CreateAnnouncementInput } from '../schemas/announcement.schema';
 import { QueryOptions } from 'mongoose';
 import { findItems } from '../services/item.service';
 import NotFoundError from '../errors/not-found-error';
@@ -53,12 +53,12 @@ export const deleteAnnouncementHandler = async (
 };
 
 export const deleteAnnouncementsHandler = async (
-    req: Request<{}, {}, DeleteAnnouncementsInput>,
+    req: Request<{}, {}, string[]>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        await deleteAnnouncements(req.body.ids);
+        await deleteAnnouncements(req.body);
 
         res.status(StatusCode.NO_CONTENT).json();
     } catch (error) {
