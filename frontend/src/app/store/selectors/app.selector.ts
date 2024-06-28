@@ -27,3 +27,18 @@ export const announcementsSelector = createSelector(
     appStateSelector,
     (state: AppState) => [...state.announcements]
 );
+
+export const headquartersSelector = createSelector(
+    appStateSelector,
+    (state: AppState) => [...state.headquarters]
+);
+
+export const itemOffersSelector = createSelector(
+    appStateSelector,
+    (state: AppState) => [...state.itemOffers]
+);
+
+export const itemRequestsSelector = createSelector(
+    appStateSelector,
+    (state: AppState) => [...state.itemRequests]
+);

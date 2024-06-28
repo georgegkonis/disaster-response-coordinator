@@ -28,7 +28,7 @@ export class ItemRequestService {
         return this.httpClient.post<ItemRequest>(url, request);
     }
 
-    get(status?: TaskStatus, item?: string, citizen?: string): Observable<ItemRequest[]> {
+    find(status?: TaskStatus, item?: string, citizen?: string): Observable<ItemRequest[]> {
         const url: string = `${this.baseUrl}`;
         let params: HttpParams = new HttpParams();
 
@@ -39,7 +39,7 @@ export class ItemRequestService {
         return this.httpClient.get<ItemRequest[]>(url, { params });
     }
 
-    getMine(status?: TaskStatus, item?: string): Observable<ItemRequest[]> {
+    findMine(status?: TaskStatus, item?: string): Observable<ItemRequest[]> {
         const url: string = `${this.baseUrl}/me`;
         let params: HttpParams = new HttpParams();
 

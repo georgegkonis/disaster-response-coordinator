@@ -57,6 +57,8 @@ import { ItemEffects } from './store/effects/item.effects';
 import { CategoryEffects } from './store/effects/category.effects';
 import { UsersComponent } from './components/users/users.component';
 import { HeadquartersEffects } from './store/effects/headquarters.effects';
+import { ItemOfferEffects } from './store/effects/item-offer.effects';
+import { ItemRequestEffects } from './store/effects/item-request.effects';
 
 @NgModule({
     bootstrap: [AppShellComponent],
@@ -91,7 +93,17 @@ import { HeadquartersEffects } from './store/effects/headquarters.effects';
         DialogModule,
         StoreDevtoolsModule.instrument(),
         StoreModule.forRoot({ app: appReducer }),
-        EffectsModule.forRoot([AuthEffects, UserEffects, WarehouseEffects, AnnouncementsEffects, ItemEffects, CategoryEffects, HeadquartersEffects]),
+        EffectsModule.forRoot([
+            AuthEffects,
+            UserEffects,
+            WarehouseEffects,
+            AnnouncementsEffects,
+            ItemEffects,
+            CategoryEffects,
+            HeadquartersEffects,
+            ItemOfferEffects,
+            ItemRequestEffects
+        ]),
         MenuModule,
         DataViewModule,
         TagModule,

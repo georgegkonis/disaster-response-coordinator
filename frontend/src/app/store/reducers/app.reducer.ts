@@ -10,6 +10,10 @@ import { CategoryActions } from '../actions/category.actions';
 import { UserActions } from '../actions/user.actions';
 import { Headquarters } from '../../models/headquarters.model';
 import { HeadquartersActions } from '../actions/headquarters.actions';
+import { ItemOffer } from '../../models/item-offer.model';
+import { ItemRequest } from '../../models/item-request.model';
+import { ItemOfferActions } from '../actions/item-offer.actions';
+import { ItemRequestActions } from '../actions/item-request.actions';
 
 export interface AppState {
     user: User | null;
@@ -18,6 +22,8 @@ export interface AppState {
     categories: Category[];
     announcements: Announcement[];
     headquarters: Headquarters[];
+    itemOffers: ItemOffer[];
+    itemRequests: ItemRequest[];
 }
 
 export const initialState: AppState = {
@@ -26,7 +32,9 @@ export const initialState: AppState = {
     items: [],
     categories: [],
     announcements: [],
-    headquarters: []
+    headquarters: [],
+    itemOffers: [],
+    itemRequests: []
 };
 
 const reducer = createReducer(
@@ -50,7 +58,13 @@ const reducer = createReducer(
     on(ItemActions.reset, (state) => update(state, { items: [] })),
 
     on(HeadquartersActions.loadSuccess, (state, { headquarters }) => update(state, { headquarters })),
-    on(HeadquartersActions.reset, (state) => update(state, { headquarters: [] }))
+    on(HeadquartersActions.reset, (state) => update(state, { headquarters: [] })),
+
+    on(ItemOfferActions.loadSuccess, (state, { itemOffers }) => update(state, { itemOffers })),
+    on(ItemOfferActions.reset, (state) => update(state, { itemOffers: [] })),
+
+    on(ItemRequestActions.loadSuccess, (state, { itemRequests }) => update(state, { itemRequests })),
+    on(ItemRequestActions.reset, (state) => update(state, { itemRequests: [] }))
 );
 
 export function appReducer(state: AppState | undefined, action: any) {
