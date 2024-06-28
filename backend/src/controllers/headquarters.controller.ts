@@ -32,7 +32,7 @@ export const getHeadquartersHandler = async (
 };
 
 export const deleteHeadquartersHandler = async (
-    req: Request,
+    req: Request<{ id: string }>,
     res: Response,
     next: NextFunction
 ) => {
