@@ -3,6 +3,7 @@ import { User } from '../../models/user.model';
 import { UpdateUserRequest } from '../../dto/requests/update-user-request.dto';
 import { FAILURE, SUCCESS } from '../../constants/action-types';
 import { CreateUserRequest } from '../../dto/requests/create-user-request.dto';
+import { MapLocation } from '../../models/map-location.model';
 
 const NAMESPACE: string = '[USERS]';
 
@@ -110,6 +111,24 @@ export namespace UserActions {
 
     export const updateMeFailure = createAction(
         `${NAMESPACE} Update Current User ${FAILURE}`
+    );
+
+    //#endregion
+
+    //#region Update User Location
+
+    export const updateLocation = createAction(
+        `${NAMESPACE} Update User Location`,
+        props<{ location: MapLocation }>()
+    );
+
+    export const updateLocationSuccess = createAction(
+        `${NAMESPACE} Update User Location ${SUCCESS}`,
+        props<{ location: MapLocation }>()
+    );
+
+    export const updateLocationFailure = createAction(
+        `${NAMESPACE} Update User Location ${FAILURE}`
     );
 
     //#endregion

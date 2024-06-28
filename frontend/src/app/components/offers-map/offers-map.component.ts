@@ -1,124 +1,50 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import * as L from 'leaflet';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppState } from '../../store/reducers/app.reducer';
-
-type MapNode = {
-    lon: number;
-    lat: number;
-};
-
-type DropdownCategory = {
-    label: string;
-    value: string | null;
-};
 
 @Component({
     selector: 'app-map',
     templateUrl: './offers-map.component.html',
     styleUrls: ['./offers-map.component.scss']
 })
-export class OffersMapComponent implements OnInit, AfterViewInit {
-    searchForm: FormGroup;
-    mapNodes: MapNode[] = [];
-    dropdownCategories: DropdownCategory[] = [];
+export class OffersMapComponent implements AfterViewInit {
 
-    viewOfferVisible: boolean = false;
-    addOfferVisible: boolean = false;
-
-    private subscription: Subscription = new Subscription();
-    private map: L.Map | null = null;
+    private map!: L.Map;
 
     constructor(
-        private store: Store<AppState>,
-        private formBuilder: FormBuilder
-    ) {
-        this.searchForm = this.formBuilder.group({
-            name: [null],
-            categoryId: [null]
-        });
-    }
-
-    // private storesSubscription = () => this.store.select(selectStores)
-    //     .subscribe((stores) => {
-    //         this.mapNodes = stores.map((store) => ({
-    //             lon: store.lon,
-    //             lat: store.lat,
-    //             store
-    //         }));
-    //
-    //         if (this.map) {
-    //             this.setStoreMarkers(this.map, this.mapNodes);
-    //         }
-    //     });
-    //
-    // private categoriesSubscription = () => this.store.select(selectCategories)
-    //     .subscribe((categories) => {
-    //         this.dropdownCategories = categories.map((store: Category) => ({
-    //             label: store.name,
-    //             value: store.id
-    //         }));
-    //
-    //         this.dropdownCategories.push({ label: 'All', value: null });
-    //     });
-
-    ngOnInit(): void {
-        // this.store.dispatch(ComStoreActions.getAll({}));
-        // this.store.dispatch(CategoryActions.getAll());
-        //
-        // this.subscription.add(this.storesSubscription());
-        // this.subscription.add(this.categoriesSubscription());
-    }
+        private store: Store<AppState>
+    ) {}
 
     ngAfterViewInit(): void {
-        this.initializeMap();
+        this.map = L.map('map');
+
+        L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }
+        ).addTo(this.map);
+
+        this.centerOnUser();
     }
 
-    onSubmit() {
-        const { name, categoryId } = this.searchForm.value;
-
-        // this.store.dispatch(ComStoreActions.getAll({ name, categoryId }));
-    }
-
-    private initializeMap() {
+    private centerOnUser() {
         navigator.geolocation.getCurrentPosition((position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
 
-            this.map = L.map('map').setView([latitude, longitude], 13);
+            const marker = L.marker([latitude, longitude]).addTo(this.map);
+            marker.bindPopup('You are here!');
 
-            L.tileLayer(
-                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                { attribution: '© OpenStreetMap' }
-            ).addTo(this.map);
-
-            if (this.mapNodes.length > 0) this.setStoreMarkers(this.map, this.mapNodes);
+            this.map.setView([latitude, longitude], 30);
         });
     }
 
-    private setStoreMarkers(map: L.Map, nodes: MapNode[]) {
-        map.eachLayer((layer) => {
-            if (layer instanceof L.Marker) map.removeLayer(layer);
-        });
-        nodes.forEach((node) => {
-            const { lat, lon } = node;
+    private setMarkers() {
+        // Set user markers
 
-            const marker = L.marker(
-                [lat, lon],
-                { icon: L.divIcon({ className: 'custom-marker', html: `<i class="pi pi-map-marker"></i>` }) }
-            ).addTo(map);
+        // Set headquarter markers
 
-            marker.on('click', () => {
-                // this.comStore = node.store;
-                this.viewOfferVisible = true;
-            });
-        });
+
     }
 
-    onAddOfferClick(): void {
-        this.addOfferVisible = true;
-        this.viewOfferVisible = false;
-    }
 }

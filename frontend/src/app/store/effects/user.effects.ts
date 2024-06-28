@@ -63,6 +63,14 @@ export class UserEffects {
         ))
     ));
 
+    updateUserLocationEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.updateLocation),
+        mergeMap(({ location }) => this.userService.updateMyLocation(location).pipe(
+            map(() => UserActions.updateLocationSuccess({ location })),
+            catchError(() => of(UserActions.updateLocationFailure()))
+        ))
+    ));
+
     reloadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(
             UserActions.createSuccess,

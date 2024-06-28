@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { UserRole } from '../../enums/user-role.enum';
@@ -10,13 +10,14 @@ import { User } from '../../models/user.model';
 import { Observable } from 'rxjs';
 import { userSelector } from '../../store/selectors/app.selector';
 import { UserActions } from '../../store/actions/user.actions';
+import { LocationService } from '../../services/location.service';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
     protected readonly routesPaths = routesPaths;
     protected readonly user$: Observable<User | null>;
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit {
     constructor(
         private store: Store<AppState>,
         private confirmationService: ConfirmationService,
+        private locationService: LocationService,
         cookieService: CookieService
     ) {
         this.user$ = this.store.select(userSelector);
@@ -72,9 +74,21 @@ export class DashboardComponent implements OnInit {
         ];
     }
 
+    //#region Lifecycle Hooks
+
     ngOnInit(): void {
         this.store.dispatch(UserActions.loadMe());
+        this.locationService.startLocationUpdates();
     }
+
+    ngOnDestroy(): void {
+        this.store.dispatch(UserActions.reset());
+        this.locationService.stopLocationUpdates();
+    }
+
+    //#endregion
+
+    //#region Event Handlers
 
     onLogoutClick(): void {
         this.confirmationService.confirm({
@@ -82,4 +96,7 @@ export class DashboardComponent implements OnInit {
             accept: () => this.store.dispatch(AuthActions.logout())
         });
     }
+
+    //#endregion
 }
+

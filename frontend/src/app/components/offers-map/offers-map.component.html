@@ -1,23 +1,21 @@
-<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-    <div class="filters-form">
+<div class="map">
 
-        <input pInputText type="text" formControlName="name" placeholder="Search Text"/>
+    <p-toolbar styleClass="p-2">
+        <div class="p-toolbar-group-start gap-2">
+            <p-button label="Create Offer" icon="pi pi-plus"></p-button>
+            <p-button label="Create Request" icon="pi pi-plus"></p-button>
+            <p-button label="Create HQ" icon="pi pi-plus"></p-button>
+        </div>
 
-        <p-dropdown [options]="dropdownCategories" formControlName="categoryId"></p-dropdown>
+        <div class="p-toolbar-group-center gap-2">
+            <input pInputText type="text" placeholder="Search Text"/>
+        </div>
 
-        <p-button label="Search" type="submit"></p-button>
+        <div class="p-toolbar-group-end gap-2">
+            <p-button label="Search" icon="pi pi-search"></p-button>
+            <p-button label="Reset" icon="pi pi-refresh"></p-button>
+        </div>
+    </p-toolbar>
 
-    </div>
-</form>
-
-<div id="map"></div>
-
-<!--&lt;!&ndash;View Offer Dialog&ndash;&gt;-->
-<!--<p-dialog [style]="{width: '25vw'}" [(visible)]="viewOfferVisible">-->
-<!--    <app-view-offer *ngIf="viewOfferVisible" [comStore]="comStore" (addOfferClick)="onAddOfferClick()"></app-view-offer>-->
-<!--</p-dialog>-->
-
-<!--&lt;!&ndash;Add Offer Dialog&ndash;&gt;-->
-<!--<p-dialog [style]="{width: '25vw'}" [(visible)]="addOfferVisible">-->
-<!--    <app-add-offer *ngIf="addOfferVisible" [comStore]="comStore"></app-add-offer>-->
-<!--</p-dialog>-->
+    <div id="map"></div>
+</div>
