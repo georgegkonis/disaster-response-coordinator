@@ -39,18 +39,8 @@
 
         <!-- Buttons -->
         <div class="app-form__buttons col-12">
-            <p-button [disabled]="!registerForm.valid"
-                      [raised]="true"
-                      icon="pi pi-check"
-                      iconPos="right"
-                      label="Submit"
-                      type="submit"></p-button>
-            <p-button (onClick)="onCancelClick()"
-                      [outlined]="true"
-                      [raised]="true"
-                      icon="pi pi-times"
-                      iconPos="right"
-                      label="Cancel"></p-button>
+            <p-button (onClick)="onCancelClick()" [outlined]="true" icon="pi pi-times" label="Cancel" type="button"></p-button>
+            <p-button [disabled]="!registerForm.valid" icon="pi pi-check" label="Register" type="submit"></p-button>
         </div>
     </form>
 </div>
