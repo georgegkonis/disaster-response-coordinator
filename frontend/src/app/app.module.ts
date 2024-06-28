@@ -56,8 +56,10 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { ItemEffects } from './store/effects/item.effects';
 import { CategoryEffects } from './store/effects/category.effects';
 import { UsersComponent } from './components/users/users.component';
+import { HeadquartersEffects } from './store/effects/headquarters.effects';
 
 @NgModule({
+    bootstrap: [AppShellComponent],
     declarations: [
         AppShellComponent,
         HomeComponent,
@@ -89,7 +91,7 @@ import { UsersComponent } from './components/users/users.component';
         DialogModule,
         StoreDevtoolsModule.instrument(),
         StoreModule.forRoot({ app: appReducer }),
-        EffectsModule.forRoot([AuthEffects, UserEffects, WarehouseEffects, AnnouncementsEffects, ItemEffects, CategoryEffects]),
+        EffectsModule.forRoot([AuthEffects, UserEffects, WarehouseEffects, AnnouncementsEffects, ItemEffects, CategoryEffects, HeadquartersEffects]),
         MenuModule,
         DataViewModule,
         TagModule,
@@ -114,7 +116,6 @@ import { UsersComponent } from './components/users/users.component';
         CookieService,
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, deps: [MessageService] },
         { provide: HTTP_INTERCEPTORS, useClass: HttpCredentialsInterceptor, multi: true }
-    ],
-    bootstrap: [AppShellComponent]
+    ]
 })
 export class AppModule {}

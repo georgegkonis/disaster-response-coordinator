@@ -8,6 +8,8 @@ import { AnnouncementsActions } from '../actions/announcements.actions';
 import { ItemActions } from '../actions/item.actions';
 import { CategoryActions } from '../actions/category.actions';
 import { UserActions } from '../actions/user.actions';
+import { Headquarters } from '../../models/headquarters.model';
+import { HeadquartersActions } from '../actions/headquarters.actions';
 
 export interface AppState {
     user: User | null;
@@ -15,6 +17,7 @@ export interface AppState {
     items: Item[];
     categories: Category[];
     announcements: Announcement[];
+    headquarters: Headquarters[];
 }
 
 export const initialState: AppState = {
@@ -22,7 +25,8 @@ export const initialState: AppState = {
     users: [],
     items: [],
     categories: [],
-    announcements: []
+    announcements: [],
+    headquarters: []
 };
 
 const reducer = createReducer(
@@ -43,7 +47,10 @@ const reducer = createReducer(
     on(CategoryActions.reset, (state) => update(state, { categories: [] })),
 
     on(ItemActions.loadSuccess, (state, { items }) => update(state, { items })),
-    on(ItemActions.reset, (state) => update(state, { items: [] }))
+    on(ItemActions.reset, (state) => update(state, { items: [] })),
+
+    on(HeadquartersActions.loadSuccess, (state, { headquarters }) => update(state, { headquarters })),
+    on(HeadquartersActions.reset, (state) => update(state, { headquarters: [] }))
 );
 
 export function appReducer(state: AppState | undefined, action: any) {

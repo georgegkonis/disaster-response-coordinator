@@ -27,7 +27,7 @@ export class HeadquartersService {
         return this.httpClient.post<Headquarters>(url, request);
     }
 
-    getAll(): Observable<Headquarters[]> {
+    find(): Observable<Headquarters[]> {
         const url: string = `${this.baseUrl}`;
 
         return this.httpClient.get<Headquarters[]>(url);
