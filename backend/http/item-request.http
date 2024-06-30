@@ -1,4 +1,4 @@
-@requestId = 65c67bfa4ab244b97d2730fb
+@requestId = 667ec6000153e4c573ba3af6
 
 ### Create
 
@@ -30,7 +30,7 @@ PATCH {{host}}/{{baseUrl}}/item-requests/{{requestId}}/status
 Content-Type: application/json
 
 {
-  "status": "pending"
+  "status": "accepted"
 }
 
 ### Delete
