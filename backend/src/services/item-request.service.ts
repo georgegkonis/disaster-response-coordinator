@@ -2,18 +2,23 @@ import itemRequestModel, { ItemRequest } from '../models/item-request.model';
 import { FilterQuery, QueryOptions } from 'mongoose';
 import NotFoundError from '../errors/not-found-error';
 
+const populate: string[] = ['item', 'rescuer', 'citizen'];
+
 export const createItemRequest = async (
     input: ItemRequest
 ) => {
-    const request: ItemRequest = await itemRequestModel.create(input);
+    let itemRequest: ItemRequest = await itemRequestModel.create<ItemRequest>(input);
 
-    return request;
+    itemRequest = await getItemRequest(itemRequest._id!.toHexString());
+
+    return itemRequest;
 };
 
 export const getItemRequest = async (
     id: string
 ) => {
-    const request: ItemRequest | null = await itemRequestModel.findById(id);
+    const options: QueryOptions = { populate };
+    const request: ItemRequest | null = await itemRequestModel.findById<ItemRequest>(id, {}, options);
 
     if (!request) throw new NotFoundError('item request', id);
 
@@ -21,9 +26,9 @@ export const getItemRequest = async (
 };
 
 export const findItemRequests = async (
-    filter: FilterQuery<ItemRequest> = {},
-    options: QueryOptions = {}
+    filter: FilterQuery<ItemRequest> = {}
 ) => {
+    const options: QueryOptions = { populate };
     const requests: ItemRequest[] = await itemRequestModel.find<ItemRequest>(filter, {}, options);
 
     return requests;
@@ -33,7 +38,8 @@ export const updateItemRequest = async (
     id: string,
     input: Partial<ItemRequest>
 ) => {
-    const request: ItemRequest | null = await itemRequestModel.findByIdAndUpdate(id, input, { new: true });
+    const options: QueryOptions = { new: true, populate };
+    const request: ItemRequest | null = await itemRequestModel.findByIdAndUpdate<ItemRequest>(id, input, options);
 
     if (!request) throw new NotFoundError('item request', id);
 
@@ -43,5 +49,5 @@ export const updateItemRequest = async (
 export const deleteItemRequest = async (
     id: string
 ) => {
-    await itemRequestModel.findByIdAndDelete(id);
+    await itemRequestModel.findByIdAndDelete<ItemRequest>(id);
 };

@@ -26,16 +26,14 @@ export const createItemOfferHandler = async (
     }
 };
 
-export const getMyItemOffersHandler = async (
+export const findMyItemOffersHandler = async (
     req: Request<{}, {}, {}, { status?: TaskStatus, item: string }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
         const citizen = res.locals.user._id;
-        const options: QueryOptions = { populate: ['item', 'rescuer'] };
-
-        const offers = await findItemOffers({ ...req.query, citizen }, options);
+        const offers = await findItemOffers({ ...req.query, citizen });
 
         res.status(StatusCode.OK).json(offers);
     } catch (error) {
@@ -43,15 +41,13 @@ export const getMyItemOffersHandler = async (
     }
 };
 
-export const getItemOffersHandler = async (
+export const findItemOffersHandler = async (
     req: Request<{}, {}, {}, { status?: TaskStatus, item?: string, citizen?: string }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const options: QueryOptions = { populate: ['item', 'rescuer', 'citizen'] };
-
-        const offers = await findItemOffers(req.query, options);
+        const offers = await findItemOffers(req.query);
 
         res.status(StatusCode.OK).json(offers);
     } catch (error) {

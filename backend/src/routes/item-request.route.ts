@@ -8,8 +8,8 @@ import { createItemRequestSchema, updateItemRequestStatusSchema } from '../schem
 import {
     createItemRequestHandler,
     deleteItemRequestHandler,
-    getItemRequestsHandler,
-    getMyItemRequestsHandler,
+    findItemRequestsHandler,
+    findMyItemRequestsHandler,
     updateItemRequestStatusHandler
 } from '../controllers/item-request.controller';
 
@@ -21,10 +21,10 @@ router.use(deserializeUser, requireUser);
 router.post('/', restrictTo(Role.CITIZEN), validate(createItemRequestSchema), createItemRequestHandler);
 
 // Get item requests
-router.get('/', restrictTo(Role.ADMIN, Role.RESCUER), getItemRequestsHandler);
+router.get('/', restrictTo(Role.ADMIN, Role.RESCUER), findItemRequestsHandler);
 
 // Get current user's item requests
-router.get('/me', restrictTo(Role.CITIZEN), getMyItemRequestsHandler);
+router.get('/me', restrictTo(Role.CITIZEN), findMyItemRequestsHandler);
 
 // Update item request status
 router.patch('/:id/status', restrictTo(Role.RESCUER), validate(updateItemRequestStatusSchema), updateItemRequestStatusHandler);

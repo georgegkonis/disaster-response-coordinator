@@ -8,8 +8,8 @@ import { createItemOfferSchema, updateItemOfferStatusSchema } from '../schemas/i
 import {
     createItemOfferHandler,
     deleteItemOfferHandler,
-    getItemOffersHandler,
-    getMyItemOffersHandler,
+    findItemOffersHandler,
+    findMyItemOffersHandler,
     updateItemOfferStatusHandler
 } from '../controllers/item-offer.controller';
 
@@ -21,10 +21,10 @@ router.use(deserializeUser, requireUser);
 router.post('/', restrictTo(Role.CITIZEN), validate(createItemOfferSchema), createItemOfferHandler);
 
 // Get item offers
-router.get('/', restrictTo(Role.ADMIN, Role.RESCUER), getItemOffersHandler);
+router.get('/', restrictTo(Role.ADMIN, Role.RESCUER), findItemOffersHandler);
 
 // Get current user's item offers
-router.get('/me', restrictTo(Role.CITIZEN), getMyItemOffersHandler);
+router.get('/me', restrictTo(Role.CITIZEN), findMyItemOffersHandler);
 
 // Update item offer status
 router.patch('/:id/status', restrictTo(Role.RESCUER), validate(updateItemOfferStatusSchema), updateItemOfferStatusHandler);

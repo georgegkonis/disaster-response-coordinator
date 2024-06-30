@@ -10,7 +10,6 @@ import { CreateItemRequestInput, UpdateItemRequestStatusInput } from '../schemas
 import { StatusCode } from '../enums/status-code.enum';
 import { TaskStatus } from '../enums/task-status.enum';
 import { getItem } from '../services/item.service';
-import { QueryOptions } from 'mongoose';
 import UnauthorizedError from '../errors/unauthorized-error';
 import ForbiddenError from '../errors/forbidden-error';
 
@@ -32,16 +31,15 @@ export const createItemRequestHandler = async (
     }
 };
 
-export const getMyItemRequestsHandler = async (
+export const findMyItemRequestsHandler = async (
     req: Request<{}, {}, {}, { status?: TaskStatus, item?: string }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const options: QueryOptions = { populate: ['item', 'rescuer'] };
         const citizen: string = res.locals.user._id;
 
-        const requests = await findItemRequests({ ...req.query, citizen }, options);
+        const requests = await findItemRequests({ ...req.query, citizen });
 
         res.status(StatusCode.OK).json(requests);
     } catch (error) {
@@ -49,15 +47,13 @@ export const getMyItemRequestsHandler = async (
     }
 };
 
-export const getItemRequestsHandler = async (
+export const findItemRequestsHandler = async (
     req: Request<{}, {}, {}, { status?: TaskStatus, item?: string, citizen?: string, }>,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const options: QueryOptions = { populate: ['item', 'rescuer', 'citizen'] };
-
-        const requests = await findItemRequests(req.query, options);
+        const requests = await findItemRequests(req.query);
 
         res.status(StatusCode.OK).json(requests);
     } catch (error) {
@@ -108,7 +104,7 @@ async function canBeDeleted(id: string, userId: string) {
         throw new UnauthorizedError('You are not authorized to delete this item request');
     }
 
-    if (request.status === TaskStatus.COMPLETED) {
-        throw new ForbiddenError('You cannot delete a completed item request');
+    if (request.status !== TaskStatus.PENDING) {
+        throw new ForbiddenError('You cannot delete an item request that is not pending');
     }
 }

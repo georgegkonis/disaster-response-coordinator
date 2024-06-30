@@ -2,10 +2,14 @@ import itemOfferModel, { ItemOffer } from '../models/item-offer.model';
 import { FilterQuery, QueryOptions } from 'mongoose';
 import NotFoundError from '../errors/not-found-error';
 
+const populate: string[] = ['item', 'rescuer', 'citizen'];
+
 export const createItemOffer = async (
     input: ItemOffer
 ) => {
-    const itemOffer: ItemOffer = await itemOfferModel.create(input);
+    let itemOffer: ItemOffer = await itemOfferModel.create<ItemOffer>(input);
+
+    itemOffer = await getItemOffer(itemOffer._id!.toHexString());
 
     return itemOffer;
 };
@@ -13,7 +17,8 @@ export const createItemOffer = async (
 export const getItemOffer = async (
     id: string
 ) => {
-    const itemOffer: ItemOffer | null = await itemOfferModel.findById(id);
+    const options: QueryOptions = { populate };
+    const itemOffer: ItemOffer | null = await itemOfferModel.findById<ItemOffer>(id, {}, options);
 
     if (!itemOffer) throw new NotFoundError('item offer', id);
 
@@ -21,9 +26,9 @@ export const getItemOffer = async (
 };
 
 export const findItemOffers = async (
-    filter: FilterQuery<ItemOffer> = {},
-    options: QueryOptions = {}
+    filter: FilterQuery<ItemOffer> = {}
 ) => {
+    const options: QueryOptions = { populate };
     const itemOffers: ItemOffer[] = await itemOfferModel.find<ItemOffer>(filter, {}, options);
 
     return itemOffers;
@@ -33,7 +38,8 @@ export const updateItemOffer = async (
     id: string,
     input: Partial<ItemOffer>
 ) => {
-    const itemOffer: ItemOffer | null = await itemOfferModel.findByIdAndUpdate<ItemOffer>(id, input, { new: true });
+    const options: QueryOptions = { new: true, populate };
+    const itemOffer: ItemOffer | null = await itemOfferModel.findByIdAndUpdate<ItemOffer>(id, input, options);
 
     if (!itemOffer) throw new NotFoundError('item offer', id);
 
@@ -43,5 +49,5 @@ export const updateItemOffer = async (
 export const deleteItemOffer = async (
     id: string
 ) => {
-    await itemOfferModel.findByIdAndDelete(id);
+    await itemOfferModel.findByIdAndDelete<ItemOffer>(id);
 };
