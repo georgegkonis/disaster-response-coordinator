@@ -8,7 +8,6 @@ import { Item } from '../models/item.model';
 export const createItemRequestSchema = object({
     body: object({
         item: string().refine(isValidObjectId, 'Invalid ID format'),
-        description: string().min(1),
         peopleCount: number().min(1)
     }).strip()
 });

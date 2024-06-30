@@ -26,8 +26,9 @@ export class ItemRequest {
     @prop({ required: true, ref: () => User })
     public citizen!: Ref<User>;
 
-    @prop({ required: true })
-    public description!: string;
+    // TODO: remove this field
+    @prop()
+    public description?: string;
 
     @prop({ required: true })
     public peopleCount!: number;

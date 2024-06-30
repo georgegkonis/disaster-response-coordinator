@@ -7,7 +7,6 @@ Content-Type: application/json
 
 {
   "item": "65c675a8fa63db786131a788",
-  "description": "I need it",
   "peopleCount": 5
 }
 
