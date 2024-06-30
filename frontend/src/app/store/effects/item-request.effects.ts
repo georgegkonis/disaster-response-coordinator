@@ -23,45 +23,51 @@ export class ItemRequestEffects {
         tap(() => this.loaderService.show()),
         mergeMap(() => withMinDelay(this.itemRequestService.find()).pipe(
             map((itemRequests) => ItemRequestActions.loadSuccess({ itemRequests })),
-            catchError(() => of(ItemRequestActions.loadFailure()))
-        )),
-        finalize(() => this.loaderService.hide())
+            catchError(() => of(ItemRequestActions.loadFailure())),
+            finalize(() => this.loaderService.hide())
+        ))
     ));
 
     loadMineEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemRequestActions.loadMine),
         tap(() => this.loaderService.show()),
         mergeMap(() => withMinDelay(this.itemRequestService.findMine()).pipe(
-            map((itemRequests) => ItemRequestActions.loadMySuccess({ itemRequests })),
-            catchError(() => of(ItemRequestActions.loadMyFailure()))
-        )),
-        finalize(() => this.loaderService.hide())
+            map((itemRequests) => ItemRequestActions.loadMineSuccess({ itemRequests })),
+            catchError(() => of(ItemRequestActions.loadMineFailure())),
+            finalize(() => this.loaderService.hide())
+        ))
     ));
 
     createEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemRequestActions.create),
+        tap(() => this.loaderService.show()),
         mergeMap(({ request }) => this.itemRequestService.create(request).pipe(
             map((itemRequest) => ItemRequestActions.createSuccess({ itemRequest })),
             tap(() => this.messageService.showSuccess('Item request created successfully')),
-            catchError(() => of(ItemRequestActions.createFailure()))
+            catchError(() => of(ItemRequestActions.createFailure())),
+            finalize(() => this.loaderService.hide())
         ))
     ));
 
     updateStatusEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemRequestActions.updateStatus),
+        tap(() => this.loaderService.show()),
         mergeMap(({ id, status }) => this.itemRequestService.updateStatus(id, status).pipe(
             map((itemRequest) => ItemRequestActions.updateStatusSuccess({ itemRequest })),
             tap(() => this.messageService.showSuccess('Item request status updated successfully')),
-            catchError(() => of(ItemRequestActions.updateStatusFailure()))
+            catchError(() => of(ItemRequestActions.updateStatusFailure())),
+            finalize(() => this.loaderService.hide())
         ))
     ));
 
     deleteEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemRequestActions.$delete),
+        tap(() => this.loaderService.show()),
         mergeMap(({ id }) => this.itemRequestService.delete(id).pipe(
             map(() => ItemRequestActions.deleteSuccess({ id })),
             tap(() => this.messageService.showSuccess('Item request deleted successfully')),
-            catchError(() => of(ItemRequestActions.deleteFailure()))
+            catchError(() => of(ItemRequestActions.deleteFailure())),
+            finalize(() => this.loaderService.hide())
         ))
     ));
 }

@@ -1,0 +1,112 @@
+<div class="flex flex-column gap-2">
+
+    <div class="inline-flex justify-content-between">
+        <p-button (onClick)="onCreate()" [disabled]="userRole === 'rescuer'" label="Create" icon="pi pi-plus"/>
+        <p-button (onClick)="filtersPanel.toggle($event)" [outlined]="true" icon="pi pi-filter"/>
+    </div>
+
+    <p-overlayPanel #filtersPanel>
+        <div class="flex gap-3 align-items-center justify-content-start">
+            <p-dropdown [options]="statusOptions"
+                        [showClear]="true"
+                        panelStyleClass="w-full"
+                        placeholder="Select a status"
+                        styleClass="w-full"/>
+
+            <p-dropdown [filter]="true"
+                        [options]="items"
+                        [showClear]="true"
+                        optionLabel="name"
+                        optionValue="id"
+                        placeholder="Select an item"
+                        styleClass="min-w-full"/>
+
+            <div class="flex gap-2">
+                <p-button (onClick)="onResetFilters()" [outlined]="true" icon="pi pi-refresh" label="Reset"></p-button>
+                <p-button (onClick)="onApplyFilters()" icon="pi pi-check" label="Apply"></p-button>
+            </div>
+        </div>
+    </p-overlayPanel>
+
+    <p-dataView [value]="itemRequests">
+
+        <ng-template pTemplate="list" let-itemRequests>
+            <div class="grid gap-3 p-3 overflow-y-auto" [style]="{'max-height': '70vh'}">
+                <div *ngFor="let itemRequest of itemRequests" class="col-12 border-round-md shadow-2 grid pt-0">
+
+                    <div class="col-4 flex flex-column justify-content-center align-items-start gap-2">
+                        <span class="text-lg font-semibold text-primary">{{ itemRequest.item.name }}</span>
+                        <span class="text-base text-secondary"><i class="pi pi-users"></i> {{ itemRequest.peopleCount }}</span>
+                        <p-tag [value]="itemRequest.status.toUpperCase()" [severity]="itemRequest.status | taskStatus"></p-tag>
+                    </div>
+
+                    <div class="col-6 flex flex-column justify-content-center align-items-end gap-2">
+                        <span class="text-sm"><i class="pi pi-calendar"></i> {{ itemRequest.createdAt | date: 'short' }}</span>
+                        <span class="text-sm"><i class="pi pi-refresh"></i> {{ itemRequest.updatedAt | date: 'short' }}</span>
+                    </div>
+
+                    <div class="col flex flex-column justify-content-center align-items-end gap-2">
+                        <ng-container *ngIf="dynamicActionButton(itemRequest) as button">
+                            <p-button (onClick)="button.onClick()"
+                                      [icon]="button.icon"
+                                      [outlined]="true"
+                                      [rounded]="true"
+                                      [severity]="button.severity"
+                                      size="small"
+                                      styleClass="p-button-primary"></p-button>
+                        </ng-container>
+
+                        <p-button (onClick)="infoPanel.toggle($event)"
+                                  [outlined]="true"
+                                  [rounded]="true"
+                                  icon="pi pi-info"
+                                  size="small"
+                                  styleClass="p-button-primary"/>
+                    </div>
+
+                    <p-overlayPanel #infoPanel [style]="{width: '25rem'}">
+                        <app-item-request-info [itemRequest]="itemRequest"></app-item-request-info>
+                    </p-overlayPanel>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+<p-dialog [(visible)]="formDialogVisible" [closable]="false" [modal]="true" [style]="{width: '30rem', 'max-height': '60vh'}">
+    <ng-template pTemplate="headless">
+        <form (ngSubmit)="onSubmit()" [formGroup]="itemRequestForm" class="app-form flex">
+
+            <!-- Heading -->
+            <h1 class="app-form__heading col-12">Create Item Request</h1>
+
+            <!-- Item Field -->
+            <div class="app-form__field col">
+                <label class="app-form__field__label" for="itemField">Item</label>
+                <p-dropdown [filter]="true"
+                            [options]="items"
+                            formControlName="item"
+                            id="itemField"
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="Select an item"
+                            styleClass="w-full"/>
+            </div>
+
+            <!-- People Field -->
+            <div class="app-form__field col-4">
+                <label class="app-form__field__label" for="peopleField">People Count</label>
+                <p-inputNumber [min]="1" formControlName="peopleCount" id="peopleField" inputStyleClass="w-full"/>
+            </div>
+
+            <!-- Buttons -->
+            <div class="app-form__buttons col-12">
+                <p-button (onClick)="onCancel()"
+                          icon="pi pi-times"
+                          label="Cancel"
+                          styleClass="p-button-outlined p-button-danger"></p-button>
+                <p-button [disabled]="!itemRequestForm.valid" type="submit" icon="pi pi-check" label="Submit"></p-button>
+            </div>
+        </form>
+    </ng-template>
+</p-dialog>

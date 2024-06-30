@@ -33,12 +33,12 @@ export namespace ItemRequestActions {
         props<{ status?: TaskStatus, item?: string }>()
     );
 
-    export const loadMySuccess = createAction(
+    export const loadMineSuccess = createAction(
         `${NAMESPACE} Load My Item Requests ${SUCCESS}`,
         props<{ itemRequests: ItemRequest[] }>()
     );
 
-    export const loadMyFailure = createAction(
+    export const loadMineFailure = createAction(
         `${NAMESPACE} Load My Item Requests ${FAILURE}`
     );
 

@@ -11,5 +11,5 @@ export interface User {
     details?: UserDetails;
     createdAt: Date;
     updatedAt: Date;
-    location?: MapLocation;
+    location: MapLocation;
 }

@@ -1,10 +1,8 @@
 <div class="map">
 
-    <p-toolbar styleClass="p-2">
+    <p-toolbar styleClass="p-2 border-round-lg">
         <div class="p-toolbar-group-start gap-2">
-            <p-button label="Create Offer" icon="pi pi-plus"></p-button>
-            <p-button label="Create Request" icon="pi pi-plus"></p-button>
-            <p-button label="Create HQ" icon="pi pi-plus"></p-button>
+            <p-button label="Create HQ" icon="pi pi-plus"/>
         </div>
 
         <div class="p-toolbar-group-center gap-2">
@@ -12,10 +10,27 @@
         </div>
 
         <div class="p-toolbar-group-end gap-2">
-            <p-button label="Search" icon="pi pi-search"></p-button>
-            <p-button label="Reset" icon="pi pi-refresh"></p-button>
+            <p-button label="Search" icon="pi pi-search"/>
+            <p-button label="Reset" icon="pi pi-refresh"/>
         </div>
     </p-toolbar>
 
-    <div id="map"></div>
+    <div class="inline-flex gap-3" [style]="{'height': '84vh'}">
+
+        <div class="col-8 p-1 border-round-lg bg-white">
+            <div id="map" class="col-8 border-round-lg"></div>
+        </div>
+
+        <div class="col p-1 border-round-lg bg-white">
+            <p-tabView>
+                <p-tabPanel header="Item Requests">
+                    <app-item-requests [itemRequests]="(itemRequests$ | async) ?? []" [items]="(items$ | async) ?? []"></app-item-requests>
+                </p-tabPanel>
+
+                <p-tabPanel header="Item Offers">
+                    <app-item-offers [itemOffers]="(itemOffers$ | async) ?? []" [items]="(items$ | async) ?? []"></app-item-offers>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
 </div>

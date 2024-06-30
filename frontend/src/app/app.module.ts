@@ -59,6 +59,16 @@ import { UsersComponent } from './components/users/users.component';
 import { HeadquartersEffects } from './store/effects/headquarters.effects';
 import { ItemOfferEffects } from './store/effects/item-offer.effects';
 import { ItemRequestEffects } from './store/effects/item-request.effects';
+import { ShowForRoleDirective } from './directives/show-for-role.directive';
+import { ItemOffersComponent } from './components/offers-map/item-offers/item-offers.component';
+import { ItemRequestsComponent } from './components/offers-map/item-requests/item-requests.component';
+import { TaskStatusPipe } from './pipes/task-status.pipe';
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ItemRequestInfoComponent } from './components/offers-map/item-request-info/item-request-info.component';
+import { ItemOfferInfoComponent } from './components/offers-map/item-offer-info/item-offer-info.component';
+import { UserNamePipe } from './pipes/user-name.pipe';
 
 @NgModule({
     bootstrap: [AppShellComponent],
@@ -73,7 +83,11 @@ import { ItemRequestEffects } from './store/effects/item-request.effects';
         WarehouseComponent,
         OffersMapComponent,
         AnnouncementsComponent,
-        UsersComponent
+        UsersComponent,
+        ItemOffersComponent,
+        ItemRequestsComponent,
+        ItemOfferInfoComponent,
+        ItemRequestInfoComponent
     ],
     imports: [
         BrowserModule,
@@ -91,8 +105,8 @@ import { ItemRequestEffects } from './store/effects/item-request.effects';
         FormsModule,
         ConfirmDialogModule,
         DialogModule,
-        StoreDevtoolsModule.instrument(),
         StoreModule.forRoot({ app: appReducer }),
+        StoreDevtoolsModule.instrument(),
         EffectsModule.forRoot([
             AuthEffects,
             UserEffects,
@@ -120,7 +134,13 @@ import { ItemRequestEffects } from './store/effects/item-request.effects';
         BadgeModule,
         QuantityStatusPipe,
         TabViewModule,
-        FieldsetModule
+        FieldsetModule,
+        ShowForRoleDirective,
+        TaskStatusPipe,
+        CardModule,
+        DividerModule,
+        OverlayPanelModule,
+        UserNamePipe
     ],
     providers: [
         MessageService,

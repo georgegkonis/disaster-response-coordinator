@@ -6,6 +6,7 @@ import { AppMessageService } from '../../services/app-message.service';
 import { HeadquartersActions } from '../actions/headquarters.actions';
 import { finalize, mergeMap, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { withMinDelay } from '../../utilities/with-min-delay';
 
 @Injectable()
 export class HeadquartersEffects {
@@ -20,11 +21,11 @@ export class HeadquartersEffects {
     loadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(HeadquartersActions.load),
         tap(() => this.loaderService.show()),
-        mergeMap(() => this.headquartersService.find().pipe(
+        mergeMap(() => withMinDelay(this.headquartersService.find()).pipe(
             map((headquarters) => HeadquartersActions.loadSuccess({ headquarters })),
-            catchError(() => of(HeadquartersActions.loadFailure()))
+            catchError(() => of(HeadquartersActions.loadFailure())),
+            finalize(() => this.loaderService.hide())
         )),
-        finalize(() => this.loaderService.hide())
     ));
 
     createEffect$ = createEffect(() => this.actions$.pipe(

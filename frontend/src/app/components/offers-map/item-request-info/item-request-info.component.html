@@ -1,0 +1,18 @@
+<div class="flex flex-column gap-2">
+    <div class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Submitted By:</span>
+        <span class="text-base">{{ itemRequest.citizen | userName }}</span>
+    </div>
+    <div class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Submitted At:</span>
+        <span class="text-base">{{ itemRequest.createdAt | date: 'medium' }}</span>
+    </div>
+    <div *ngIf="itemRequest.rescuer" class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Accepted By:</span>
+        <span class="text-base">{{ itemRequest.rescuer! | userName }}</span>
+    </div>
+    <div *ngIf="itemRequest.rescuer" class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Accepted At:</span>
+        <span class="text-base">{{ itemRequest.acceptedAt | date: 'medium' }}</span>
+    </div>
+</div>

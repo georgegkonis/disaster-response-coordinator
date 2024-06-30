@@ -26,7 +26,7 @@ export interface AppState {
     itemRequests: ItemRequest[];
 }
 
-export const initialState: AppState = {
+const initialState: AppState = {
     user: null,
     users: [],
     items: [],
@@ -60,11 +60,37 @@ const reducer = createReducer(
     on(HeadquartersActions.loadSuccess, (state, { headquarters }) => update(state, { headquarters })),
     on(HeadquartersActions.reset, (state) => update(state, { headquarters: [] })),
 
+    //#region Item offers
+
     on(ItemOfferActions.loadSuccess, (state, { itemOffers }) => update(state, { itemOffers })),
+
+    on(ItemOfferActions.loadMineSuccess, (state, { itemOffers }) => update(state, { itemOffers })),
+
+    on(ItemOfferActions.createSuccess, (state, { itemOffer }) => update(state, { itemOffers: [...state.itemOffers, itemOffer] })),
+
+    on(ItemOfferActions.updateStatusSuccess, (state, { itemOffer }) => update(state, { itemOffers: replaceInArray(state.itemOffers, itemOffer) })),
+
+    on(ItemOfferActions.deleteSuccess, (state, { id }) => update(state, { itemOffers: deleteFromArray(state.itemOffers, id) })),
+
     on(ItemOfferActions.reset, (state) => update(state, { itemOffers: [] })),
 
+    //#endregion
+
+    //#region Item requests
+
     on(ItemRequestActions.loadSuccess, (state, { itemRequests }) => update(state, { itemRequests })),
+
+    on(ItemRequestActions.loadMineSuccess, (state, { itemRequests }) => update(state, { itemRequests })),
+
+    on(ItemRequestActions.createSuccess, (state, { itemRequest }) => update(state, { itemRequests: [...state.itemRequests, itemRequest] })),
+
+    on(ItemRequestActions.updateStatusSuccess, (state, { itemRequest }) => update(state, { itemRequests: replaceInArray(state.itemRequests, itemRequest) })),
+
+    on(ItemRequestActions.deleteSuccess, (state, { id }) => update(state, { itemRequests: deleteFromArray(state.itemRequests, id) })),
+
     on(ItemRequestActions.reset, (state) => update(state, { itemRequests: [] }))
+
+    //#endregion
 );
 
 export function appReducer(state: AppState | undefined, action: any) {
@@ -73,4 +99,12 @@ export function appReducer(state: AppState | undefined, action: any) {
 
 function update(state: AppState, changes: Partial<AppState>) {
     return { ...state, ...changes };
+}
+
+function replaceInArray<T extends { id: string }>(array: T[], newItem: T): T[] {
+    return array.map((item) => (item.id === newItem.id ? newItem : item));
+}
+
+function deleteFromArray<T extends { id: string }>(array: T[], id: string): T[] {
+    return array.filter((i) => i.id !== id);
 }

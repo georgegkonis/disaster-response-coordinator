@@ -4,10 +4,12 @@ import { TaskStatus } from '../enums/task-status.enum';
 
 export interface ItemOffer {
     id: string;
-    citizen: string | User;
-    item: string | Item;
+    citizen: User;
+    item: Item;
     quantity: number;
     status: TaskStatus;
-    rescuer?: string | User;
+    rescuer?: User;
+    createdAt: Date;
+    updatedAt: Date;
     acceptedAt?: Date;
 }

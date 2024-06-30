@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Item } from '../../models/item.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Category } from '../../models/category.model';
 import { AppState } from '../../store/reducers/app.reducer';
 import { Store } from '@ngrx/store';
@@ -40,6 +40,8 @@ export class WarehouseComponent implements OnInit, OnDestroy {
 
     //#region Properties
 
+    private readonly unsubscribe$: Subject<void> = new Subject<void>();
+
     protected readonly tooltipOptions: TooltipOptions = tooltipOptions;
     protected readonly items$: Observable<Item[]>;
     protected readonly categories$: Observable<Category[]>;
@@ -73,14 +75,17 @@ export class WarehouseComponent implements OnInit, OnDestroy {
         this.store.dispatch(ItemActions.load({ request: {} }));
         this.store.dispatch(CategoryActions.load({ request: {} }));
 
-        this.items$.subscribe(items => {
+        this.items$.pipe(takeUntil(this.unsubscribe$)).subscribe(items => {
             this.maxCode = items.reduce((max, item) => item.code > max ? item.code : max, 0);
         });
     }
 
     ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+
         this.store.dispatch(ItemActions.reset());
-        this.store.dispatch(CategoryActions.reset());
+        this.store.dispatch(CategoryActions.reset())
     }
 
     //#endregion
