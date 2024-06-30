@@ -28,6 +28,7 @@ html, body {
   gap: 1rem;
 
   &__heading {
+    color: $color-text-dark;
     font: {
       size: 2rem;
       weight: bold;
