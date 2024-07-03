@@ -4,6 +4,7 @@ import { UpdateUserRequest } from '../../dto/requests/update-user-request.dto';
 import { FAILURE, SUCCESS } from '../../constants/action-types';
 import { CreateUserRequest } from '../../dto/requests/create-user-request.dto';
 import { MapLocation } from '../../models/map-location.model';
+import { UserRole } from '../../enums/user-role.enum';
 
 const NAMESPACE: string = '[USERS]';
 
@@ -12,7 +13,8 @@ export namespace UserActions {
     //#region Load Users
 
     export const load = createAction(
-        `${NAMESPACE} Load Users`
+        `${NAMESPACE} Load Users`,
+        props<{ role?: UserRole }>()
     );
 
     export const loadSuccess = createAction(

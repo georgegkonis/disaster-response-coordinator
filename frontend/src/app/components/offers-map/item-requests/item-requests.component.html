@@ -6,24 +6,29 @@
     </div>
 
     <p-overlayPanel #filtersPanel>
-        <div class="flex gap-3 align-items-center justify-content-start">
-            <p-dropdown [options]="statusOptions"
+        <div class="flex flex-column gap-3 align-items-center justify-content-start">
+            <p-dropdown #statusDropdown
+                        [options]="statusOptions"
                         [showClear]="true"
+                        [style]="{minWidth: '12rem'}"
                         panelStyleClass="w-full"
                         placeholder="Select a status"
                         styleClass="w-full"/>
 
-            <p-dropdown [filter]="true"
+            <p-dropdown #itemDropdown
+                        [filter]="true"
                         [options]="items"
                         [showClear]="true"
+                        [style]="{minWidth: '12rem'}"
                         optionLabel="name"
                         optionValue="id"
                         placeholder="Select an item"
-                        styleClass="min-w-full"/>
+                        styleClass="w-full"/>
 
             <div class="flex gap-2">
-                <p-button (onClick)="onResetFilters()" [outlined]="true" icon="pi pi-refresh" label="Reset"></p-button>
-                <p-button (onClick)="onApplyFilters()" icon="pi pi-check" label="Apply"></p-button>
+                <p-button (onClick)="onApplyFilters(statusDropdown.value, itemDropdown.value); filtersPanel.toggle(false)"
+                          icon="pi pi-check"
+                          label="Apply"></p-button>
             </div>
         </div>
     </p-overlayPanel>

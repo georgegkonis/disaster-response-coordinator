@@ -62,7 +62,7 @@ export class UsersComponent implements OnInit {
     //#region Lifecycle Hooks
 
     ngOnInit(): void {
-        this.store.dispatch(UserActions.load());
+        this.store.dispatch(UserActions.load({}));
     }
 
     //#endregion
@@ -93,7 +93,7 @@ export class UsersComponent implements OnInit {
     }
 
     onReloadClick(): void {
-        this.store.dispatch(UserActions.load());
+        this.store.dispatch(UserActions.load({}));
     }
 
     //#endregion

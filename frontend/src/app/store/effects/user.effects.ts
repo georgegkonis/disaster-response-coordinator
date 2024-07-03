@@ -21,7 +21,7 @@ export class UserEffects {
     loadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(UserActions.load),
         tap(() => this.loaderService.show()),
-        mergeMap(() => withMinDelay(this.userService.find()).pipe(
+        mergeMap(({role}) => withMinDelay(this.userService.find(role)).pipe(
             map(users => UserActions.loadSuccess({ users })),
             catchError(() => of(UserActions.loadFailure()))
         )),
@@ -77,6 +77,6 @@ export class UserEffects {
             UserActions.deleteSuccess,
             UserActions.updateMeSuccess
         ),
-        map(() => UserActions.load())
+        map(() => UserActions.load({}))
     ));
 }

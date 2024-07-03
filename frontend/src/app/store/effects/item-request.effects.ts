@@ -21,7 +21,7 @@ export class ItemRequestEffects {
     loadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemRequestActions.load),
         tap(() => this.loaderService.show()),
-        mergeMap(() => withMinDelay(this.itemRequestService.find()).pipe(
+        mergeMap(({ status, item, citizen }) => withMinDelay(this.itemRequestService.find(status, item, citizen)).pipe(
             map((itemRequests) => ItemRequestActions.loadSuccess({ itemRequests })),
             catchError(() => of(ItemRequestActions.loadFailure())),
             finalize(() => this.loaderService.hide())
@@ -31,7 +31,7 @@ export class ItemRequestEffects {
     loadMineEffect$ = createEffect(() => this.actions$.pipe(
         ofType(ItemRequestActions.loadMine),
         tap(() => this.loaderService.show()),
-        mergeMap(() => withMinDelay(this.itemRequestService.findMine()).pipe(
+        mergeMap(({ status, item }) => withMinDelay(this.itemRequestService.findMine(status, item)).pipe(
             map((itemRequests) => ItemRequestActions.loadMineSuccess({ itemRequests })),
             catchError(() => of(ItemRequestActions.loadMineFailure())),
             finalize(() => this.loaderService.hide())

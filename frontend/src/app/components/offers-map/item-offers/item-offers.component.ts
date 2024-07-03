@@ -69,12 +69,12 @@ export class ItemOffersComponent {
         this.formDialogVisible = true;
     }
 
-    onApplyFilters(): void {
-        // TODO: implement filtering
-    }
-
-    onResetFilters(): void {
-        // TODO: implement filtering
+    onApplyFilters(status?: TaskStatus, item?: string): void {
+        if (this.userRole === UserRole.CITIZEN) {
+            this.store.dispatch(ItemOfferActions.loadMine({ status, item }));
+        } else {
+            this.store.dispatch(ItemOfferActions.load({ status, item }));
+        }
     }
 
     onSubmit(): void {

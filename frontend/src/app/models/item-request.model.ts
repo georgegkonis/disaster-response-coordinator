@@ -4,7 +4,7 @@ import { TaskStatus } from '../enums/task-status.enum';
 
 export interface ItemRequest {
     id: string;
-    item: string | Item;
+    item: Item;
     citizen: User;
     peopleCount: number;
     status: TaskStatus;

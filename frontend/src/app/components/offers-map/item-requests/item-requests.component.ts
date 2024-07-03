@@ -69,8 +69,12 @@ export class ItemRequestsComponent {
         this.formDialogVisible = true;
     }
 
-    onApplyFilters(): void {
-        // TODO: implement filtering
+    onApplyFilters(status?: TaskStatus, item?: string): void {
+        if (this.userRole === UserRole.CITIZEN) {
+            this.store.dispatch(ItemRequestActions.loadMine({ status, item }));
+        } else {
+            this.store.dispatch(ItemRequestActions.load({ status, item }));
+        }
     }
 
     onResetFilters(): void {
