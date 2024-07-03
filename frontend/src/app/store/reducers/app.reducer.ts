@@ -42,23 +42,57 @@ const reducer = createReducer(
 
     on(AuthActions.logoutSuccess, (state) => update(state, initialState)),
 
+    //#region User
+
     on(UserActions.loadMeSuccess, (state, { user }) => update(state, { user })),
+
     on(UserActions.updateMeSuccess, (state, { user }) => update(state, { user })),
 
+    on(UserActions.updateMyLocationSuccess, (state, { location }) => update(state, { user: { ...state.user!, location } })),
+
     on(UserActions.loadSuccess, (state, { users }) => update(state, { users })),
+
+    on(UserActions.createSuccess, (state, { user }) => update(state, { users: [...state.users, user] })),
+
+    on(UserActions.updateSuccess, (state, { user }) => update(state, { users: replaceInArray(state.users, user) })),
+
+    on(UserActions.deleteSuccess, (state, { id }) => update(state, { users: deleteFromArray(state.users, id) })),
+
     on(UserActions.reset, (state) => update(state, { users: [] })),
 
+    //#endregion
+
+    //#region Announcements
+
     on(AnnouncementsActions.loadSuccess, (state, { announcements }) => update(state, { announcements })),
+
     on(AnnouncementsActions.reset, (state) => update(state, { announcements: [] })),
 
+    //#endregion
+
+    //#region Categories
+
     on(CategoryActions.loadSuccess, (state, { categories }) => update(state, { categories })),
+
     on(CategoryActions.reset, (state) => update(state, { categories: [] })),
 
+    //#endregion
+
+    //#region Items
+
     on(ItemActions.loadSuccess, (state, { items }) => update(state, { items })),
+
     on(ItemActions.reset, (state) => update(state, { items: [] })),
 
+    //#endregion
+
+    //#region Headquarters
+
     on(HeadquartersActions.loadSuccess, (state, { headquarters }) => update(state, { headquarters })),
+
     on(HeadquartersActions.reset, (state) => update(state, { headquarters: [] })),
+
+    //#endregion
 
     //#region Item offers
 

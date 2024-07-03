@@ -35,7 +35,7 @@ export class LocationService {
                 console.debug('Location has not changed, skipping update...');
             } else {
                 console.debug('Location has changed, updating...');
-                this.store.dispatch(UserActions.updateLocation({ location }));
+                this.store.dispatch(UserActions.updateMyLocation({ location }));
             }
         }), INTERVAL_PERIOD);
     }

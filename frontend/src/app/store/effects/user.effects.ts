@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { AppMessageService } from '../../services/app-message.service';
 import { AppLoaderService } from '../../services/app-loader.service';
 import { withMinDelay } from '../../utilities/with-min-delay';
+import { NavigationService } from '../../services/navigation.service';
 
 @Injectable()
 export class UserEffects {
@@ -15,13 +16,14 @@ export class UserEffects {
         private actions$: Actions,
         private userService: UserService,
         private messageService: AppMessageService,
-        private loaderService: AppLoaderService
+        private loaderService: AppLoaderService,
+        private navigationService: NavigationService
     ) {}
 
     loadEffect$ = createEffect(() => this.actions$.pipe(
         ofType(UserActions.load),
         tap(() => this.loaderService.show()),
-        mergeMap(({role}) => withMinDelay(this.userService.find(role)).pipe(
+        mergeMap(({ role }) => withMinDelay(this.userService.find(role)).pipe(
             map(users => UserActions.loadSuccess({ users })),
             catchError(() => of(UserActions.loadFailure()))
         )),
@@ -58,25 +60,19 @@ export class UserEffects {
         ofType(UserActions.updateMe),
         mergeMap(({ request }) => this.userService.updateMe(request).pipe(
             map(user => UserActions.updateMeSuccess({ user })),
-            tap(() => this.messageService.showSuccess('User updated successfully')),
+            tap(() => {
+                this.messageService.showSuccess('User updated successfully');
+                this.navigationService.navigateToDashboard();
+            }),
             catchError(() => of(UserActions.updateMeFailure()))
         ))
     ));
 
     updateUserLocationEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(UserActions.updateLocation),
+        ofType(UserActions.updateMyLocation),
         mergeMap(({ location }) => this.userService.updateMyLocation(location).pipe(
-            map(() => UserActions.updateLocationSuccess({ location })),
-            catchError(() => of(UserActions.updateLocationFailure()))
+            map(() => UserActions.updateMyLocationSuccess({ location })),
+            catchError(() => of(UserActions.updateMyLocationFailure()))
         ))
-    ));
-
-    reloadEffect$ = createEffect(() => this.actions$.pipe(
-        ofType(
-            UserActions.createSuccess,
-            UserActions.deleteSuccess,
-            UserActions.updateMeSuccess
-        ),
-        map(() => UserActions.load({}))
     ));
 }

@@ -119,17 +119,17 @@ export namespace UserActions {
 
     //#region Update User Location
 
-    export const updateLocation = createAction(
+    export const updateMyLocation = createAction(
         `${NAMESPACE} Update User Location`,
         props<{ location: MapLocation }>()
     );
 
-    export const updateLocationSuccess = createAction(
+    export const updateMyLocationSuccess = createAction(
         `${NAMESPACE} Update User Location ${SUCCESS}`,
         props<{ location: MapLocation }>()
     );
 
-    export const updateLocationFailure = createAction(
+    export const updateMyLocationFailure = createAction(
         `${NAMESPACE} Update User Location ${FAILURE}`
     );
 
