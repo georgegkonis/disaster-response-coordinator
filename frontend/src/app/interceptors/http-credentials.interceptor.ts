@@ -3,10 +3,10 @@ import { Observable } from 'rxjs';
 
 export class HttpCredentialsInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const requestRequest = req.clone({
+        const httpRequest: HttpRequest<any> = req.clone({
             withCredentials: true
         });
 
-        return next.handle(requestRequest);
+        return next.handle(httpRequest);
     }
 }
