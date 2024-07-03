@@ -48,6 +48,9 @@ export class User {
     @prop({ _id: false })
     public location?: MapLocation;
 
+    @prop({ type: Map })
+    public inventory?: Map<string, number>;
+
     //#region Virtuals
 
     public id?: Types.ObjectId;

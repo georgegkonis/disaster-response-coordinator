@@ -12,6 +12,10 @@ import { TaskStatus } from '../enums/task-status.enum';
 import { getItem } from '../services/item.service';
 import UnauthorizedError from '../errors/unauthorized-error';
 import ForbiddenError from '../errors/forbidden-error';
+import { ItemRequest } from '../models/item-request.model';
+import { User } from '../models/user.model';
+import { updateUser } from '../services/user.service';
+import { withinDistance } from '../utils/distance';
 
 export const createItemRequestHandler = async (
     req: Request<{}, {}, CreateItemRequestInput>,
@@ -67,13 +71,23 @@ export const updateItemRequestStatusHandler = async (
     next: NextFunction
 ) => {
     try {
-        req.body.rescuer = res.locals.user._id;
+        const rescuer = res.locals.user;
+
+        await canUpdateStatus(req.params.id, rescuer._id!.toHexString(), req.body.status);
+
+        const input: Partial<ItemRequest> = { ...req.body, rescuer: rescuer._id };
 
         if (req.body.status === TaskStatus.ACCEPTED) {
-            req.body.acceptedAt = new Date();
+            input.acceptedAt = new Date();
+        } else if (req.body.status === TaskStatus.COMPLETED) {
+            input.completedAt = new Date();
         }
 
-        const request = await updateItemRequest(req.params.id, req.body);
+        const request = await updateItemRequest(req.params.id, input);
+
+        if (request.status === TaskStatus.COMPLETED) {
+            await updateRescuerInventory(request);
+        }
 
         res.status(StatusCode.OK).json(request);
     } catch (error) {
@@ -87,7 +101,7 @@ export const deleteItemRequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        await canBeDeleted(req.params.id, res.locals.user._id.toHexString());
+        await canDelete(req.params.id, res.locals.user._id.toHexString());
 
         await deleteItemRequest(req.params.id);
 
@@ -97,7 +111,45 @@ export const deleteItemRequestHandler = async (
     }
 };
 
-async function canBeDeleted(id: string, userId: string) {
+async function canUpdateStatus(id: string, rescuerId: string, status: TaskStatus) {
+    const request = await getItemRequest(id);
+
+    // Accepting a request
+    if (status === TaskStatus.ACCEPTED) {
+        if (request.status !== TaskStatus.PENDING) {
+            throw new ForbiddenError('You can only accept a request that is pending');
+        }
+    }
+
+    // Completing a request
+    if (status === TaskStatus.COMPLETED) {
+        if (request.status !== TaskStatus.ACCEPTED || request.rescuer!._id.toHexString() !== rescuerId) {
+            throw new ForbiddenError('You can only complete a request that is accepted by you');
+        }
+
+        const rescuer = request.rescuer as User;
+        const citizen = request.citizen as User;
+
+        if (!withinDistance(rescuer.location, citizen.location)) {
+            throw new ForbiddenError('You are not close enough to complete this request');
+        }
+
+        const quantity = rescuer.inventory?.get(request.item._id.toHexString()) ?? 0;
+
+        if (quantity < request.peopleCount) {
+            throw new ForbiddenError('You do not have the required items to complete this request')
+        }
+    }
+
+    // Cancelling a request
+    if (status === TaskStatus.PENDING) {
+        if (request.status !== TaskStatus.ACCEPTED || request.rescuer!._id.toHexString() !== rescuerId) {
+            throw new ForbiddenError('You can only cancel a request that is accepted by you');
+        }
+    }
+}
+
+async function canDelete(id: string, userId: string) {
     const request = await getItemRequest(id);
 
     if (request.citizen._id.toHexString() !== userId) {
@@ -108,3 +160,20 @@ async function canBeDeleted(id: string, userId: string) {
         throw new ForbiddenError('You cannot delete an item request that is not pending');
     }
 }
+
+async function updateRescuerInventory(request: ItemRequest) {
+    const itemId = request.item._id.toHexString();
+    const rescuerId = request.rescuer!._id.toHexString();
+    const inventory = (request.rescuer as User).inventory ?? new Map<string, number>();
+    const quantity = inventory.get(itemId) ?? 0;
+
+    if (quantity > request.peopleCount) {
+        inventory.set(itemId, quantity - request.peopleCount);
+    } else {
+        inventory.delete(itemId);
+    }
+
+    await updateUser(rescuerId, { inventory });
+}
+
+

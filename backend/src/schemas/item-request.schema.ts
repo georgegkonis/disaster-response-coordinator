@@ -23,4 +23,4 @@ export const updateItemRequestStatusSchema = object({
 });
 
 export type CreateItemRequestInput = TypeOf<typeof createItemRequestSchema>['body'] & { item: Ref<Item>, citizen: Ref<User> };
-export type UpdateItemRequestStatusInput = TypeOf<typeof updateItemRequestStatusSchema>['body'] & { rescuer: Ref<User>, acceptedAt?: Date };
+export type UpdateItemRequestStatusInput = TypeOf<typeof updateItemRequestStatusSchema>['body'];

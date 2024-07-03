@@ -42,6 +42,9 @@ export class ItemRequest {
     @Prop()
     public acceptedAt?: Date;
 
+    @Prop()
+    public completedAt?: Date;
+
     //#region Virtuals
 
     public id?: Types.ObjectId;

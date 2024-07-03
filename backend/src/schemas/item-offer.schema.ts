@@ -23,4 +23,4 @@ export const updateItemOfferStatusSchema = object({
 });
 
 export type CreateItemOfferInput = TypeOf<typeof createItemOfferSchema>['body'] & { item: Ref<Item>, citizen: Ref<User> };
-export type UpdateItemOfferStatusInput = TypeOf<typeof updateItemOfferStatusSchema>['body'] & { rescuer: Ref<User>, acceptedAt?: Date };
+export type UpdateItemOfferStatusInput = TypeOf<typeof updateItemOfferStatusSchema>['body'];
