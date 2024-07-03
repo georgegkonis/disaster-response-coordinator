@@ -23,7 +23,6 @@
     "@ngrx/store": "^17.1.0",
     "@ngrx/store-devtools": "^17.1.0",
     "file-saver": "^2.0.5",
-    "font-awesome": "^4.7.0",
     "leaflet": "^1.9.4",
     "ngx-cookie-service": "^17.1.0",
     "ngx-spinner": "^17.0.0",
