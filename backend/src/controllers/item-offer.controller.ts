@@ -10,6 +10,7 @@ import { User } from '../models/user.model';
 import { ItemOffer } from '../models/item-offer.model';
 import { updateUser } from '../services/user.service';
 import { withinDistance } from '../utils/distance';
+import { Role } from '../enums/role.enum';
 
 export const createItemOfferHandler = async (
     req: Request<{}, {}, CreateItemOfferInput>,
@@ -50,7 +51,12 @@ export const findItemOffersHandler = async (
     next: NextFunction
 ) => {
     try {
-        const offers = await findItemOffers(req.query);
+        let offers = await findItemOffers(req.query);
+
+        const user = res.locals.user;
+        if (user.role === Role.RESCUER) {
+            offers = offers.filter(offer => offer.status === TaskStatus.PENDING || offer.rescuer?._id.toHexString() === user._id.toHexString());
+        }
 
         res.status(StatusCode.OK).json(offers);
     } catch (error) {

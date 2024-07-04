@@ -16,6 +16,7 @@ import { ItemRequest } from '../models/item-request.model';
 import { User } from '../models/user.model';
 import { updateUser } from '../services/user.service';
 import { withinDistance } from '../utils/distance';
+import { Role } from '../enums/role.enum';
 
 export const createItemRequestHandler = async (
     req: Request<{}, {}, CreateItemRequestInput>,
@@ -57,7 +58,12 @@ export const findItemRequestsHandler = async (
     next: NextFunction
 ) => {
     try {
-        const requests = await findItemRequests(req.query);
+        let requests = await findItemRequests(req.query);
+
+        const user = res.locals.user;
+        if (user.role === Role.RESCUER) {
+            requests = requests.filter(offer => offer.status === TaskStatus.PENDING || offer.rescuer?._id.toHexString() === user._id.toHexString());
+        }
 
         res.status(StatusCode.OK).json(requests);
     } catch (error) {
