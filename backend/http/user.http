@@ -47,6 +47,16 @@ Content-Type: application/json
   "longitude": 37.983810
 }
 
+### Update my inventory
+
+PATCH {{host}}/{{baseUrl}}/users/me/inventory
+Content-Type: application/json
+
+{
+  "item": "666094873fa31e6a3c4aa3c1",
+  "quantity": 0
+}
+
 ### Delete me
 
 DELETE {{host}}/{{baseUrl}}/users/me

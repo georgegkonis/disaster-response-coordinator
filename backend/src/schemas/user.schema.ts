@@ -1,6 +1,7 @@
 import { number, object, string, TypeOf, z } from 'zod';
 import { passCharsCheck } from '../utils/checks';
 import { Role } from '../enums/role.enum';
+import { isObjectIdOrHexString } from 'mongoose';
 
 const userDetailsShape = object({
     firstName: string()
@@ -52,6 +53,14 @@ export const updateUserLocationSchema = object({
     }).strip()
 });
 
+export const updateUserInventorySchema = object({
+    body: object({
+        item: string({ required_error: 'Item is required' }).refine(isObjectIdOrHexString, 'Item ID is invalid'),
+        quantity: number({ required_error: 'Quantity is required' }).min(0, 'Quantity cannot be less than 0')
+    })
+});
+
 export type CreateUserInput = TypeOf<typeof createUserSchema>['body'];
 export type UpdateUserInput = TypeOf<typeof updateUserSchema>['body'];
 export type UpdateUserLocationInput = TypeOf<typeof updateUserLocationSchema>['body'];
+export type UpdateUserInventoryInput = TypeOf<typeof updateUserInventorySchema>['body'];

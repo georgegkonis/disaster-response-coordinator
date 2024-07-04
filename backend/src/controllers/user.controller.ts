@@ -3,9 +3,10 @@ import { createUser, deleteUser, findUsers, getUser, updateUser } from '../servi
 import { StatusCode } from '../enums/status-code.enum';
 import { MongoErrorCodes } from '../constants/mongo-error-codes';
 import { deleteUserCache, updateUserCache } from '../services/cache.service';
-import { CreateUserInput, UpdateUserInput, UpdateUserLocationInput } from '../schemas/user.schema';
+import { CreateUserInput, UpdateUserInput, UpdateUserInventoryInput, UpdateUserLocationInput } from '../schemas/user.schema';
 import { Role } from '../enums/role.enum';
 import ConflictError from '../errors/conflict.error';
+import { getItem, updateItemQuantity } from '../services/item.service';
 
 export const createUserHandler = async (
     req: Request<{}, {}, CreateUserInput>,
@@ -103,6 +104,42 @@ export const updateMyLocationHandler = async (
     }
 };
 
+export const updateMyInventoryHandler = async (
+    req: Request<{}, {}, UpdateUserInventoryInput>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const itemId: string = req.body.item;
+        const rescuerId: string = res.locals.user._id.toHexString();
+        const inventory = (await getUser(rescuerId)).inventory ?? new Map<string, number>();
+
+        const currentQuantity = inventory.get(itemId) ?? 0;
+        const requestedQuantity = req.body.quantity;
+
+        if (currentQuantity !== requestedQuantity) {
+            if (currentQuantity > requestedQuantity) {
+                await updateItemQuantity(itemId, currentQuantity - requestedQuantity);
+            } else if (currentQuantity < requestedQuantity) {
+                await ensureNeededItemQuantityExists(itemId, requestedQuantity - currentQuantity);
+                await updateItemQuantity(itemId, currentQuantity - requestedQuantity);
+            }
+
+            if (requestedQuantity === 0) {
+                inventory.delete(itemId);
+            } else {
+                inventory.set(itemId, requestedQuantity);
+            }
+
+            await updateUser(rescuerId, { inventory });
+        }
+
+        res.status(StatusCode.NO_CONTENT).json();
+    } catch (err: any) {
+        next(err);
+    }
+};
+
 export const deleteUserHandler = async (
     req: Request<{ id: string }>,
     res: Response,
@@ -137,3 +174,11 @@ export const deleteMeHandler = async (
         next(err);
     }
 };
+
+async function ensureNeededItemQuantityExists(itemId: string, neededQuantity: number) {
+    const item = await getItem(itemId);
+
+    if ((item.quantity ?? 0) < neededQuantity) {
+        throw new ConflictError(`Needed item quantity is not available`);
+    }
+}

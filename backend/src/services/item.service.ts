@@ -54,6 +54,17 @@ export const updateItem = async (
     return item;
 };
 
+export const updateItemQuantity = async (
+    id: string,
+    quantity: number
+) => {
+    const item: Item | null = await itemModel.findByIdAndUpdate<Item>(id, { $inc: { quantity } }, { new: true });
+
+    if (!item) throw new NotFoundError('item', id);
+
+    return item;
+};
+
 export const deleteItem = async (
     id: string
 ) => {

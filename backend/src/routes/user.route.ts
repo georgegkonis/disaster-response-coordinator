@@ -6,7 +6,7 @@ import {
     getMeHandler,
     getUserHandler,
     getUsersHandler,
-    updateMeHandler,
+    updateMeHandler, updateMyInventoryHandler,
     updateMyLocationHandler
 } from '../controllers/user.controller';
 import { deserializeUser } from '../middleware/deserialize-user.middleware';
@@ -14,7 +14,7 @@ import { requireUser } from '../middleware/require-user.middleware';
 import { restrictTo } from '../middleware/restrict-to.middleware';
 import { Role } from '../enums/role.enum';
 import { validate } from '../middleware/validate.middleware';
-import { createUserSchema, updateUserLocationSchema, updateUserSchema } from '../schemas/user.schema';
+import { createUserSchema, updateUserInventorySchema, updateUserLocationSchema, updateUserSchema } from '../schemas/user.schema';
 
 const router = express.Router();
 
@@ -37,6 +37,9 @@ router.patch('/me', validate(updateUserSchema), updateMeHandler);
 
 // Update current user's location
 router.patch('/me/location', validate(updateUserLocationSchema), updateMyLocationHandler);
+
+// Update current user's inventory
+router.patch('/me/inventory', restrictTo(Role.RESCUER), validate(updateUserInventorySchema), updateMyInventoryHandler);
 
 // Delete current user
 router.delete('/me', deleteMeHandler);
