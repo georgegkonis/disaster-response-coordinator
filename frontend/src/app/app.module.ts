@@ -69,6 +69,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TaskInfoComponent } from './components/offers-map/item-offer-info/task-info.component';
 import { PersonPipe } from './pipes/person.pipe';
 import { InventoryComponent } from './components/offers-map/inventory/inventory.component';
+import { AnalyticsComponent } from './components/analytics/analytics.component';
+import { ChartModule } from 'primeng/chart';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
     bootstrap: [AppShellComponent],
@@ -87,7 +90,8 @@ import { InventoryComponent } from './components/offers-map/inventory/inventory.
         ItemOffersComponent,
         ItemRequestsComponent,
         TaskInfoComponent,
-        InventoryComponent
+        InventoryComponent,
+        AnalyticsComponent
     ],
     imports: [
         BrowserModule,
@@ -140,7 +144,9 @@ import { InventoryComponent } from './components/offers-map/inventory/inventory.
         CardModule,
         DividerModule,
         OverlayPanelModule,
-        PersonPipe
+        PersonPipe,
+        ChartModule,
+        CalendarModule
     ],
     providers: [
         MessageService,

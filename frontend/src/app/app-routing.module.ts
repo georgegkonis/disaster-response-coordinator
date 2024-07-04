@@ -12,6 +12,7 @@ import { WarehouseComponent } from './components/warehouse/warehouse.component';
 import { OffersMapComponent } from './components/offers-map/offers-map.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
 import { UsersComponent } from './components/users/users.component';
+import { AnalyticsComponent } from './components/analytics/analytics.component';
 
 const routes: Routes = [
     {
@@ -51,6 +52,11 @@ const routes: Routes = [
             {
                 path: 'warehouse',
                 component: WarehouseComponent,
+                canActivate: [adminRoleGuard]
+            },
+            {
+                path: 'analytics',
+                component: AnalyticsComponent,
                 canActivate: [adminRoleGuard]
             }
         ]

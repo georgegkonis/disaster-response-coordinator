@@ -62,8 +62,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 label: 'Analytics',
                 icon: 'pi pi-fw pi-chart-bar',
                 routerLink: routesPaths.ANALYTICS,
-                visible: isAdmin,
-                disabled: true // TODO: enable when analytics are implemented
+                visible: isAdmin
             },
             {
                 label: 'Users',

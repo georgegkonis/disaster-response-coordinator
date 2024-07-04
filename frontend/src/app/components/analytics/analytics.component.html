@@ -1,0 +1,17 @@
+<div class="analytics">
+    <p-toolbar styleClass="p-2 border-round-lg">
+        <div class="p-toolbar-group-left gap-3">
+            <label for="from" class="font-bold block"> From: </label>
+            <p-calendar [(ngModel)]="fromDate" placeholder="Select Date" id="from" name="From"></p-calendar>
+            <label for="to" class="font-bold block"> To: </label>
+            <p-calendar [(ngModel)]="toDate" placeholder="Select Date" id="to" name="To"></p-calendar>
+
+            <p-button label="Apply" (onClick)="filterDates()" class="p-button-sm p-button-primary"/>
+        </div>
+    </p-toolbar>
+
+    <div class="flex flex-wrap justify-content-center w-full h-full py-5">
+        <p-chart class="col-4" type="pie" [data]="itemRequestData" [options]="itemRequestOptions"></p-chart>
+        <p-chart class="col-4" type="pie" [data]="itemOfferData" [options]="itemOfferOptions"></p-chart>
+    </div>
+</div>
