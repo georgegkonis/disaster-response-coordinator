@@ -12,4 +12,5 @@ export interface User {
     createdAt: Date;
     updatedAt: Date;
     location: MapLocation;
+    inventory?: Map<string, number>;
 }

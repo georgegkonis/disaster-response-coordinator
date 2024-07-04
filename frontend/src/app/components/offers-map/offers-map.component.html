@@ -29,6 +29,6 @@
     </div>
 </div>
 
-<p-dialog #inventoryDialog header="Inventory" [(visible)]="inventoryDialog.visible" [style]="{'width': '50vw'}" [modal]="true">
+<p-dialog #inventoryDialog header="Inventory" [(visible)]="inventoryDialog.visible" [style]="{'width': '40vw'}">
     <app-inventory [items]="(items$ | async) ?? []" [user]="user"></app-inventory>
 </p-dialog>

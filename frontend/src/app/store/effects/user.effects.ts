@@ -68,11 +68,20 @@ export class UserEffects {
         ))
     ));
 
-    updateUserLocationEffect$ = createEffect(() => this.actions$.pipe(
+    updateMyLocationEffect$ = createEffect(() => this.actions$.pipe(
         ofType(UserActions.updateMyLocation),
         mergeMap(({ location }) => this.userService.updateMyLocation(location).pipe(
             map(() => UserActions.updateMyLocationSuccess({ location })),
             catchError(() => of(UserActions.updateMyLocationFailure()))
+        ))
+    ));
+
+    updateMyInventoryEffect$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.updateMyInventory),
+        mergeMap(({ item, quantity }) => this.userService.updateMyInventory(item, quantity).pipe(
+            tap(() => this.messageService.showSuccess('Inventory updated successfully')),
+            map((user) => UserActions.updateMyInventorySuccess({ user })),
+            catchError(() => of(UserActions.updateMyInventoryFailure()))
         ))
     ));
 }

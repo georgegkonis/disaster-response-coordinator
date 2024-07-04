@@ -1,9 +1,30 @@
-<div class="flex flex-column justify-content-start align-items-stretch gap-3">
-    <h1>Inventory (WIP)</h1>
+<div class="flex align-items-stretch pt-2">
 
-    <div *ngFor="let item of items" class="flex flex-row justify-content-between align-items-center gap-3 p-2 border-round-lg bg-white">
-        <span>{{item.name}}</span>
+    <div class="flex flex-column col-6 gap-3 p-0 cursor-pointer">
+        <div *ngFor="let item of inventoryItems"
+             (click)="onSelectItem(item)"
+             class="flex flex-row justify-content-between p-2 align-items-center border-round-md shadow-2 hover:bg-black-alpha-10">
+
+            <span class="text-base text-secondary"><i class="pi pi-tag  pr-2"></i>{{ item.name }}</span>
+
+            <span class="text-base text-secondary"><i class="pi pi-hashtag  pr-2"></i>{{ item.quantity }}</span>
+        </div>
     </div>
 
-    <p-button class="align-self-center" label="Update"></p-button>
+    <p-divider layout="vertical"/>
+
+    <form class="flex flex-column col gap-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p-dropdown [filter]="true"
+                    [options]="items"
+                    formControlName="item"
+                    id="itemField"
+                    optionLabel="name"
+                    optionValue="id"
+                    placeholder="Select an item"
+                    styleClass="w-full"/>
+
+        <p-inputNumber [showButtons]="true" [min]="0" formControlName="quantity" placeholder="Quantity" styleClass="w-full"></p-inputNumber>
+
+        <p-button [disabled]="!form.valid" type="submit" class="align-self-center" label="Update"></p-button>
+    </form>
 </div>

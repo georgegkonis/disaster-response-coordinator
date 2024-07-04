@@ -82,55 +82,73 @@ export namespace UserActions {
 
     //#endregion
 
-    //#region Load Current User
+    //#region Load Me
 
     export const loadMe = createAction(
-        `${NAMESPACE} Load Current User`
+        `${NAMESPACE} Load Me`
     );
 
     export const loadMeSuccess = createAction(
-        `${NAMESPACE} Load Current User ${SUCCESS}`,
+        `${NAMESPACE} Load Me ${SUCCESS}`,
         props<{ user: User }>()
     );
 
     export const loadMeFailure = createAction(
-        `${NAMESPACE} Load Current User ${FAILURE}`
+        `${NAMESPACE} Load Me ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Update Current User
+    //#region Update Me
 
     export const updateMe = createAction(
-        `${NAMESPACE} Update Current User`,
+        `${NAMESPACE} Update Me`,
         props<{ request: UpdateUserRequest }>()
     );
 
     export const updateMeSuccess = createAction(
-        `${NAMESPACE} Update Current User ${SUCCESS}`,
+        `${NAMESPACE} Update Me ${SUCCESS}`,
         props<{ user: User }>()
     );
 
     export const updateMeFailure = createAction(
-        `${NAMESPACE} Update Current User ${FAILURE}`
+        `${NAMESPACE} Update Me ${FAILURE}`
     );
 
     //#endregion
 
-    //#region Update User Location
+    //#region Update My Location
 
     export const updateMyLocation = createAction(
-        `${NAMESPACE} Update User Location`,
+        `${NAMESPACE} Update My Location`,
         props<{ location: MapLocation }>()
     );
 
     export const updateMyLocationSuccess = createAction(
-        `${NAMESPACE} Update User Location ${SUCCESS}`,
+        `${NAMESPACE} Update My Location ${SUCCESS}`,
         props<{ location: MapLocation }>()
     );
 
     export const updateMyLocationFailure = createAction(
-        `${NAMESPACE} Update User Location ${FAILURE}`
+        `${NAMESPACE} Update My Location ${FAILURE}`
+    );
+
+    //#endregion
+
+    //#region Update My Inventory
+
+    export const updateMyInventory = createAction(
+        `${NAMESPACE} Update My Inventory`,
+        props<{ item: string, quantity: number }>()
+    );
+
+    export const updateMyInventorySuccess = createAction(
+        `${NAMESPACE} Update My Inventory ${SUCCESS}`,
+        props<{ user: User }>()
+    );
+
+    export const updateMyInventoryFailure = createAction(
+        `${NAMESPACE} Update My Inventory ${FAILURE}`
     );
 
     //#endregion

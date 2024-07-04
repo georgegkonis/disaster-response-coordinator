@@ -64,6 +64,12 @@ export class UserService {
         return this.httpClient.patch<void>(url, location);
     }
 
+    updateMyInventory(item: string, quantity: number): Observable<User> {
+        const url: string = `${this.baseUrl}/me/inventory`;
+
+        return this.httpClient.patch<User>(url, { item, quantity });
+    }
+
     deleteMe(): Observable<void> {
         const url: string = `${this.baseUrl}/me`;
 

@@ -1,10 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Item } from '../../../models/item.model';
 import { User } from '../../../models/user.model';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AppState } from '../../../store/reducers/app.reducer';
+import { Store } from '@ngrx/store';
+import { UserActions } from '../../../store/actions/user.actions';
 
 interface ItemQuantityForm {
-    itemId: FormControl<string>;
+    item: FormControl<string>;
     quantity: FormControl<number>;
 }
 
@@ -13,15 +16,42 @@ interface ItemQuantityForm {
     templateUrl: './inventory.component.html',
     styleUrl: './inventory.component.scss'
 })
-export class InventoryComponent {
+export class InventoryComponent implements OnChanges {
 
     @Input() items!: Item[];
     @Input() user!: User | null;
 
-    protected readonly form: FormArray<FormGroup<ItemQuantityForm>> = new FormArray<FormGroup<ItemQuantityForm>>([]);
+    protected readonly form: FormGroup<ItemQuantityForm> = initInventoryItemForm();
+
+    protected inventoryItems: { id: string, name: string, quantity: number }[] = [];
+
+    constructor(
+        private store: Store<AppState>
+    ) {
+
+    }
+
+    ngOnChanges(): void {
+        if (this.user?.inventory) {
+            const inventoryMap = new Map<string, number>(Object.entries(this.user.inventory));
+
+            this.inventoryItems = this.items
+                .filter(item => inventoryMap.has(item.id))
+                .map(item => ({ id: item.id, name: item.name, quantity: inventoryMap.get(item.id) || 0 }));
+        }
+    }
+
+    onSelectItem(item: { id: string; quantity: number }): void {
+        this.form.controls.item.setValue(item.id);
+        this.form.controls.quantity.setValue(item.quantity);
+    }
+
+    onSubmit(): void {
+        this.store.dispatch(UserActions.updateMyInventory(this.form.getRawValue()));
+    }
 }
 
 const initInventoryItemForm = () => new FormGroup<ItemQuantityForm>({
-    itemId: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+    item: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     quantity: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required, Validators.min(0)] })
 });

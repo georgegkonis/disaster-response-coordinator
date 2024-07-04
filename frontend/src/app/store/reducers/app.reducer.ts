@@ -50,6 +50,8 @@ const reducer = createReducer(
 
     on(UserActions.updateMyLocationSuccess, (state, { location }) => update(state, { user: { ...state.user!, location } })),
 
+    on(UserActions.updateMyInventorySuccess, (state, { user }) => update(state, { user })),
+
     on(UserActions.loadSuccess, (state, { users }) => update(state, { users })),
 
     on(UserActions.createSuccess, (state, { user }) => update(state, { users: [...state.users, user] })),

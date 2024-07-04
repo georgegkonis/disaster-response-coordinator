@@ -68,7 +68,6 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
     //#region Lifecycle Hooks
 
     ngOnInit(): void {
-
         this.store.dispatch(HeadquartersActions.load());
         this.store.dispatch(ItemActions.load({ request: {} }));
 
@@ -204,6 +203,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     //#endregion
+    protected readonly truckIcon = truckIcon;
 }
 
 
