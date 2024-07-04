@@ -1,0 +1,22 @@
+<div class="flex flex-column gap-2">
+    <div class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Submitted By:</span>
+        <span class="text-base">{{ task.citizen | person }}</span>
+    </div>
+    <div class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Submitted At:</span>
+        <span class="text-base">{{ task.createdAt | date: 'medium' }}</span>
+    </div>
+    <div *ngIf="task.rescuer" class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Accepted By:</span>
+        <span class="text-base">{{ task.rescuer! | person }}</span>
+    </div>
+    <div *ngIf="task.acceptedAt" class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Accepted At:</span>
+        <span class="text-base">{{ task.acceptedAt | date: 'medium' }}</span>
+    </div>
+    <div *ngIf="task.completedAt" class="flex gap-2 align-items-center m-0">
+        <span class="text-base font-bold">Completed At:</span>
+        <span class="text-base">{{ task.completedAt | date: 'medium' }}</span>
+    </div>
+</div>

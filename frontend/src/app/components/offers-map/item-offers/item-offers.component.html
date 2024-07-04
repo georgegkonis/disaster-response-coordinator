@@ -44,9 +44,9 @@
                         <p-tag [value]="itemOffer.status.toUpperCase()" [severity]="itemOffer.status | taskStatus"></p-tag>
                     </div>
 
-                    <div class="col-6 flex flex-column justify-content-center align-items-end gap-2">
-                        <span class="text-sm"><i class="pi pi-calendar"></i> {{ itemOffer.createdAt | date: 'short' }}</span>
-                        <span class="text-sm"><i class="pi pi-refresh"></i> {{ itemOffer.updatedAt | date: 'short' }}</span>
+                    <div class="col-6 flex flex-column justify-content-center align-items-start gap-2">
+                        <span class="text-sm"><i class="pi pi-user"></i> {{ itemOffer.citizen | person }}</span>
+                        <span *ngIf="itemOffer.rescuer" class="text-sm"><i class="pi pi-check"></i> {{ itemOffer.rescuer | person }}</span>
                     </div>
 
                     <div class="col flex flex-column justify-content-center align-items-end gap-2">
@@ -69,7 +69,7 @@
                     </div>
 
                     <p-overlayPanel #infoPanel [style]="{width: '25rem'}">
-                        <app-item-offer-info [itemOffer]="itemOffer"></app-item-offer-info>
+                        <app-task-info [task]="itemOffer"></app-task-info>
                     </p-overlayPanel>
                 </div>
             </div>
@@ -99,7 +99,7 @@
 
             <!-- Quantity Field -->
             <div class="app-form__field col-4">
-                <label class="app-form__field__label" for="quantityField">People Count</label>
+                <label class="app-form__field__label" for="quantityField">Quantity</label>
                 <p-inputNumber [min]="1" formControlName="quantity" id="quantityField" inputStyleClass="w-full"/>
             </div>
 

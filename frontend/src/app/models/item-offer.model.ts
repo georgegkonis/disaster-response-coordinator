@@ -12,4 +12,5 @@ export interface ItemOffer {
     createdAt: Date;
     updatedAt: Date;
     acceptedAt?: Date;
+    completedAt?: Date;
 }

@@ -12,4 +12,5 @@ export interface ItemRequest {
     createdAt: Date;
     updatedAt: Date;
     acceptedAt?: Date;
+    completedAt?: Date;
 }

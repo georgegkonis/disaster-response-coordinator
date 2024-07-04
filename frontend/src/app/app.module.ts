@@ -66,9 +66,8 @@ import { TaskStatusPipe } from './pipes/task-status.pipe';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { ItemRequestInfoComponent } from './components/offers-map/item-request-info/item-request-info.component';
-import { ItemOfferInfoComponent } from './components/offers-map/item-offer-info/item-offer-info.component';
-import { UserNamePipe } from './pipes/user-name.pipe';
+import { TaskInfoComponent } from './components/offers-map/item-offer-info/task-info.component';
+import { PersonPipe } from './pipes/user-name.pipe';
 
 @NgModule({
     bootstrap: [AppShellComponent],
@@ -86,8 +85,7 @@ import { UserNamePipe } from './pipes/user-name.pipe';
         UsersComponent,
         ItemOffersComponent,
         ItemRequestsComponent,
-        ItemOfferInfoComponent,
-        ItemRequestInfoComponent
+        TaskInfoComponent
     ],
     imports: [
         BrowserModule,
@@ -140,7 +138,7 @@ import { UserNamePipe } from './pipes/user-name.pipe';
         CardModule,
         DividerModule,
         OverlayPanelModule,
-        UserNamePipe
+        PersonPipe
     ],
     providers: [
         MessageService,

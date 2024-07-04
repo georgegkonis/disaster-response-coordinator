@@ -45,9 +45,9 @@
                         <p-tag [value]="itemRequest.status.toUpperCase()" [severity]="itemRequest.status | taskStatus"></p-tag>
                     </div>
 
-                    <div class="col-6 flex flex-column justify-content-center align-items-end gap-2">
-                        <span class="text-sm"><i class="pi pi-calendar"></i> {{ itemRequest.createdAt | date: 'short' }}</span>
-                        <span class="text-sm"><i class="pi pi-refresh"></i> {{ itemRequest.updatedAt | date: 'short' }}</span>
+                    <div class="col-6 flex flex-column justify-content-center align-items-start gap-2">
+                        <span class="text-sm"><i class="pi pi-user"></i> {{ itemRequest.citizen | person }}</span>
+                        <span *ngIf="itemRequest.rescuer" class="text-sm"><i class="pi pi-check"></i> {{ itemRequest.rescuer | person }}</span>
                     </div>
 
                     <div class="col flex flex-column justify-content-center align-items-end gap-2">
@@ -70,7 +70,7 @@
                     </div>
 
                     <p-overlayPanel #infoPanel [style]="{width: '25rem'}">
-                        <app-item-request-info [itemRequest]="itemRequest"></app-item-request-info>
+                        <app-task-info [task]="itemRequest"></app-task-info>
                     </p-overlayPanel>
                 </div>
             </div>

@@ -3,9 +3,9 @@ import { User } from '../models/user.model';
 
 @Pipe({
     standalone: true,
-    name: 'userName'
+    name: 'person'
 })
-export class UserNamePipe {
+export class PersonPipe {
 
     transform(user: User): string {
         return user.details ? `${user.details.firstName} ${user.details.lastName} (${user.username})` : `${user.username}`;
