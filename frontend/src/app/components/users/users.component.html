@@ -1,6 +1,6 @@
 <div class="users">
 
-    <p-toolbar styleClass="p-2">
+    <p-toolbar styleClass="p-2 border-round-lg">
         <div class="p-toolbar-group-start gap-2">
             <p-button (onClick)="onCreateClick()" label="Create" icon="pi pi-plus"></p-button>
         </div>
@@ -12,9 +12,10 @@
              [tableStyle]="{'min-width': '80rem'}"
              [value]="(users$ | async) ?? []"
              dataKey="id"
-             scrollHeight="84vh"
+             scrollHeight="78vh"
              sortField="updatedAt"
              sortMode="single"
+             class="bg-white border-round-lg p-2"
              styleClass="p-datatable-sm p-datatable-gridlines">
 
         <ng-template pTemplate="header">
