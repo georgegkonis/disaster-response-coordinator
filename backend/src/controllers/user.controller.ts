@@ -7,6 +7,9 @@ import { CreateUserInput, UpdateUserInput, UpdateUserInventoryInput, UpdateUserL
 import { Role } from '../enums/role.enum';
 import ConflictError from '../errors/conflict.error';
 import { getItem, updateItemQuantity } from '../services/item.service';
+import { findHeadquarters } from '../services/headquarters.service';
+import { withinDistance } from '../utils/distance';
+import BadRequestError from '../errors/bad-request-error';
 
 export const createUserHandler = async (
     req: Request<{}, {}, CreateUserInput>,
@@ -110,6 +113,8 @@ export const updateMyInventoryHandler = async (
     next: NextFunction
 ) => {
     try {
+        await withinDistanceOfSomeWarehouse(res.locals.user.location);
+
         const itemId: string = req.body.item;
         const rescuerId: string = res.locals.user._id.toHexString();
         const inventory = (await getUser(rescuerId)).inventory ?? new Map<string, number>();
@@ -124,7 +129,7 @@ export const updateMyInventoryHandler = async (
         if (currentQuantity > requestedQuantity) {
             await updateItemQuantity(itemId, currentQuantity - requestedQuantity);
         } else if (currentQuantity < requestedQuantity) {
-            await ensureNeededItemQuantityExists(itemId, requestedQuantity - currentQuantity);
+            await neededItemQuantityExists(itemId, requestedQuantity - currentQuantity);
             await updateItemQuantity(itemId, currentQuantity - requestedQuantity);
         }
 
@@ -176,10 +181,18 @@ export const deleteMeHandler = async (
     }
 };
 
-async function ensureNeededItemQuantityExists(itemId: string, neededQuantity: number) {
+async function withinDistanceOfSomeWarehouse(location: { latitude: number, longitude: number }) {
+    const warehouses = await findHeadquarters({});
+
+    if (!warehouses.some(warehouse => withinDistance(location, warehouse.location))) {
+        throw new BadRequestError('You are not close to any warehouse');
+    }
+}
+
+async function neededItemQuantityExists(itemId: string, neededQuantity: number) {
     const item = await getItem(itemId);
 
     if ((item.quantity ?? 0) < neededQuantity) {
-        throw new ConflictError(`Needed item quantity is not available`);
+        throw new BadRequestError(`Needed item quantity is not available`);
     }
 }
