@@ -67,7 +67,7 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TaskInfoComponent } from './components/offers-map/item-offer-info/task-info.component';
-import { PersonPipe } from './pipes/user-name.pipe';
+import { PersonPipe } from './pipes/person.pipe';
 import { InventoryComponent } from './components/offers-map/inventory/inventory.component';
 
 @NgModule({
