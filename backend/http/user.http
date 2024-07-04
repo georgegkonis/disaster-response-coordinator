@@ -54,7 +54,7 @@ Content-Type: application/json
 
 {
   "item": "666094873fa31e6a3c4aa3c1",
-  "quantity": 0
+  "quantity": 20
 }
 
 ### Delete me

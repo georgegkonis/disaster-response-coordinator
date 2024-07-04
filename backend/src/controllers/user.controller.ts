@@ -113,28 +113,29 @@ export const updateMyInventoryHandler = async (
         const itemId: string = req.body.item;
         const rescuerId: string = res.locals.user._id.toHexString();
         const inventory = (await getUser(rescuerId)).inventory ?? new Map<string, number>();
-
         const currentQuantity = inventory.get(itemId) ?? 0;
         const requestedQuantity = req.body.quantity;
 
-        if (currentQuantity !== requestedQuantity) {
-            if (currentQuantity > requestedQuantity) {
-                await updateItemQuantity(itemId, currentQuantity - requestedQuantity);
-            } else if (currentQuantity < requestedQuantity) {
-                await ensureNeededItemQuantityExists(itemId, requestedQuantity - currentQuantity);
-                await updateItemQuantity(itemId, currentQuantity - requestedQuantity);
-            }
-
-            if (requestedQuantity === 0) {
-                inventory.delete(itemId);
-            } else {
-                inventory.set(itemId, requestedQuantity);
-            }
-
-            await updateUser(rescuerId, { inventory });
+        if (currentQuantity === requestedQuantity) {
+            res.status(StatusCode.NO_CONTENT).json();
+            return;
         }
 
-        res.status(StatusCode.NO_CONTENT).json();
+        if (currentQuantity > requestedQuantity) {
+            await updateItemQuantity(itemId, currentQuantity - requestedQuantity);
+        } else if (currentQuantity < requestedQuantity) {
+            await ensureNeededItemQuantityExists(itemId, requestedQuantity - currentQuantity);
+            await updateItemQuantity(itemId, currentQuantity - requestedQuantity);
+        }
+
+        if (requestedQuantity === 0) {
+            inventory.delete(itemId);
+        } else {
+            inventory.set(itemId, requestedQuantity);
+        }
+
+        const user = await updateUser(rescuerId, { inventory });
+        res.status(StatusCode.OK).json(user);
     } catch (err: any) {
         next(err);
     }
