@@ -1,7 +1,7 @@
 <div class="flex flex-column gap-2">
 
     <div class="inline-flex justify-content-between">
-        <p-button (onClick)="onCreate()" [disabled]="userRole === 'rescuer'" label="Create" icon="pi pi-plus"/>
+        <p-button (onClick)="onCreate()" [disabled]="userRole !== 'citizen'" label="Create" icon="pi pi-plus"/>
         <p-button (onClick)="filtersPanel.toggle($event)" [outlined]="true" icon="pi pi-filter"/>
     </div>
 

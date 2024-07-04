@@ -10,6 +10,8 @@ import { ConfirmationService, TooltipOptions } from 'primeng/api';
 import { ItemActions } from '../../store/actions/item.actions';
 import { CreateAnnouncementRequest } from '../../dto/requests/create-announcement-request.dto';
 import { Item } from '../../models/item.model';
+import { CookieService } from 'ngx-cookie-service';
+import { UserRole } from '../../enums/user-role.enum';
 
 interface AnnouncementForm {
     description: FormControl<string>;
@@ -31,6 +33,7 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
     protected readonly announcementForm: FormGroup<AnnouncementForm>;
     protected readonly announcements$: Observable<Announcement[]>;
     protected readonly items$: Observable<Item[]>;
+    protected readonly userRole: UserRole;
 
     protected readonly tooltipOptions: TooltipOptions = {
         showDelay: 500
@@ -42,10 +45,11 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
 
     constructor(
         private store: Store<AppState>,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private cookieService: CookieService
     ) {
         this.announcementForm = initAnnouncementForm();
-
+        this.userRole = this.cookieService.get('role') as UserRole;
         this.announcements$ = store.select(announcementsSelector);
         this.items$ = store.select(itemsSelector);
     }

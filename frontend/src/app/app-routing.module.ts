@@ -41,7 +41,8 @@ const routes: Routes = [
             },
             {
                 path: 'users',
-                component: UsersComponent
+                component: UsersComponent,
+                canActivate: [adminRoleGuard]
             },
             {
                 path: 'profile',
