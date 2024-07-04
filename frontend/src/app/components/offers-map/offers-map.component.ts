@@ -40,9 +40,9 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
     protected readonly items$: Observable<Item[]>;
     protected readonly rescuers$: Observable<User[]>;
 
-    private readonly userRole: UserRole = UserRole.CITIZEN;
+    protected readonly userRole: UserRole = UserRole.CITIZEN;
 
-    private user: User | null = null;
+    protected user: User | null = null;
     private map!: L.Map;
 
     private headquartersLayer = L.layerGroup();

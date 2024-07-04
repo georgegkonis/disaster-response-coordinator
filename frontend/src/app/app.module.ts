@@ -68,6 +68,7 @@ import { DividerModule } from 'primeng/divider';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TaskInfoComponent } from './components/offers-map/item-offer-info/task-info.component';
 import { PersonPipe } from './pipes/user-name.pipe';
+import { InventoryComponent } from './components/offers-map/inventory/inventory.component';
 
 @NgModule({
     bootstrap: [AppShellComponent],
@@ -85,7 +86,8 @@ import { PersonPipe } from './pipes/user-name.pipe';
         UsersComponent,
         ItemOffersComponent,
         ItemRequestsComponent,
-        TaskInfoComponent
+        TaskInfoComponent,
+        InventoryComponent
     ],
     imports: [
         BrowserModule,

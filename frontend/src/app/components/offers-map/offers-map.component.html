@@ -2,16 +2,10 @@
 
     <p-toolbar styleClass="p-2 border-round-lg">
         <div class="p-toolbar-group-start gap-2">
-            <p-button label="Create HQ" icon="pi pi-plus"/>
-        </div>
-
-        <div class="p-toolbar-group-center gap-2">
-            <input pInputText type="text" placeholder="Search Text"/>
-        </div>
-
-        <div class="p-toolbar-group-end gap-2">
-            <p-button label="Search" icon="pi pi-search"/>
-            <p-button label="Reset" icon="pi pi-refresh"/>
+            <p-button (onClick)="inventoryDialog.visible = true"
+                      [disabled]="userRole !== 'rescuer'"
+                      icon="pi pi-arrow-right-arrow-left"
+                      label="Manage Inventory"></p-button>
         </div>
     </p-toolbar>
 
@@ -34,3 +28,7 @@
         </div>
     </div>
 </div>
+
+<p-dialog #inventoryDialog header="Inventory" [(visible)]="inventoryDialog.visible" [style]="{'width': '50vw'}" [modal]="true">
+    <app-inventory [items]="(items$ | async) ?? []" [user]="user"></app-inventory>
+</p-dialog>
