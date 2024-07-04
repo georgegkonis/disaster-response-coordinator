@@ -43,8 +43,10 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
     protected readonly userRole: UserRole = UserRole.CITIZEN;
 
     protected user: User | null = null;
+    protected items: Item[] = [];
     private map!: L.Map;
 
+    private userLayer = L.layerGroup();
     private headquartersLayer = L.layerGroup();
     private itemOffersLayer = L.layerGroup();
     private itemRequestsLayer = L.layerGroup();
@@ -63,6 +65,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.userRole = this.cookieService.get('userRole') as UserRole;
 
         this.store.select(userSelector).pipe(takeUntil(this.unsubscribe$)).subscribe(user => this.user = user);
+        this.items$.pipe(takeUntil(this.unsubscribe$)).subscribe(items => this.items = items);
     }
 
     //#region Lifecycle Hooks
@@ -122,6 +125,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
         ).addTo(this.map);
 
         const overlayMaps: L.Control.LayersObject = {
+            'You': this.userLayer,
             'Headquarters': this.headquartersLayer,
             'Item Offers': this.itemOffersLayer,
             'Item Requests': this.itemRequestsLayer,
@@ -134,13 +138,15 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private placePinOnMapAndZoom(): void {
+        this.userLayer.addTo(this.map);
+
         navigator.geolocation.getCurrentPosition((position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
 
             this.map.setView([latitude, longitude], 30);
 
-            L.marker([latitude, longitude], { icon: locationPinIcon }).addTo(this.map).bindPopup('You are here!').openPopup();
+            L.marker([latitude, longitude], { icon: locationPinIcon }).addTo(this.userLayer).bindPopup('You are here!').openPopup();
         });
     }
 
@@ -150,7 +156,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.headquarters$.pipe(takeUntil(this.unsubscribe$)).subscribe(headquarters => {
             headquarters.forEach(hq => {
                 L.marker([hq.location.latitude, hq.location.longitude], { icon: warehouseIcon })
-                    .bindPopup('Headquarters')
+                    .bindPopup('Warehouse')
                     .addTo(this.headquartersLayer);
             });
         });
@@ -162,7 +168,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.itemOffers$.pipe(takeUntil(this.unsubscribe$)).subscribe(offers => {
             offers.forEach(offer => {
                 L.marker([offer.citizen.location.latitude, offer.citizen.location.longitude], { icon: itemOfferIcon })
-                    .bindPopup(`<b>Offer: ${offer.item.name}</b><b>Quantiry: ${offer.item.quantity}</b>`)
+                    .bindPopup(`<b>Offer: ${offer.item.name}</b> <br> <b>Quantity: ${offer.quantity}</b> <br> <b>Status: ${offer.status}</b> <br> <b> Citizen: ${offer.citizen.username}</b>`)
                     .addTo(this.itemOffersLayer);
             });
         });
@@ -174,7 +180,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.itemRequests$.pipe(takeUntil(this.unsubscribe$)).subscribe(requests => {
             requests.forEach(request => {
                 L.marker([request.citizen.location.latitude, request.citizen.location.longitude], { icon: itemRequestIcon })
-                    .bindPopup(`<b>Request: ${request.item.name}</b>`)
+                    .bindPopup(`<b>Request: ${request.item.name}</b> <br> <b>People: ${request.peopleCount}</b> <br> <b>Status: ${request.status}</b> <br> <b> Citizen: ${request.citizen.username}</b>`)
                     .addTo(this.itemRequestsLayer);
             });
         });
@@ -186,7 +192,7 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.rescuers$.pipe(takeUntil(this.unsubscribe$)).subscribe(rescuers => {
             rescuers.forEach(rescuer => {
                 L.marker([rescuer.location.latitude, rescuer.location.longitude], { icon: truckIcon })
-                    .bindPopup(`<b>Rescuer: ${rescuer.username}</b>`)
+                    .bindPopup(`<b>Rescuer: ${rescuer.username}</b> <br> <b>Inventory:<b/> <br> <b>${this.rescuerInventory(rescuer) ?? 'Nothing'}</b>`)
                     .addTo(this.rescuersLayer);
             });
         });
@@ -202,8 +208,20 @@ export class OffersMapComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    private rescuerInventory = (rescuer: User): string | null => {
+        if (rescuer?.inventory) {
+            const inventoryMap = new Map<string, number>(Object.entries(rescuer.inventory));
+
+            return this.items
+                .filter(item => inventoryMap.has(item.id))
+                .map(item => `${item.name}: ${inventoryMap.get(item.id)}`)
+                .join('<br>');
+        }
+
+        return null;
+    };
+
     //#endregion
-    protected readonly truckIcon = truckIcon;
 }
 
 
